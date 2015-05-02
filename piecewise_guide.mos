@@ -1,0 +1,26 @@
+model  piecewise                   ! Start a new model
+
+uses "mmxprs"                  ! Load the optimizer library
+
+declarations
+ I=1..4
+ x,y: mpvar
+ w: array(I) of mpvar
+ R,F: array(I) of real
+end-declarations
+
+! ...assign values to arrays R and F...
+R:: [0, 1, 2, 3]
+F:: [0, 0.2, 6.4, 48.6]
+
+! Define the SOS-2 with "reference row" coefficients from R
+ Defx:= sum(i in I) R(i)*w(i) is_sos2
+ sum(i in I) w(i) = 1
+! The variable and the corresponding function value we want to approximate
+
+x = Defx
+y = sum(i in I) F(i)*w(i)
+
+writeln("x=", x.sol, "y=", y.sol);
+
+end-model

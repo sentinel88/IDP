@@ -1,0 +1,7 @@
+!  Init node Term node	Free Flow Time 	Cost
+	1	6	19	7	
+	5	10	25	12
+	2	7	30	7
+	6	11	32	15
+	3	8	21	11
+	7	12	28	18

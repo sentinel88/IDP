@@ -1,0 +1,569 @@
+/********************************************************
+  file model.cxx
+  ````````````````
+  Implementing genetic algorithm as a metaheuristic for a
+  bilevel formulation of the discrete network design problem.
+
+  (c) 2015 Private
+      author: Nishanth Nagendra, Mar. 2015
+********************************************************/
+
+#include <defs.h>
+#include <data.h>
+#include <funcs.h>
+
+/***********************************************************************/
+
+#ifdef _CODE_NOT_USED
+int model_problem(model_data *dndp, network_data *netinfo, genetic_algo *ga)
+{
+
+/***Declarations***/
+
+ XPRBexpr incr;              /* Increment to be added after x[1] */
+ XPRBexpr summation;         /* Auxiliary summation expression */
+ XPRBexpr increment[N+1][N+1];
+
+ float points[M+1], slopes[M+1];        /* Approximation points,  Function to approximate is (x^5) */
+ int i, j, k;           /* Iteration variables */
+ float ta, xa, ba, ca, Constant;
+ int r, s, flag = 0, count = 0;
+ float temp;
+ char str[100];
+
+ (dndp->p).setName("TAP");
+
+ //parse(netinfo);
+
+ printf("\nParsing finished successfully\n");
+
+/****Approximation Points and associated slopes******/
+ points[0] = 0; slopes[0] = 0;
+ for (i=1; i<=M; i++) { 
+    points[i] = points[i-1] + step_size;
+    if (CHOICE) {
+       slopes[i] = ( pow(points[i], 5) - pow(points[i-1], 5)) / (points[i] - points[i-1]);
+    } else {
+       slopes[i] = ( pow(points[i], 4) - pow(points[i-1], 4)) / (points[i] - points[i-1]);
+    }
+ }
+
+ cout<<"\nPoints and slopes initialized\n";
+
+/****VARIABLES****/
+
+/***Flow on link a***/
+ for (i=1; i<=OD; i++) {
+    r = (i/N);
+    s = (i%N);
+    r = (r==0)?1 : (s==0?r : (r+1));
+    s = (s==0)?N : s;    
+    //if (i==12) {
+    if (netinfo->Demand[r][s]) {
+    for (j=1; j<=N; j++) {
+       //printf("OD Pair: [%d, %d]\t", r, s);
+       for (k=1; k<=N; k++) {
+          if (netinfo->Ta[j][k] != 0.0)
+             dndp->Fa_rs[i][j][k] = (dndp->p).newVar("Flow");
+          //if (!Ta[j][k])
+            // Fa_rs[i][j][k].fix(0.0);
+       } 
+    } }
+ }
+
+/***Decision variables for linear approximation***/
+ for (i=1; i<=N; i++) {
+    for (j=1; j<=N; j++) {
+       for (k=0; k<=M; k++) {
+          if (netinfo->Ta[i][j] != 0.0)
+             dndp->x[i][j][k] = (dndp->p).newVar("x");
+          //if (!Ta[i][j])
+           // x[i][j][k].fix(0.0);
+       }
+    }
+ }
+
+/***Travelers on link a***/
+ for (i=1; i<=N; i++) {
+    for (j=1; j<=N; j++) {
+       if (netinfo->Ta[i][j] != 0.0)
+          dndp->Xa[i][j] = (dndp->p).newVar("Travelers");
+       //if (!Ta[i][j])
+         // Xa[i][j].fix(0.0);
+    }
+ }
+
+/***Construction of new links***/
+ for (i=1; i<=NL; i++) {
+          j = netinfo->new_links[i].orig;
+          k = netinfo->new_links[i].term;
+          dndp->Ya[j][k] = (dndp->p).newVar("New link", XPRB_BV);
+          dndp->Xa[j][k] = (dndp->p).newVar("Travelers");
+          //dndp->Ya[j][k].fix(ga.population[iter].binary_enc[i]);
+ }
+
+ cout<<"\nDecision variables declared\n";
+ 
+/***Flow aggregation constraints***/
+ for (i=1; i<=N; i++) {
+    //summation = 0;
+    for (j=1; j<=N; j++) {
+       summation = 0;
+       if (netinfo->Ta[i][j] != 0.0) {
+       for (k=1; k<=OD; k++) {
+          r = (k/N);
+          s = (k%N);
+          r = (r==0)?1 : (s==0?r : (r+1));
+          s = (s==0)?N : s;    
+          //if (i==12) {
+          if (netinfo->Demand[r][s]) 
+          //if (k==12)
+             summation += dndp->Fa_rs[k][i][j];
+       }
+       (dndp->p).newCtr("Flow Aggregation", dndp->Xa[i][j] == summation);
+       }
+    }
+ }
+
+ cout<<"\nFlow aggregation constraints declared\n";
+
+/***Demand at origin constraints***/
+ for (i=1; i<=N; i++) {  /* for S */
+    for (j=1; j<=N; j++) { /* for R */
+       if (netinfo->Demand[j][i] != 0.0) {
+       incr = 0;
+       summation = 0;
+       for (k=1; k<=N; k++) {
+          if (netinfo->Ta[j][k] != 0.0) 
+             summation += dndp->Fa_rs[(N*(j-1))+i][j][k];
+          if (netinfo->Ta[k][j] != 0.0)
+             incr += dndp->Fa_rs[(N*(j-1))+i][k][j];          
+       }
+       (dndp->p).newCtr("origination", summation == netinfo->Demand[j][i]);
+       (dndp->p).newCtr("Demand at origin", incr == 0);
+       }
+    }
+ }
+
+ cout<<"\nDemand at origin constraints declared\n";
+
+/***Demand at destination constraints***/
+ for (i=1; i<=N; i++) {  /* for R */
+    for (j=1; j<=N; j++) { /* for S */
+       if (netinfo->Demand[i][j] != 0.0) {
+       incr = 0;
+       summation = 0;
+       for (k=1; k<=N; k++) {
+          if (netinfo->Ta[k][j] != 0.0) 
+             summation += dndp->Fa_rs[(N*(i-1))+j][k][j];
+          if (netinfo->Ta[j][k] != 0.0)
+             incr += dndp->Fa_rs[(N*(i-1))+j][j][k];          
+       }
+       (dndp->p).newCtr("destination", summation == netinfo->Demand[i][j]);
+       (dndp->p).newCtr("Demand at destination", incr == 0);
+       }
+    }
+ }
+
+ cout<<"\nDemand at destination constraints declared\n";
+
+/***Flow conservation constraints***/
+ for (i=1; i<=OD; i++) {
+    r = (i/N);
+    s = (i%N);
+    r = (r==0)?1 : (s==0?r : (r+1));
+    s = (s==0)?N : s;    
+    if (netinfo->Demand[r][s] != 0.0) {
+    //r=1; s=12; i=12;
+    for (j=1; (j<=N) /*&& (j!=r) && (j!=s)*/; j++) {
+       if (j!=r && j!=s) { 
+       summation = 0;
+       incr = 0;
+       for (k=1; k<=N; k++) {
+          if (netinfo->Ta[k][j] != 0.0)
+             summation += dndp->Fa_rs[i][k][j];
+          if (netinfo->Ta[j][k] != 0.0)
+             incr += dndp->Fa_rs[i][j][k];
+       }
+       (dndp->p).newCtr("Flow conservation", summation == incr);
+       }
+    }
+    }
+ }
+
+ summation = 0;
+
+ cout<<"\nBudget constraints declared\n";
+
+/***Budget constraint***/
+ for (i=0; i<NL; i++) {
+    j = netinfo->new_links[i].orig;
+    k = netinfo->new_links[i].term;
+    summation += (netinfo->ba[j][k] * dndp->Ya[j][k]);
+    (dndp->p).newCtr("bigM constraint", dndp->Xa[j][k] <= (bigM * (dndp->Ya[j][k])) );
+ }
+
+ (dndp->p).newCtr("Budget constraint", summation <= B);   
+
+ cout<<"\nBefore objective\n";
+
+/****OBJECTIVE****/
+ for (i=1; i<=N; i++) {
+    for (j=1; j<=N; j++) {
+    if (netinfo->Ta[i][j] != 0.0) { //Condition to determine whether to have constraints for this edge or not
+       cout<<i<<" "<<j<<"\t";
+       ta = netinfo->Ta[i][j];
+       //xa = Xa[i][j];
+       ca = netinfo->Ca[i][j];
+       ba = netinfo->Ba[i][j];
+       Constant = ( (ta * ba)/(5 * pow(ca, 4)) );
+       dndp->increment[i][j] = 0;
+       for (k=2; k<=M; k++) {
+          dndp->increment[i][j] += ( (slopes[k] - slopes[k-1]) * dndp->x[i][j][k] );
+          //p.newCtr("Increments", x[i][j][1] <= (x[i][j][k] + points[k-1]) );
+          (dndp->p).newCtr("Increments", dndp->Xa[i][j] <= (dndp->x[i][j][k] + points[k-1]) );
+       }
+       if (CHOICE == 2) {
+          summation += (ta * dndp->Xa[i][j]) + (Constant * (0 + (slopes[1]*dndp->Xa[i][j]) + dndp->increment[i][j]) );  /* 0 represents function value at X{0} which is                                                                                                zero since the non linear function here is x^5*/
+       } else {
+          //summation += (ta * Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*x[i][j][1]) + increment[i][j]) );
+          summation += (ta * dndp->Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*dndp->Xa[i][j]) + dndp->increment[i][j]) );
+       }
+    } 
+    }
+ }  
+       
+ (dndp->p).setObj((dndp->p).newCtr("OBJ", summation) ); /* Define & set the obj. function */ 
+
+// cout<<"\nBefore solving\n";
+
+/****SOLVING****/
+//   flag = p.print();
+ (dndp->p).setSense(XPRB_MINIM);
+ //(dndp->p).lpOptimize("");         /* Solve the LP-problem */
+ //p.mipOptimize("");         /* Solve the LP-problem */
+
+ //cout<<"\nObjective value: "<<(dndp->p).getObjVal()<<"\n";
+ //cout<<"Decision variable values\n";
+ (dndp->p).exportProb(XPRB_LP);
+
+/***Flow on link a***/
+/*cout<<"\nFlow on link a for every OD pair\n";
+ //for (i=1; i<=OD; i++) {
+    for (j=1; j<=N; j++) {
+       cout<<"\n";
+       for (k=1; k<=N; k++) {
+          cout<<Fa_rs[12][j][k].getSol()<<" ";
+         // Fa_rs[i][j][k].fix(0.0);
+       }
+    }
+ //}*/
+
+// cout<<"\nTravelers on link a\n";
+/***Travelers on link a***/
+ /*for (i=1; i<=N; i++) {
+    //cout<<"\n";
+    for (j=1; j<=N; j++) {
+       if (netinfo->Ta[i][j] != 0.0)
+          cout<<"("<<i<<","<<j<<") : "<<(dndp->Xa[i][j]).getSol()<<"\n";
+       //Xa[i][j].fix(0.0);
+    }
+ }*/
+
+ //clean(netinfo);  /* Clean routing for de-allocating the memory for Demand and free flow travel time matrices */
+
+ //free(ga->population);
+
+ return 0;  
+}
+#endif
+
+int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
+{
+
+/***Declarations***/
+
+ XPRBexpr incr;              /* Increment to be added after x[1] */
+ XPRBexpr summation;         /* Auxiliary summation expression */
+ XPRBexpr increment[N+1][N+1];
+
+ float points[M+1], slopes[M+1];        /* Approximation points,  Function to approximate is (x^5) */
+ int i, j, k, l;           /* Iteration variables */
+ float ta, xa, ba, ca, Constant;
+ int r, s, flag = 0, count = 0;
+ float temp;
+ char str[100];
+
+ //dndp->p = XPRBnewprob("TAP");
+ (dndp->p).setName("TAP");
+
+/****Approximation Points and associated slopes******/
+ points[0] = 0; slopes[0] = 0;
+ for (i=1; i<=M; i++) { 
+    points[i] = points[i-1] + step_size;
+    if (CHOICE) {
+       slopes[i] = ( pow(points[i], 5) - pow(points[i-1], 5)) / (points[i] - points[i-1]);
+    } else {
+       slopes[i] = ( pow(points[i], 4) - pow(points[i-1], 4)) / (points[i] - points[i-1]);
+    }
+ }
+
+ cout<<"\nPoints and slopes initialized\n";
+
+/****VARIABLES****/
+
+/***Flow on link a***/
+ for (i=1; i<=OD; i++) {
+    r = (i/N);
+    s = (i%N);
+    r = (r==0)?1 : (s==0?r : (r+1));
+    s = (s==0)?N : s;    
+    if (netinfo->Demand[r][s]) {
+       for (l=0; l<EL; l++) {
+          j = netinfo->existing_links[l].orig;
+          k = netinfo->existing_links[l].term;
+          dndp->Fa_rs[i][j][k] = (dndp->p).newVar("Flow");
+       }
+       
+       for (l=0; l<NL; l++) { 
+          if (ga_cand.binary_enc[l]) {
+             j = netinfo->new_links[l].orig; 
+             k = netinfo->new_links[l].term;
+             dndp->Fa_rs[i][j][k] = (dndp->p).newVar("Flow");
+          }
+       }
+    } 
+ }
+
+/***Decision variables for linear approximation, binary variables for construction of new links and travelers on link a***/
+ for (l=0; l<EL; l++) {
+    i = netinfo->existing_links[l].orig;
+    j = netinfo->existing_links[l].term;
+    for (k=0; k<=M; k++) {
+       dndp->x[i][j][k] = (dndp->p).newVar("x");
+    }
+    dndp->Xa[i][j] = (dndp->p).newVar("Travelers");
+ }
+
+ for (l=0; l<NL; l++) {
+    if (ga_cand.binary_enc[l]) {
+       i = netinfo->new_links[l].orig;
+       j = netinfo->new_links[l].term;
+       for (k=0; k<=M; k++) {
+          dndp->x[i][j][k] = (dndp->p).newVar("x");
+       }
+       dndp->Xa[i][j] = (dndp->p).newVar("Travelers");
+       dndp->Ya[j][k] = (dndp->p).newVar("New link", XPRB_BV);
+    }
+ }
+
+ cout<<"\nDecision variables declared\n";
+ 
+/***Flow aggregation constraints***/
+ for (l=0; l<EL; l++) {
+    i = netinfo->existing_links[l].orig;
+    j = netinfo->existing_links[l].term;
+    summation = 0;
+    for (k=1; k<=OD; k++) {
+       r = (k/N);
+       s = (k%N);
+       r = (r==0)?1 : (s==0?r : (r+1));
+       s = (s==0)?N : s;    
+       if (netinfo->Demand[r][s]) 
+          summation += dndp->Fa_rs[k][i][j];
+    }
+    (dndp->p).newCtr("Flow Aggregation", dndp->Xa[i][j] == summation);
+ }
+
+ for (l=0; l<NL; l++) {
+    if (ga_cand.binary_enc[l]) {
+       i = netinfo->new_links[l].orig;
+       j = netinfo->new_links[l].term;
+       summation = 0;
+       for (k=1; k<=OD; k++) {
+          r = (k/N);
+          s = (k%N);
+          r = (r==0)?1 : (s==0?r : (r+1));
+          s = (s==0)?N : s;    
+          if (netinfo->Demand[r][s]) 
+             summation += dndp->Fa_rs[k][i][j];
+       }
+    }
+    (dndp->p).newCtr("Flow Aggregation", dndp->Xa[i][j] == summation);
+ }
+
+ cout<<"\nFlow aggregation constraints declared\n";
+
+/***Demand at origin constraints***/
+ for (i=1; i<=N; i++) {  /* for S */
+    //summation = 0;
+    for (j=1; j<=N; j++) { /* for R */
+       //j=1; i=12;
+       if (netinfo->Demand[j][i] != 0.0) {
+       incr = 0;
+       summation = 0;
+       for (k=1; k<=N; k++) {
+          if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1) 
+             summation += dndp->Fa_rs[(N*(j-1))+i][j][k];
+          if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1)
+             incr += dndp->Fa_rs[(N*(j-1))+i][k][j];          
+       }
+       for (k=0; k<NL; k++) {
+          if (ga_cand.binary_enc[k]) {
+             if (j == netinfo->new_links[k].orig) {
+                summation += dndp->Fa_rs[(N*(j-1))+i][j][netinfo->new_links[k].term];
+             }
+             if (j == netinfo->new_links[k].term) {
+                incr += dndp->Fa_rs[(N*(j-1))+i][netinfo->new_links[k].orig][j];
+             }
+          }
+       }
+       (dndp->p).newCtr("origination", summation == netinfo->Demand[j][i]);
+       (dndp->p).newCtr("Demand at origin", incr == 0);
+       }
+    }
+ }
+
+ cout<<"\nDemand at origin constraints declared\n";
+
+/***Demand at destination constraints***/
+ for (i=1; i<=N; i++) {  /* for R */
+    //summation = 0;
+    for (j=1; j<=N; j++) { /* for S */
+       //i=1; j=12;
+       if (netinfo->Demand[i][j] != 0.0) {
+       incr = 0;
+       summation = 0;
+       for (k=1; k<=N; k++) {
+          if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1) 
+             summation += dndp->Fa_rs[(N*(i-1))+j][k][j];
+          if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1)
+             incr += dndp->Fa_rs[(N*(i-1))+j][j][k];          
+       }
+       for (k=0; k<NL; k++) {
+          if (ga_cand.binary_enc[k]) {
+             if (j == netinfo->new_links[k].orig) {
+                incr += dndp->Fa_rs[(N*(i-1))+j][j][netinfo->new_links[k].term];
+             }
+             if (j == netinfo->new_links[k].term) {
+                summation += dndp->Fa_rs[(N*(i-1))+j][netinfo->new_links[k].orig][j];
+             }
+          }
+       }
+       (dndp->p).newCtr("destination", summation == netinfo->Demand[i][j]);
+       (dndp->p).newCtr("Demand at destination", incr == 0);
+       }
+    }
+ }
+
+ cout<<"\nDemand at destination constraints declared\n";
+
+/***Flow conservation constraints***/
+ for (i=1; i<=OD; i++) {
+    r = (i/N);
+    s = (i%N);
+    r = (r==0)?1 : (s==0?r : (r+1));
+    s = (s==0)?N : s;    
+    if (netinfo->Demand[r][s] != 0.0) {
+    //r=1; s=12; i=12;
+    for (j=1; (j<=N) /*&& (j!=r) && (j!=s)*/; j++) {
+       if (j!=r && j!=s) { 
+       summation = 0;
+       incr = 0;
+       for (k=1; k<=N; k++) {
+          if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1)
+             summation += dndp->Fa_rs[i][k][j];
+          if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1)
+             incr += dndp->Fa_rs[i][j][k];
+       }
+       for (k=0; k<NL; k++) {
+          if (ga_cand.binary_enc[k]) {
+             if (j == netinfo->new_links[k].orig) {
+                incr += dndp->Fa_rs[i][j][netinfo->new_links[k].term];
+             }
+             if (j == netinfo->new_links[k].term) {
+                summation += dndp->Fa_rs[i][netinfo->new_links[k].orig][j];
+             }
+          }
+       }
+       (dndp->p).newCtr("Flow conservation", summation == incr);
+    } }
+    }
+ }
+
+ summation = 0;
+
+ cout<<"\nBudget constraints declared\n";
+
+/***Budget constraint***/
+ for (i=0; i<NL; i++) {
+    if (ga_cand.binary_enc[i]) {
+       j = netinfo->new_links[i].orig;
+       k = netinfo->new_links[i].term;
+       summation += (netinfo->ba[j][k] * dndp->Ya[j][k]);
+       (dndp->p).newCtr("bigM constraint", dndp->Xa[j][k] <= (bigM * (dndp->Ya[j][k])) );
+    }
+ }
+
+ (dndp->p).newCtr("Budget constraint", summation <= B);   
+
+ cout<<"\nBefore objective\n";
+
+/****OBJECTIVE****/
+ for (i=1; i<=N; i++) {
+    for (j=1; j<=N; j++) {
+    if (netinfo->Ta[i][j] != 0.0 && netinfo->EdgeMatrix[i][j] == 1) { //Condition to determine whether to have constraints for this edge or not
+       cout<<i<<" "<<j<<"\t";
+       ta = netinfo->Ta[i][j];
+       //xa = Xa[i][j];
+       ca = netinfo->Ca[i][j];
+       ba = netinfo->Ba[i][j];
+       Constant = ( (ta * ba)/(5 * pow(ca, 4)) );
+       //dndp->increment[i][j] = 0;
+       increment[i][j] = 0;
+       for (k=2; k<=M; k++) {
+          increment[i][j] += ( (slopes[k] - slopes[k-1]) * dndp->x[i][j][k] );
+          //p.newCtr("Increments", x[i][j][1] <= (x[i][j][k] + points[k-1]) );
+          (dndp->p).newCtr("Increments", dndp->Xa[i][j] <= (dndp->x[i][j][k] + points[k-1]) );
+       }
+       if (CHOICE == 2) {
+          summation += (ta * dndp->Xa[i][j]) + (Constant * (0 + (slopes[1]*dndp->Xa[i][j]) + increment[i][j]) );  /* 0 represents function value at X{0} which is                                                                                                zero since the non linear function here is x^5*/
+       } else {
+          //summation += (ta * Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*x[i][j][1]) + increment[i][j]) );
+          summation += (ta * dndp->Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*dndp->Xa[i][j]) + increment[i][j]) );
+       }
+    } 
+    }
+ }  
+ for (l=0; l<NL; l++) {
+    if (ga_cand.binary_enc[l]) {
+       i = netinfo->new_links[l].orig;
+       j = netinfo->new_links[l].term;
+       ta = netinfo->Ta[i][j];
+       ca = netinfo->Ca[i][j];
+       ba = netinfo->Ba[i][j];
+       Constant = ( (ta * ba)/(5 * pow(ca, 4)) );
+       increment[i][j] = 0;
+       for (k=2; k<=M; k++) {
+          increment[i][j] += ( (slopes[k] - slopes[k-1]) * dndp->x[i][j][k] );
+          //p.newCtr("Increments", x[i][j][1] <= (x[i][j][k] + points[k-1]) );
+          (dndp->p).newCtr("Increments", dndp->Xa[i][j] <= (dndp->x[i][j][k] + points[k-1]) );
+       }
+       if (CHOICE == 2) {
+          summation += (ta * dndp->Xa[i][j]) + (Constant * (0 + (slopes[1]*dndp->Xa[i][j]) + increment[i][j]) );  /* 0 represents function value at X{0} which is                                                                                                zero since the non linear function here is x^5*/
+       } else {
+          //summation += (ta * Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*x[i][j][1]) + increment[i][j]) );
+          summation += (ta * dndp->Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*dndp->Xa[i][j]) + increment[i][j]) );
+       }
+    }  
+    }
+       
+ (dndp->p).setObj((dndp->p).newCtr("OBJ", summation) ); /* Define & set the obj. function */ 
+
+/****SOLVING****/
+ (dndp->p).setSense(XPRB_MINIM);
+ //(dndp->p).lpOptimize("");         /* Solve the LP-problem */
+ //p.mipOptimize("");         /* Solve the LP-problem */
+
+ return 0;  
+}

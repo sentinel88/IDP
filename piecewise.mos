@@ -1,0 +1,36 @@
+model  piecewise                   ! Start a new model
+
+uses "mmxprs"                  ! Load the optimizer library
+
+declarations
+ Breakpoints = 0..3            ! Approximation points
+ Index = 2..3                  ! Index variables 
+ DecisionIndex = 1..3          ! Index for decision variables
+ POINTS: array(Breakpoints) of real    ! Actual values of breakpoints
+ FUNCVALUE: array(Breakpoints) of real    ! Function value at these breakpoints 
+ SLOPE: array(Breakpoints) of real   ! Slope at each of these breakpoints 
+ x: array(DecisionIndex) of mpvar      ! Decision variables
+end-declarations
+
+ x(1) = 2.5
+
+! POINTS:: [0, 1, 2, 3]
+! FUNCVALUE:: [0, 1, 32, 243]
+! SLOPE:: [0, 1, 31, 211] 
+
+ POINTS:: [0, 1.5, 2.5, 3.5]
+ FUNCVALUE:: [0, 7.59375, 97.65625, 525.21875]
+ SLOPE:: [0, 5.0625, 90.0625, 427.5625] 
+
+                               ! Objective: minimize 
+ Profit:= 0 + (5.0625 * x(1)) + (sum(o in Index) (SLOPE(o) - SLOPE(o-1))* x(o))  
+
+ forall(o in Index) x(1) <= x(o) + POINTS(o-1)
+  
+ minimize(Profit)              ! Solve the LP-problem
+
+                               ! Print out the solution
+ writeln("Solution:\n Objective: ", getobjval)
+ forall(o in DecisionIndex)  writeln(" x(" + o + "): ", x(o).sol)
+
+end-model

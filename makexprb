@@ -1,0 +1,50 @@
+#************************************************
+#*  BCL: Makefile                               *
+#*  =============                               *
+#*                                              *
+#*  file makefile                               *
+#*  `````````````                               *
+#*  Makefile for Xpress-BCL examples            *
+#*                                              *
+#*  (c) 2008 Fair Isaac Corporation             *
+#*      author: S.Heipcke, 2000, rev. Jan. 2014 *
+#************************************************
+
+.SUFFIXES: .java .class .cxx
+
+# Before using this makefile remember to set the environment variable
+# XPRESSDIR to the directory where Xpress-Optimizer is installed on your 
+# computer and BCL to the directory where BCL is installed (if different 
+# from XPRESSDIR).
+
+CFLAGS-linux=-D_REENTRANT
+CFLAGS-linux-gnu=$(CFLAGS-linux)
+CFLAGS-solaris=-D_REENTRANT
+CFLAGS-hpux=+Z +DAportable -D_POSIX_C_SOURCE=199506L
+CFLAGS-aix=-q32 -D_THREAD_SAFE
+CFLAGS=-g $(CFLAGS-$(OSTYPE)) -I$(BCL)/include -I. -I$(XPRESSDIR)/include -DXPRBDATAPATH=\"../../Data\"
+
+CXXFLAGS=$(CFLAGS)
+
+LDFLAGS-hpux=-Wl,+s
+LDFLAGS-aix=-brtl
+LDFLAGS=$(LDFLAGS-$(OSTYPE)) -L$(BCL)/lib -L$(XPRESSDIR)/lib
+
+LOADLIBES=-L$(BCL)/lib -L$(XPRESSDIR)/lib -lxprb -lxprs -lpthread -lm
+
+# To compile the set of examples for BCL:
+#
+.c: 
+	$(CC) $(CFLAGS) $(LDFLAGS) $< $(LOADLIBES) -o $*
+
+.cxx: 
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< parse.cxx model.cxx genetic.cxx $(LOADLIBES) -o $*
+
+.C:
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LOADLIBES) -o $*
+
+.cpp:
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LOADLIBES) -o $*
+
+.java.class:	
+	javac -classpath $(BCL)/lib/xprb.jar:$(XPRESSDIR)/lib/xprb.jar:$(XPRESSDIR)/lib/xprs.jar $*.java
