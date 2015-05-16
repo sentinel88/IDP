@@ -88,14 +88,14 @@ int generate_rand(genetic_algo *ga, network_data netinfo) {
  return 0;
 }
 
-int candidates_sort(candidate *ga_cand) {
+int candidates_sort(candidate *ga_cand, int size) {
    int i, j;
    candidate temp;
    
    memset(&temp, 0, sizeof(candidate));
    
-   for (i=0; i<GA_POPULATION_SIZE; i++) {
-      for (j=0; j<(GA_POPULATION_SIZE-i-1); j++) {
+   for (i=0; i<size; i++) {
+      for (j=0; j<(size-i-1); j++) {
          if (ga_cand[j].fitness_value > ga_cand[j+1].fitness_value) {
             memcpy(&temp, &(ga_cand[j+1]), sizeof(candidate));
             memcpy(&(ga_cand[j+1]), &(ga_cand[j]), sizeof(candidate));
@@ -103,38 +103,132 @@ int candidates_sort(candidate *ga_cand) {
          }
       }
    }
-return 0;
+   return 0;
 }
      
-int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children) {
- int i, j=0, k=0, rand_elem;
+int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data netinfo) {
+ int i, j=0, k=0, l, rand_elem, bits;
+ int intervals, tempval, srand, value;
+ int retry=0;
  candidate temp;
 
  //gen_children = (candidate *)(malloc(sizeof(candidate)));
- memset(gen_children, 0, sizeof(gen_children));
+ //memset(gen_children, 0, sizeof(gen_children));
  memset(&temp, 0, sizeof(candidate)); 
 
+ //bits = ceil(log2((double)NL));
+ //intervals = (round((log2((double)RAND_MAX)))) / bits;
+ intervals = (round((log2((double)RAND_MAX)))) / NL;
+ tempval = pow(2, NL) - 1;
+ //tempval = !(1<<(NL-1)) + 1;
+ //srand(time(NULL));
+ rand_elem = rand();
+ i = rand_elem;
+ l = intervals; 
+
  while(1) {
-    rand_elem = rand();
-    i = rand_elem % NL;
-    if (i == 0) {
+    //rand_elem = rand();
+    //i = rand_elem % NL;
+    /*if (i == 0) {
        if ((rand_elem/NL) <= NL) { i = rand_elem/NL;  }
        else continue;
-    }
+    }*/
     
    /* if (j > 1) {
        gen_children = (candidate *)(realloc(gen_children, k * sizeof(candidate)));
     }*/
+    if (l==0) {
+       rand_elem = rand();
+       l = intervals;
+    }
 
-    memcpy(&gen_children[k], &(ga->population[j].binary_enc), i);
-    memcpy((char *)(&gen_children[k]) + i, (char *)(&ga->population[j+1]) + i, sizeof(temp) - i);
+    value = rand_elem & tempval;
+    l--;
+    rand_elem = rand_elem >> NL;
+    if (value == 0) continue;
 
+    value = count_set_bits(value);
+
+/* Following memory copy operations do not reference the binary_enc member inside structure candidate for every gen_children because it is 
+   just a shortcut since the first member in the candidate data structure is binary_enc and the memcpy will work correctly without specfiying
+   the binary_enc */
+//    memcpy(&gen_children[k], &(ga->population[j].binary_enc), i);
+    memcpy(&gen_children[k], &(ga->population[j].binary_enc), value);
+//    memcpy((char *)(&gen_children[k]) + i, (char *)(&ga->population[j+1]) + i, sizeof(temp) - i);
+    memcpy((char *)(&gen_children[k]) + value, (char *)(&ga->population[j+1]) + value, sizeof(temp) - value);
+
+    if (compare(gen_children[k])) {
+       memcpy(&gen_children[k], &(ga->population[j+1].binary_enc), value);
+       memcpy((char *)(&gen_children[k]) + value, (char *)(&ga->population[j]) + value, sizeof(temp) - value);
+    } 
+   
+    if (compare(gen_children[k])) {
+       if (retry == 5) {
+          retry = 0;
+          j++;
+          continue;
+       }
+       retry++;
+       continue;
+    }
+
+    if (feasibility(gen_children[k], netinfo) != 0) continue;
+
+    retry = 0;
     j = j+2;
     k++; 
     
-    if (j >= ga->population_size) break;
+    if (j >= (ga->population_size-1)) break;
  }
  return k;
+}
+
+int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_size) {
+   double rand_elem;
+   int pos_mutate;
+   int range = RAND_MAX;
+   int k = 0;
+   int retry = 0;
+   int i,j,l;
+   int tempval, intervals, value;
+   intervals = (round((log2((double)RAND_MAX)))) / NL;
+   tempval = pow(2, NL) - 1;
+   srand(time(NULL));
+   i = rand();
+   l = intervals;
+   rand_elem = (double)rand() / (double)range;
+   while(1) {
+      if (k == pool_size) break;
+      if (rand_elem > mut_prob) {
+         rand_elem = (double)rand() / (double)range;
+         k++;
+         continue;
+      }
+      if (l == 0) {    
+         i = rand();
+         l = intervals;
+      }
+
+      value = i & tempval;
+      l--;
+      i = i >> NL;
+      if (value == 0) {
+         if (retry == 5) { retry = 0; k++; continue; }
+         retry++;
+         continue;
+      }
+      pos_mutate = count_set_bits(value);
+      gen_children[k].binary_enc[pos_mutate] = (gen_children[k].binary_enc[pos_mutate] + 1)%2; 
+      if (feasibility(gen_children[k], netinfo) != 0) {
+         if (retry == 5) { retry = 0; k++; continue; }
+         retry++;
+         continue;
+      }
+      k++;
+      rand_elem = (double)rand() / (double)range;
+      retry = 0;
+   }
+   return 0;
 }
 
 int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_cand) {
@@ -158,16 +252,36 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
    if (ga_cand->binary_enc[i]) {
       orig = netinfo->new_links[i].orig;
       term = netinfo->new_links[i].term;
-      if (CHOICE == 2) {
-         summation += (netinfo->Ta[orig][term] * (1 + (netinfo->Ba[orig][term] * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
+#ifdef _CODE   
+   if (CHOICE == 2) {
+         summation += (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
       } else {
+#endif
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());
          summation += (dndp->Xa[orig][term].getSol()) * (netinfo->Ta[orig][term] + (0.008 * pow(dndp->Xa[orig][term].getSol(), 4)));
-      }
+     // }
    } } 
 
    ga_cand->fitness_value = summation;
    printf("\nCandidate fitness: %f\n", summation);
 
    printf("\nExiting candidate fitness function\n");
+}
+
+int count_set_bits(int value) {
+   int count=0;
+   while(value) {
+      if (value & 1) count++;
+      value = value>>1;
+   }
+   return count;
+}
+
+int compare(candidate gen_child) {
+   int i=0, k=0;
+   while (i<NL) {
+      if (gen_child.binary_enc[k++] & 1) return 0;
+      i++;
+   }
+   return 1;
 }

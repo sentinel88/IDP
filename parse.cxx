@@ -81,7 +81,6 @@ int parse (network_data *netinfo) {
    }
 
    fclose(datafile);
-
    datafile = fopen(FILENAME_NEW_LINKS, "r");
 
    memset(str, 0, 100);
@@ -107,7 +106,6 @@ int parse (network_data *netinfo) {
          printf("[%d,%d]:%.2f %.2f\t", i, j, netinfo->Demand[i][j], netinfo->Ta[i][j]);
       }
    }
-
    printf("\nExiting parse function\n");
    return 0;
 } 

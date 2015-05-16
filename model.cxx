@@ -354,6 +354,7 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
        }
        dndp->Xa[i][j] = (dndp->p).newVar("Travelers");
        dndp->Ya[j][k] = (dndp->p).newVar("New link", XPRB_BV);
+       dndp->Ya[j][k].fix(1.0);
     }
  }
 
@@ -541,7 +542,8 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
        j = netinfo->new_links[l].term;
        ta = netinfo->Ta[i][j];
        ca = netinfo->Ca[i][j];
-       ba = netinfo->Ba[i][j];
+       //ba = netinfo->Ba[i][j];
+       ba = 0.15;
        Constant = ( (ta * ba)/(5 * pow(ca, 4)) );
        increment[i][j] = 0;
        for (k=2; k<=M; k++) {
@@ -549,13 +551,15 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
           //p.newCtr("Increments", x[i][j][1] <= (x[i][j][k] + points[k-1]) );
           (dndp->p).newCtr("Increments", dndp->Xa[i][j] <= (dndp->x[i][j][k] + points[k-1]) );
        }
+#ifdef _CODE
        if (CHOICE == 2) {
           summation += (ta * dndp->Xa[i][j]) + (Constant * (0 + (slopes[1]*dndp->Xa[i][j]) + increment[i][j]) );  /* 0 represents function value at X{0} which is                                                                                                zero since the non linear function here is x^5*/
        } else {
+#endif 
           //summation += (ta * Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*x[i][j][1]) + increment[i][j]) );
           summation += (ta * dndp->Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*dndp->Xa[i][j]) + increment[i][j]) );
-       }
-    }  
+      // }
+       }  
     }
        
  (dndp->p).setObj((dndp->p).newCtr("OBJ", summation) ); /* Define & set the obj. function */ 

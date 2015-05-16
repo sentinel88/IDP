@@ -7,6 +7,7 @@ int main()
 {
 
  int count = 0;
+ double RANGE = RAND_MAX;
 
 #ifdef CODE
  FILE *datafile = NULL;
@@ -35,15 +36,13 @@ int main()
  fclose(datafile);
 #endif
 
+ float num;
+ srand(time(NULL));
 while(1) {
- int num;
- //srand(time(NULL));
- num = rand();
- printf("\n%d\n", num % 144);
+ num = rand()/RANGE;
+ printf("\n%f\n", num);
  if (count++ == 25) break;
 }
-
- printf("\nRAND_MAX=%d\n", RAND_MAX);
 
  return 0;
 } 

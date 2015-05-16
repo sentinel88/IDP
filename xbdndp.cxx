@@ -30,7 +30,7 @@ int main(int argc, char **argv)
  int i, j, k, l, m;           /* Iteration variables */
  float ta, xa, ba, ca, Constant;
  int r, s, flag = 0, count = 0, ret = 0, pool_size;
- float temp;
+ float temp, best;
 
  printf("\nHello\n");
 
@@ -56,7 +56,6 @@ int main(int argc, char **argv)
     ret = generate_rand(&ga, netinfo);
   //  i++;
  //}
-
  i = 0;
  for (i=0; i<ga.iterations; i++) {
     printf("\nGenetic algorithm: Iteration %d\n", i+1);
@@ -90,10 +89,10 @@ int main(int argc, char **argv)
        //XPRBdelprob(&(dndp.p));
     }
 
-    candidates_sort(ga.population);
+    candidates_sort(ga.population, GA_POPULATION_SIZE);
 
-    pool_size = genetic_sp_crossover(&ga, gen_children);
-    //genetic_mutation(gen_children);
+    pool_size = genetic_sp_crossover(&ga, gen_children, netinfo);
+    genetic_mutation(gen_children, netinfo, pool_size);
 
     k = 0; j = 0;
     //pool_size = sizeof(gen_children)/sizeof(candidate);
@@ -114,7 +113,10 @@ int main(int argc, char **argv)
        //XPRBdelprob(dndp.p);
     } 
 
-    candidates_sort(gen_children);
+    candidates_sort(gen_children, pool_size);
+
+    //best = ga.population[0].fitness_value;
+    //if (best < gen_children[0].fitness_value) best = gen_children[0].fitness_value;
 
 /***Select the candidates for the next generation from the pool of children and current population***/
    candidate *new_gen = (candidate *)(malloc(GA_POPULATION_SIZE * sizeof(candidate)));
@@ -131,9 +133,16 @@ int main(int argc, char **argv)
       }
       l++;
       //k++; j++;
-      if (l == GA_POPULATION_SIZE) break;
+      if (j == GA_POPULATION_SIZE || k == pool_size) break;
    }
-   
+
+   if (k == pool_size) {
+      while(l < GA_POPULATION_SIZE) {
+         memcpy(&new_gen[l], &(ga.population[j]), sizeof(candidate));
+         l++; j++;
+      }   
+   }
+
    free(ga.population);
    ga.population = new_gen;
    new_gen = NULL;
@@ -160,10 +169,12 @@ int main(int argc, char **argv)
  }*/
 
  printf("\nFinal objective value for DNDP is %f\n", ga.population[0].fitness_value);
+ //printf("\nFinal objective value for DNDP is %f\n", best);
 
  free(gen_children);
  free(ga.population);
  gen_children = NULL;
+
  clean(&netinfo);
 
  return 0;  
