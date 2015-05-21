@@ -1,6 +1,14 @@
 #!/bin/bash
-for i in {1..7}
+let a=1
+let b=1
+for (( i=1; i<=7; i++));
 do
-   echo "********Experiment $i********\n\n"
-   ./xbdndp > try10_$i.txt
+b=$i
+a=$(($b * 10))
+echo "*******Budget=$a********"
+   for (( j=1; j<=7; j++));
+   do
+      echo "********Experiment $j********"
+      ./xbdndp $a > try$a'_'$j'.'txt 
+   done
 done
