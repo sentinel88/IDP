@@ -105,7 +105,7 @@ int candidates_sort(candidate *ga_cand, int size) {
    }
    return 0;
 }
-     
+
 int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data netinfo) {
  int i, j=0, k=0, l, rand_elem, bits;
  int intervals, tempval, srand, value;
@@ -137,6 +137,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
    /* if (j > 1) {
        gen_children = (candidate *)(realloc(gen_children, k * sizeof(candidate)));
     }*/
+
     if (l==0) {
        rand_elem = rand();
        l = intervals;
@@ -172,7 +173,10 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
        continue;
     }
 
-    if (feasibility(gen_children[k], netinfo) != 0) continue;
+    if (feasibility(gen_children[k], netinfo) != 0) {
+       memset(&gen_children[k], 0, sizeof(candidate));
+       continue;
+    }
 
     retry = 0;
     j = j+2;
@@ -184,6 +188,8 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
 }
 
 int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_size) {
+   printf("\nEntering mutation routing\n");
+   candidate temp;
    double rand_elem;
    int pos_mutate;
    int range = RAND_MAX;
@@ -218,16 +224,21 @@ int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_siz
          continue;
       }
       pos_mutate = count_set_bits(value);
+      memcpy(&temp, &gen_children[k].binary_enc, sizeof(candidate));
       gen_children[k].binary_enc[pos_mutate] = (gen_children[k].binary_enc[pos_mutate] + 1)%2; 
       if (feasibility(gen_children[k], netinfo) != 0) {
+         memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
          if (retry == 5) { retry = 0; k++; continue; }
          retry++;
          continue;
       }
+      memset(&temp, 0, sizeof(candidate));
+      printf("\nMutation successfully done for candidate %d in the pool of children\n", k+1);
       k++;
       rand_elem = (double)rand() / (double)range;
       retry = 0;
    }
+   printf("\nExiting mutation routine\n");
    return 0;
 }
 

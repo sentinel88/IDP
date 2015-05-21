@@ -25,10 +25,10 @@
 #define bigM 15000
 #define step_size 0.2
 //#define step_size 100
-#define mut_prob 0.2
+#define mut_prob 0.6
 #define CHOICE 1
 //#define CHOICE 2
-#define B  50      /* Project budget */
+#define B  10      /* Project budget */
 #define GA_POPULATION_SIZE 5
 #define GA_ITERATIONS 9
 //#define GA_ITERATIONS 3
