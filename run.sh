@@ -1,6 +1,7 @@
 #!/bin/bash
 let a=1
 let b=1
+#let i=3
 for (( i=1; i<=7; i++));
 do
 b=$i

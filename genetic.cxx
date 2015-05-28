@@ -17,7 +17,7 @@ int feasibility(candidate gen_cand, network_data netinfo) {
     i++;
  }
  printf("\nBudget = %f\n", budget_sat);
- if (budget_sat > B) return -1;
+ if (budget_sat > Budget) return -1;
  printf("\nExiting feasiblity\n");
  return 0;
 }
@@ -80,9 +80,9 @@ int generate_rand(genetic_algo *ga, network_data netinfo) {
     } else { count++; }
     //printf("\n%d\n", ga.population[count].binary_enc);
     //count++;
-    if (count == 5) break;
+    if (count == GA_POPULATION_SIZE) break;
     }
-    if (count == 5) break;
+    if (count == GA_POPULATION_SIZE) break;
  }
  printf("\nExiting generate_rand\n");
  return 0;
@@ -111,6 +111,8 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
  int intervals, tempval, srand, value;
  int retry=0;
  candidate temp;
+
+ printf("\nEntering crossover function\n");
 
  //gen_children = (candidate *)(malloc(sizeof(candidate)));
  //memset(gen_children, 0, sizeof(gen_children));
@@ -154,7 +156,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
    just a shortcut since the first member in the candidate data structure is binary_enc and the memcpy will work correctly without specfiying
    the binary_enc */
 //    memcpy(&gen_children[k], &(ga->population[j].binary_enc), i);
-    memcpy(&gen_children[k], &(ga->population[j].binary_enc), value);
+    memcpy(&gen_children[k].binary_enc, &(ga->population[j].binary_enc), value);
 //    memcpy((char *)(&gen_children[k]) + i, (char *)(&ga->population[j+1]) + i, sizeof(temp) - i);
     memcpy((char *)(&gen_children[k]) + value, (char *)(&ga->population[j+1]) + value, sizeof(temp) - value);
 
@@ -184,11 +186,12 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
     
     if (j >= (ga->population_size-1)) break;
  }
+ printf("\nExiting crossover function\n");
  return k;
 }
 
 int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_size) {
-   printf("\nEntering mutation routing\n");
+   printf("\nEntering mutation routine\n");
    candidate temp;
    double rand_elem;
    int pos_mutate;
@@ -224,7 +227,7 @@ int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_siz
          continue;
       }
       pos_mutate = count_set_bits(value);
-      memcpy(&temp, &gen_children[k].binary_enc, sizeof(candidate));
+      memcpy(&temp, &gen_children[k], sizeof(candidate));
       gen_children[k].binary_enc[pos_mutate] = (gen_children[k].binary_enc[pos_mutate] + 1)%2; 
       if (feasibility(gen_children[k], netinfo) != 0) {
          memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));

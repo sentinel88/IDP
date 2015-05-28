@@ -12,6 +12,8 @@
 #include <data.h>
 #include <funcs.h>
 
+int Budget;
+
 /***********************************************************************/
 
 int main(int argc, char **argv)
@@ -41,6 +43,8 @@ int main(int argc, char **argv)
  
  gen_children = (candidate *)(malloc(ga.population_size * sizeof(candidate)));
  memset(gen_children, 0, sizeof(gen_children)); 
+
+ Budget = atoi(argv[1]);
 
  //gen_children = NULL;
 
@@ -133,7 +137,7 @@ int main(int argc, char **argv)
       }
       l++;
       //k++; j++;
-      if (j == GA_POPULATION_SIZE || k == pool_size) break;
+      if (l == GA_POPULATION_SIZE || j == GA_POPULATION_SIZE || k == pool_size) break;
    }
 
    if (k == pool_size) {

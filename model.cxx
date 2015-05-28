@@ -506,7 +506,7 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
     }
  }
 
- (dndp->p).newCtr("Budget constraint", summation <= B);   
+ (dndp->p).newCtr("Budget constraint", summation <= Budget);   
 
  cout<<"\nBefore objective\n";
 
