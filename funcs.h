@@ -25,6 +25,8 @@ int genetic_mutation(candidate *, network_data, int);
 
 int candidate_fitness(model_data *, network_data *, candidate *);
 
+int print_candidate(candidate *);
+
 int encode_ga_cand(candidate *, int);
 
 int count_set_bits(int value);

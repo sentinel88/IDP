@@ -109,7 +109,8 @@ int candidates_sort(candidate *ga_cand, int size) {
 int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data netinfo) {
  int i, j=0, k=0, l, rand_elem, bits;
  int intervals, tempval, srand, value;
- int retry=0;
+ int retry=0; 
+ double rand_val;
  candidate temp;
 
  printf("\nEntering crossover function\n");
@@ -124,9 +125,10 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
  tempval = pow(2, NL) - 1;
  //tempval = !(1<<(NL-1)) + 1;
  //srand(time(NULL));
- rand_elem = rand();
- i = rand_elem;
+ i = rand_elem = rand();
+ //i = rand_elem;
  l = intervals; 
+ rand_val = (double)rand() / (double)RAND_MAX;
 
  while(1) {
     //rand_elem = rand();
@@ -139,7 +141,12 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
    /* if (j > 1) {
        gen_children = (candidate *)(realloc(gen_children, k * sizeof(candidate)));
     }*/
-
+    if (j >= (ga->population_size-1)) break;
+    if (rand_val > cross_prob) {
+       rand_val = (double)rand() / (double)RAND_MAX;
+       j++; 
+       continue;
+    }
     if (l==0) {
        rand_elem = rand();
        l = intervals;
@@ -280,6 +287,14 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
    printf("\nCandidate fitness: %f\n", summation);
 
    printf("\nExiting candidate fitness function\n");
+}
+
+int print_candidate(candidate *ga_cand) {
+   int i;
+   for (i=0; i<NL; i++) {
+      printf("%d", ga_cand->binary_enc[i]);
+   }
+   return 0;
 }
 
 int count_set_bits(int value) {
