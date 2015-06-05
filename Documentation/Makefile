@@ -9,6 +9,7 @@ all: paper
 
 paper:
 	$(TEX) $(PAPER)
+	$(BIB) $(PAPER)
 	$(TEX) $(PAPER)
 	$(TEX) $(PAPER)
 	$(TEX) $(PAPER)

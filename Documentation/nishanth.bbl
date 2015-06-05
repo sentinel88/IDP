@@ -1,0 +1,56 @@
+\begin{thebibliography}{1}
+
+\bibitem{fontaine}
+Fontaine{,} P.{,}~Minner{,} S.
+\newblock {Benders Decomposition for Discrete-Continuous Linear Bilevel
+  Problems with application to traffic network design}.
+\newblock {\em {Transportation Research(www.elsevier.com/locate/trb)}},
+  September 2014.
+
+\bibitem{gao}
+Gao{,} Ziyou.{,} Wu{,} Jianjun{,}~Sun{,} Huijun.
+\newblock {Solution algorithm for the bilevel discrete network design problem}.
+\newblock {\em {Transportation Research(www.elsevier.com/locate/trb)}}, July
+  2005.
+
+\bibitem{poorzahedy2}
+Hejazi{,} S.R.{,} Memariani{,} A.{,} Jahanshahloo{,} G.{,}~Sepehri{,} M.M.
+\newblock {Linear bilevel programming solution by genetic algorithm}.
+\newblock {\em {Computers and Operations
+  Research(www.elsevier.com/locate/dsw)}}, July 2000.
+
+\bibitem{tianze}
+Xu{,} Tianze.{,} Wei{,} Heng.{,}~Hu{,} Guanghua.
+\newblock {Study on continuous network design problem using simulated annealing
+  and genetic algorithm}.
+\newblock {\em {Expert Systems with
+  Applications(www.elsevier.com/locate/eswa)}}, March 2009.
+
+\bibitem{leblanc}
+LeBlanc{,} Larry J.{,} Boyce{,}~David E.
+\newblock {A bilevel programming algorithm for exact solution of the network
+  design problem with user-optimal flows}.
+\newblock {\em {Transportation Research(www.elsevier.com/locate/trb)}}, June
+  1986.
+
+\bibitem{kuo}
+Kuo{,} R.J.{,}~Huang{,} C.C.
+\newblock {Application of particle swarm optimization algorithm for solving
+  bi-level linear programming problem}.
+\newblock {\em {Computers and Mathematics with
+  Applications(www.elsevier.com/locate/camwa)}}, February 2009.
+
+\bibitem{poorzahedy1}
+Poorzahedy{,} Hossain.{,} Rouhani{,}~Omid M.
+\newblock {Hybrid meta-heuristic algorithms for solving network design
+  problem}.
+\newblock {\em {Transportation Research(www.elsevier.com/locate/trb)}}, July
+  2006.
+
+\bibitem{wen}
+Wen{,} U.P.{,}~Huang{,} A.D.
+\newblock {A simple Tabu Search method to solve the mixed-integer linear
+  bilevel programming problem}.
+\newblock {\em {European Journal Of Operations Research}}, February 1996.
+
+\end{thebibliography}

@@ -27,10 +27,16 @@ int candidate_fitness(model_data *, network_data *, candidate *);
 
 int print_candidate(candidate *);
 
+int print_generation(candidate *, int, bool);
+
 int encode_ga_cand(candidate *, int);
 
 int count_set_bits(int value);
 
 int compare(candidate);
+
+int check_duplicate(candidate *, candidate *, int);
+
+int elem_compare(candidate *, candidate *);
 
 #endif

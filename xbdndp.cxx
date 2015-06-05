@@ -37,6 +37,8 @@ int main(int argc, char **argv)
  clock_t start, end;
  double cpu_time_used;
 
+ printf("\nWARNING:  Please remember to change the settings for low budget problems to avoid getting stuck in an infinite loop. For low budget problems check_duplicate function is not a good idea as there are few feasible candidates in problems for low budget and one cannot avoid duplicates\n\n");
+
  ga.population_size = GA_POPULATION_SIZE;
  ga.iterations = GA_ITERATIONS;
  ga.population = (candidate *)malloc( (ga.population_size) * sizeof(candidate));
@@ -44,6 +46,11 @@ int main(int argc, char **argv)
  
  gen_children = (candidate *)(malloc(ga.population_size * sizeof(candidate)));
  memset(gen_children, 0, sizeof(gen_children)); 
+
+ if (argc < 2) {
+    printf("\nIncorrect number of command line arguments\n");
+    exit(0);
+ }
 
  Budget = atoi(argv[1]);
 
@@ -59,9 +66,13 @@ int main(int argc, char **argv)
     ret = generate_rand(&ga, netinfo);
   //  i++;
  //}
+
  i = 0;
  for (i=0; i<ga.iterations; i++) {
     printf("\nGenetic algorithm: Iteration %d\n", i+1);
+    printf("\n\n************************************************\n");
+    printf("Generation %d\n", i+1);
+    print_generation(ga.population, GA_POPULATION_SIZE, false);
        //model_data dndp;
     for (j=0; j<ga.population_size; j++) {
        //dndp.p = XPRBnewprob("TAP");
@@ -87,9 +98,11 @@ int main(int argc, char **argv)
        printf("\nActual time: %lf\n", cpu_time_used);
        printf("\nObjective value: %f\n", dndp.p.getObjVal());
        candidate_fitness(&dndp, &netinfo, &(ga.population[j]));
-       printf("\nIteration %d results:\n", i+1);
+       printf("\n\n************************************************\n");
+       printf("Iteration %d results:\n", i+1);
        print_candidate(&ga.population[j]);
-       printf("\nFitness: %f\n", ga.population[j].fitness_value);
+       printf("Fitness: %f\n", ga.population[j].fitness_value);
+       printf("************************************************\n");
        
        /*for (k=0; k<NL; k++) {
           dndp->Ya[r][s].fix(0.0);
@@ -99,10 +112,25 @@ int main(int argc, char **argv)
        //XPRBdelprob(&(dndp.p));
     }
 
+    printf("\n\n************************************************\n");
+    printf("Generation %d(Before sorting)\n", i+1);
+    print_generation(ga.population, GA_POPULATION_SIZE, true);
+
     candidates_sort(ga.population, GA_POPULATION_SIZE);
 
+    printf("\n\n************************************************\n");
+    printf("Generation %d(After sorting)\n", i+1);
+    print_generation(ga.population, GA_POPULATION_SIZE, true);
+
     pool_size = genetic_sp_crossover(&ga, gen_children, netinfo);
+    printf("\n\n************************************************\n");
+    printf("Children generated after crossover for Generation %d\n", i+1);
+    print_generation(gen_children, pool_size, false);
+
     genetic_mutation(gen_children, netinfo, pool_size);
+    printf("\n\n************************************************\n");
+    printf("Children generated after mutation for Generation %d\n", i+1);
+    print_generation(gen_children, pool_size, false);
 
     k = 0; j = 0;
     //pool_size = sizeof(gen_children)/sizeof(candidate);
@@ -120,13 +148,18 @@ int main(int argc, char **argv)
        dndp.p.lpOptimize("");
        printf("\nObjective value: %f\n", dndp.p.getObjVal());
        candidate_fitness(&dndp, &netinfo, &gen_children[k]);
-       printf("\nIteration %d results:\n", i+1);
+       printf("\n\n************************************************\n");
+       printf("Iteration %d results:\n", i+1);
        print_candidate(&gen_children[k]);
-       printf("\nFitness: %f\n", gen_children[k].fitness_value);
+       printf("Fitness: %f\n", gen_children[k].fitness_value);
+       printf("************************************************\n");
        //XPRBdelprob(dndp.p);
     } 
 
     candidates_sort(gen_children, pool_size);
+    printf("\n\n************************************************\n");
+    printf("Children sorted after crossover and mutation for Generation %d\n", i+1);
+    print_generation(gen_children, pool_size, true);
 
     //best = ga.population[0].fitness_value;
     //if (best < gen_children[0].fitness_value) best = gen_children[0].fitness_value;
@@ -137,7 +170,14 @@ int main(int argc, char **argv)
 
    l = 0; k = 0; j = 0;
    while(1) {
-      if (gen_children[k].fitness_value <= ga.population[j].fitness_value) {
+      if (gen_children[k].fitness_value < ga.population[j].fitness_value) {
+#ifdef _PROTECT
+         if (check_duplicate(&gen_children[k], ga.population, GA_POPULATION_SIZE)) {
+            printf("\nIgnoring this child\n");
+            k++;
+            continue;
+         }
+#endif
          memcpy(&new_gen[l], &gen_children[k], sizeof(candidate));
          k++;
       } else {
@@ -155,6 +195,7 @@ int main(int argc, char **argv)
          l++; j++;
       }   
    }
+
 
    free(ga.population);
    ga.population = new_gen;

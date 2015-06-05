@@ -71,13 +71,23 @@ int generate_rand(genetic_algo *ga, network_data netinfo) {
        encode_ga_cand(&(ga->population[count]), value);
        rand_elem = rand_elem >> NL;
        //printf("%d ", ga->population[count].binary_enc[k-1]);
-    
+   
+    /* Keeping feasibility check and elem_compare checks separate so that going forward if needed we can surround the code for elem_compare
+       checks by macros in case of problems with low budgets where having duplicate candidates cannot be avoided as there are only very few 
+       feasible candidates */
 
     if (feasibility(ga->population[count], netinfo) != 0) {
        memset(&(ga->population[count].binary_enc), 0, NL);
        printf("\nNot feasible\n");
        continue;
-    } else { count++; }
+    } else {
+       if (check_duplicate(&(ga->population[count]), ga->population, count-1)) {
+          printf("\nDuplicate random candidate generated. Ignoring it and continuing with further attempts.\n");
+          memset(&(ga->population[count].binary_enc), 0, NL);
+          continue;
+       } 
+       count++; 
+    }
     //printf("\n%d\n", ga.population[count].binary_enc);
     //count++;
     if (count == GA_POPULATION_SIZE) break;
@@ -187,6 +197,12 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
        continue;
     }
 
+    if (elem_compare(&gen_children[k], ga->population)) {
+       memset(&gen_children[k], 0, sizeof(candidate));
+       j++;
+       continue;
+    }
+
     retry = 0;
     j = j+2;
     k++; 
@@ -289,12 +305,69 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
    printf("\nExiting candidate fitness function\n");
 }
 
+int print_generation(candidate *ga_cand, int pool_size, bool disp_fitness) {
+   int i, j=0;
+   printf("************************************************\n");
+   if (disp_fitness) {
+   for (i=0; i<pool_size; i++) {
+      printf("Candidate %d: ", i+1);
+      for (j=0; j<NL; j++) {
+         printf("%d", ga_cand[i].binary_enc[j]);
+      }
+      printf("\tFitness value: %f", ga_cand[i].fitness_value);
+      printf("\n");
+   }  
+   } else {
+   for (i=0; i<pool_size; i++) {
+      printf("Candidate %d: ", i+1);
+      for (j=0; j<NL; j++) {
+         printf("%d", ga_cand[i].binary_enc[j]);
+      }
+      printf("\n");
+   } 
+   } 
+   printf("************************************************\n");
+   return 0;
+}
+
 int print_candidate(candidate *ga_cand) {
    int i;
+   printf("************************************************\n");
+   printf("Candidate: ");
    for (i=0; i<NL; i++) {
       printf("%d", ga_cand->binary_enc[i]);
    }
+   printf("\n************************************************\n");
    return 0;
+}
+
+int check_duplicate(candidate *ga_cand, candidate *population, int size) {
+   int i, j;
+   int match_found = 0;
+   printf("\nEntering check_duplicate function\n");  
+
+   for (i=0; i<size; i++) {
+      if (elem_compare(ga_cand, &population[i])) {
+         match_found = 1;
+         break;
+      }
+   }
+   if (match_found) {
+      printf("\nDuplicate found\n");
+      return 1;
+   }
+
+   printf("\nExiting check_duplicate function\n");  
+   return 0; 
+}
+
+int elem_compare(candidate *pattern, candidate *match) {
+   int i;
+   for (i=0; i<NL; i++) {
+      if (pattern->binary_enc[i] != match->binary_enc[i])
+         return 0;
+   }
+   return 1;
 }
 
 int count_set_bits(int value) {
