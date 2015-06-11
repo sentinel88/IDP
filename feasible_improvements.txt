@@ -1,0 +1,7 @@
+1. Use a single bit for encoding of a new link. We can have a void * pointer in the candidate data structure and initialize this pointer to a memory location allocated in the main function for some number of bytes calculated using (NL/8).
+
+2. Implement tournament selection.
+
+3. Convert C to C++ code.
+
+4. Can cache the results of the previous generation/ all generations till now for all the unique candidates to avoid repeated computation of problems by re using these results.
