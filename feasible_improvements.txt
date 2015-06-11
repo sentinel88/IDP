@@ -4,4 +4,10 @@
 
 3. Convert C to C++ code.
 
-4. Can cache the results of the previous generation/ all generations till now for all the unique candidates to avoid repeated computation of problems by re using these results.
+4. Can cache the results of the previous generation/ all generations till now for all the unique candidates to avoid repeated computation of problems by re using these results. Could be implemented as a 1D array whose size is determined at runtime based on the number of iterations and generation size and also on maybe caching only the top n values of a particular generation instead of all. Also a hash table could be implemented for large amount of caching.
+
+5. Stop the genetic algorithm based on objective function value stagnation over a sequence of iterations say 5.
+
+6. Use memcmp instead of an iterative byte by byte comparison.
+
+7. Make the application configurable for different settings of genetic algorithm parameters.
