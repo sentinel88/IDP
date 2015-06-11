@@ -172,7 +172,7 @@ int main(int argc, char **argv)
    while(1) {
       if (gen_children[k].fitness_value < ga.population[j].fitness_value) {
 #ifdef _PROTECT
-         if (check_duplicate(&gen_children[k], ga.population, GA_POPULATION_SIZE)) {
+         if (k && check_duplicate(&gen_children[k], ga.population, GA_POPULATION_SIZE)) {
             printf("\nIgnoring this child\n");
             k++;
             continue;

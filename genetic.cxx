@@ -60,7 +60,6 @@ int generate_rand(genetic_algo *ga, network_data netinfo) {
     while(i) {*/
     j = intervals;
     rand_elem = rand();
-    //while(i--) {
     while(j--) {
        //ga->population[count].binary_enc[k++] = i&1;
        //ga->population[count].binary_enc[k++] = rand_elem & 1;
@@ -72,25 +71,25 @@ int generate_rand(genetic_algo *ga, network_data netinfo) {
        rand_elem = rand_elem >> NL;
        //printf("%d ", ga->population[count].binary_enc[k-1]);
    
-    /* Keeping feasibility check and elem_compare checks separate so that going forward if needed we can surround the code for elem_compare
-       checks by macros in case of problems with low budgets where having duplicate candidates cannot be avoided as there are only very few 
-       feasible candidates */
+       /* Keeping feasibility check and elem_compare checks separate so that going forward if needed we can surround the code for elem_compare
+          checks by macros in case of problems with low budgets where having duplicate candidates cannot be avoided as there are only very few 
+          feasible candidates */
 
-    if (feasibility(ga->population[count], netinfo) != 0) {
-       memset(&(ga->population[count].binary_enc), 0, NL);
-       printf("\nNot feasible\n");
-       continue;
-    } else {
-       if (check_duplicate(&(ga->population[count]), ga->population, count-1)) {
-          printf("\nDuplicate random candidate generated. Ignoring it and continuing with further attempts.\n");
+       if (feasibility(ga->population[count], netinfo)) {
           memset(&(ga->population[count].binary_enc), 0, NL);
+          printf("\nNot feasible\n");
           continue;
-       } 
-       count++; 
-    }
-    //printf("\n%d\n", ga.population[count].binary_enc);
-    //count++;
-    if (count == GA_POPULATION_SIZE) break;
+       } else {
+          if (count && check_duplicate(&(ga->population[count]), ga->population, count)) {
+             printf("\nDuplicate random candidate generated. Ignoring it and continuing with further attempts.\n");
+             memset(&(ga->population[count].binary_enc), 0, NL);
+             continue;
+          } 
+          count++; 
+       }
+       //printf("\n%d\n", ga.population[count].binary_enc);
+       //count++;
+       if (count == GA_POPULATION_SIZE) break;
     }
     if (count == GA_POPULATION_SIZE) break;
  }
@@ -121,7 +120,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
  int intervals, tempval, srand, value;
  int retry=0; 
  double rand_val;
- candidate temp;
+ candidate temp, temp1;
 
  printf("\nEntering crossover function\n");
 
@@ -197,8 +196,9 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
        continue;
     }
 
-    if (elem_compare(&gen_children[k], ga->population)) {
+    if (k && check_duplicate(&gen_children[k], gen_children, k)) {
        memset(&gen_children[k], 0, sizeof(candidate));
+       rand_val = (double)rand() / (double)RAND_MAX;
        j++;
        continue;
     }
@@ -207,6 +207,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
     j = j+2;
     k++; 
     
+    rand_val = (double)rand() / (double)RAND_MAX;
     if (j >= (ga->population_size-1)) break;
  }
  printf("\nExiting crossover function\n");
@@ -252,10 +253,24 @@ int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_siz
       pos_mutate = count_set_bits(value);
       memcpy(&temp, &gen_children[k], sizeof(candidate));
       gen_children[k].binary_enc[pos_mutate] = (gen_children[k].binary_enc[pos_mutate] + 1)%2; 
+      if (compare(gen_children[k])) {
+         memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
+         k++;
+         rand_elem = (double)rand() / (double)range;
+         retry = 0;
+         continue;
+      }
       if (feasibility(gen_children[k], netinfo) != 0) {
          memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
          if (retry == 5) { retry = 0; k++; continue; }
          retry++;
+         continue;
+      }
+      if (k && check_duplicate(&gen_children[k], gen_children, k)) {
+         memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
+         k++;
+         rand_elem = (double)rand() / (double)range;
+         retry = 0;
          continue;
       }
       memset(&temp, 0, sizeof(candidate));
