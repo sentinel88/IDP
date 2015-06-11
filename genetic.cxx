@@ -2,6 +2,8 @@
 #include <data.h>
 #include <funcs.h>
 
+#define MAX_RETRY 0
+
 int feasibility(candidate gen_cand, network_data netinfo) {
  float budget_sat = 0.0;
  int i = 0, orig, term;
@@ -38,6 +40,7 @@ int encode_ga_cand(candidate *ga_cand, int value) {
 int generate_rand(genetic_algo *ga, network_data netinfo) {
  int i, j, count, k, rand_elem, intervals;
  int value, temp;
+ int retry_attempts = 0;
  printf("\nEntering generate_rand\n");
  count = 0;
  k = 0;
@@ -81,11 +84,20 @@ int generate_rand(genetic_algo *ga, network_data netinfo) {
           continue;
        } else {
           if (count && check_duplicate(&(ga->population[count]), ga->population, count)) {
-             printf("\nDuplicate random candidate generated. Ignoring it and continuing with further attempts.\n");
-             memset(&(ga->population[count].binary_enc), 0, NL);
-             continue;
+             if (retry_attempts == MAX_RETRY) {
+                printf("\n5 retry attempts have been made to regenerate a random candidate so now we will consider the duplicate itself and proceed forward\n");
+                retry_attempts = 0;
+                count++;
+                continue;
+             } else {
+                retry_attempts++;
+                printf("\nDuplicate random candidate generated. Ignoring it and continuing with further attempts.\n");
+                memset(&(ga->population[count].binary_enc), 0, NL);
+                continue;
+             }
           } 
           count++; 
+          retry_attempts = 0;
        }
        //printf("\n%d\n", ga.population[count].binary_enc);
        //count++;
@@ -191,7 +203,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
        continue;
     }
 
-    if (feasibility(gen_children[k], netinfo) != 0) {
+    if (feasibility(gen_children[k], netinfo)) {  //Possibly consider to also increment retry here to avoid infinite attempts
        memset(&gen_children[k], 0, sizeof(candidate));
        continue;
     }
@@ -216,7 +228,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
 
 int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_size) {
    printf("\nEntering mutation routine\n");
-   candidate temp;
+   candidate temp, temp1;
    double rand_elem;
    int pos_mutate;
    int range = RAND_MAX;
@@ -231,7 +243,7 @@ int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_siz
    l = intervals;
    rand_elem = (double)rand() / (double)range;
    while(1) {
-      if (k == pool_size) break;
+      if (k >= pool_size) break;
       if (rand_elem > mut_prob) {
          rand_elem = (double)rand() / (double)range;
          k++;
@@ -266,14 +278,19 @@ int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_siz
          retry++;
          continue;
       }
-      if (k && check_duplicate(&gen_children[k], gen_children, k)) {
-         memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
+      memcpy(&temp1, &gen_children[k].binary_enc, sizeof(candidate));
+      memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
+      //if (k && check_duplicate(&gen_children[k], gen_children, pool_size)) {
+      if (k && check_duplicate(&temp1, gen_children, pool_size)) {
+         //memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
          k++;
          rand_elem = (double)rand() / (double)range;
          retry = 0;
          continue;
       }
       memset(&temp, 0, sizeof(candidate));
+      memcpy(&gen_children[k].binary_enc, &temp1, sizeof(candidate));
+      memset(&temp1, 0, sizeof(candidate));
       printf("\nMutation successfully done for candidate %d in the pool of children\n", k+1);
       k++;
       rand_elem = (double)rand() / (double)range;
@@ -325,7 +342,7 @@ int print_generation(candidate *ga_cand, int pool_size, bool disp_fitness) {
    printf("************************************************\n");
    if (disp_fitness) {
    for (i=0; i<pool_size; i++) {
-      printf("Candidate %d: ", i+1);
+      printf("Candidate %d:  ", i+1);
       for (j=0; j<NL; j++) {
          printf("%d", ga_cand[i].binary_enc[j]);
       }

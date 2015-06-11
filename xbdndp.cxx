@@ -90,12 +90,12 @@ int main(int argc, char **argv)
           dndp.Ya[r][s].fix(ga.population[j].binary_enc[k]);
           printf("\nValue fixed for Ya is: %f", dndp.Ya[r][s].getSol());
        }*/
-       start = clock();
+       //start = clock();
        remodel_problem(&dndp, &netinfo, ga.population[j]);
-       end = clock();
+       //end = clock();
        dndp.p.lpOptimize("");  
-       cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-       printf("\nActual time: %lf\n", cpu_time_used);
+       //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+       //printf("\nActual time: %lf\n", cpu_time_used);
        printf("\nObjective value: %f\n", dndp.p.getObjVal());
        candidate_fitness(&dndp, &netinfo, &(ga.population[j]));
        printf("\n\n************************************************\n");
@@ -169,10 +169,13 @@ int main(int argc, char **argv)
    memset(new_gen, 0, sizeof(new_gen));
 
    l = 0; k = 0; j = 0;
+   //memcpy(new_gen, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
    while(1) {
+      if (l == GA_POPULATION_SIZE || j == GA_POPULATION_SIZE || k == pool_size) break;
       if (gen_children[k].fitness_value < ga.population[j].fitness_value) {
 #ifdef _PROTECT
-         if (k && check_duplicate(&gen_children[k], ga.population, GA_POPULATION_SIZE)) {
+         //if (k && check_duplicate(&gen_children[k], ga.population, GA_POPULATION_SIZE)) {
+         if (l && check_duplicate(&gen_children[k], new_gen, l)) {
             printf("\nIgnoring this child\n");
             k++;
             continue;
@@ -181,6 +184,14 @@ int main(int argc, char **argv)
          memcpy(&new_gen[l], &gen_children[k], sizeof(candidate));
          k++;
       } else {
+#ifdef _PROTECT
+            //if (k && check_duplicate(&gen_children[k], ga.population, GA_POPULATION_SIZE)) {
+            if (l && check_duplicate(&ga.population[j], new_gen, l)) {
+               printf("\nIgnoring this child\n");
+               j++;
+               continue;
+            }
+#endif
          memcpy(&new_gen[l], &(ga.population[j]), sizeof(candidate));
          j++;
       }
@@ -190,12 +201,25 @@ int main(int argc, char **argv)
    }
 
    if (k == pool_size) {
-      while(l < GA_POPULATION_SIZE) {
+      while(l < GA_POPULATION_SIZE && j < GA_POPULATION_SIZE) {
+         if (l && check_duplicate(&ga.population[j], new_gen, l)) {
+            printf("\nIgnoring this child\n");
+            j++;
+            continue;
+         }
          memcpy(&new_gen[l], &(ga.population[j]), sizeof(candidate));
          l++; j++;
-      }   
+      }  
+      if (l < GA_POPULATION_SIZE) { 
+         printf("\nMerge of parent and child populations could not happen to create a new generation hence keeping the old parent generation for next iteration as well\n");
+         memcpy(new_gen, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+      }
+   } else {
+      if (l < GA_POPULATION_SIZE) {  
+         printf("\nMerge of parent and child populations could not happen to create a new generation hence keeping the old parent generation for next iteration as well\n");
+         memcpy(new_gen, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+      }
    }
-
 
    free(ga.population);
    ga.population = new_gen;
