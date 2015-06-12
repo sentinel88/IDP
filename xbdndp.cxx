@@ -29,6 +29,12 @@ int main(int argc, char **argv)
  network_data netinfo;      /* Structure variable representing network information */
 
  candidate *gen_children;   /* New set of children created from crossover or mutation operations */
+ candidate *cache;          /* Cache that currently stores 1 full previous generation and its fitness value to avoid unecessary recomputation
+                              */
+
+ double last_best_fitness = 99999999999.0000;
+ int last_best_iter = 0;
+ int index = -1;
  
  int i, j, k, l, m;           /* Iteration variables */
  float ta, xa, ba, ca, Constant;
@@ -46,6 +52,8 @@ int main(int argc, char **argv)
  
  gen_children = (candidate *)(malloc(ga.population_size * sizeof(candidate)));
  memset(gen_children, 0, sizeof(gen_children)); 
+ cache = (candidate *)(malloc(ga.population_size * sizeof(candidate)));
+ memset(cache, 0, sizeof(cache)); 
 
  if (argc < 2) {
     printf("\nIncorrect number of command line arguments\n");
@@ -75,6 +83,7 @@ int main(int argc, char **argv)
     print_generation(ga.population, GA_POPULATION_SIZE, false);
        //model_data dndp;
     for (j=0; j<ga.population_size; j++) {
+       index = -1;
        //dndp.p = XPRBnewprob("TAP");
        model_data dndp;
        //dndp = (model_data *)(malloc(sizeof(model_data)));
@@ -91,6 +100,15 @@ int main(int argc, char **argv)
           printf("\nValue fixed for Ya is: %f", dndp.Ya[r][s].getSol());
        }*/
        //start = clock();
+       if (i) {
+          if (cache_lookup(&ga.population[j], cache, &index)) {
+             printf("\nCache miss. Will have to solve the TAP for this candidate\n");
+          } else {
+             printf("\nCache hit. Do not need to solve the TAP for this candidate. Setting the fitness as computed before\n");
+             ga.population[j].fitness_value = cache[index].fitness_value;
+             continue;
+          } 
+       }
        remodel_problem(&dndp, &netinfo, ga.population[j]);
        //end = clock();
        dndp.p.lpOptimize("");  
@@ -118,6 +136,29 @@ int main(int argc, char **argv)
 
     candidates_sort(ga.population, GA_POPULATION_SIZE);
 
+    memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+
+/* One of the other termination criterias for genetic algorithm is objective function value */ 
+    if (i == 0) {
+       last_best_fitness = ga.population[0].fitness_value;
+    } else {
+       if (last_best_fitness == ga.population[0].fitness_value) {
+          last_best_iter++;
+          if (last_best_iter == MAX_BEST_ITERATIONS) {
+             printf("\nGenetic algorithm terminates because the objective function value has remained the same for a long time\n");
+             printf("\nFinal objective value for DNDP is %f\n", ga.population[0].fitness_value);
+             return 0;
+          }
+       } else if (last_best_fitness > ga.population[0].fitness_value) {
+             last_best_fitness = ga.population[0].fitness_value;
+             last_best_iter = 0;
+       } else {
+       /* last_best_fitness < ga.population[0].fitness_value */
+       /* Do nothing currently because last_best_fitness cannot be less than the current best since while creating this generation the best
+          fitness will be on top and in such a case last_best_fitness should retain its top place */
+       }
+    }
+
     printf("\n\n************************************************\n");
     printf("Generation %d(After sorting)\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, true);
@@ -143,6 +184,15 @@ int main(int argc, char **argv)
           dndp.Ya[r][s] = dndp.p.newVar("New link", XPRB_BV);
           dndp.Ya[r][s].fix(gen_children[k].binary_enc[j]);
           printf("\nValue fixed for Ya is: %f", dndp.Ya[r][s].getSol());
+       }*/
+      /* if (i) {
+          if (cache_lookup(&ga.population[j], cache, &index)) {
+             printf("\nCache miss. Will have to solve the TAP for this candidate\n");
+          } else {
+             printf("\nCache hit. Do not need to solve the TAP for this candidate. Setting the fitness as computed before\n");
+             ga.population[j].fitness_value = cache[index].fitness_value;
+             continue;
+          }
        }*/
        remodel_problem(&dndp, &netinfo, gen_children[k]); 
        dndp.p.lpOptimize("");
@@ -199,29 +249,49 @@ int main(int argc, char **argv)
       //k++; j++;
       if (l == GA_POPULATION_SIZE || j == GA_POPULATION_SIZE || k == pool_size) break;
    }
+   
+   printf("\nStatus:  l = %d, k = %d, j = %d, pool_size = %d\n\n", l, k, j, pool_size);
 
    if (k == pool_size) {
       while(l < GA_POPULATION_SIZE && j < GA_POPULATION_SIZE) {
+#ifdef _PROTECT
          if (l && check_duplicate(&ga.population[j], new_gen, l)) {
             printf("\nIgnoring this child\n");
             j++;
             continue;
          }
+#endif
          memcpy(&new_gen[l], &(ga.population[j]), sizeof(candidate));
          l++; j++;
       }  
+#ifdef _PROTECT
       if (l < GA_POPULATION_SIZE) { 
-         printf("\nMerge of parent and child populations could not happen to create a new generation hence keeping the old parent generation for next iteration as well\n");
-         memcpy(new_gen, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+         printf("\nInside if: Merge of parent and child populations could not happen to create a new generation hence keeping the old parent generation for next iteration as well\n");
+         int i = 0;
+         while (i < GA_POPULATION_SIZE) {
+            memcpy(&new_gen[i], &ga.population[i], sizeof(candidate));
+            printf("\nCopied candidate no. %d of parent population to next generation\n", i+1);
+            i++;
+         }
       }
+#endif
    } else {
+#ifdef _PROTECT
       if (l < GA_POPULATION_SIZE) {  
-         printf("\nMerge of parent and child populations could not happen to create a new generation hence keeping the old parent generation for next iteration as well\n");
-         memcpy(new_gen, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+         printf("\nInside else: Merge of parent and child populations could not happen to create a new generation hence keeping the old parent generation for next iteration as well\n");
+         int i = 0;
+         while (i < GA_POPULATION_SIZE) {
+            memcpy(&new_gen[i], &ga.population[i], sizeof(candidate));
+            i++;
+         }
       }
+#endif
    }
 
+   printf("\nFinished creating the next generation\n");
+
    free(ga.population);
+   printf("\nFreed ga population\n");
    ga.population = new_gen;
    new_gen = NULL;
 

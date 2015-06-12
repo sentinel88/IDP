@@ -11,3 +11,12 @@
 6. Use memcmp instead of an iterative byte by byte comparison.
 
 7. Make the application configurable for different settings of genetic algorithm parameters.
+
+8. For low budgets keep the MAX_BEST_ITERATIONS value low whereas for higher budget problems keep this macro value high.
+
+9. Crossover operations result in new candidates. We can try to see that these candidates are not the same as the ones already generated in our present parent population or we can always keep a global set of candidates generated but this will result in a huge search time.
+
+10. Create only how many children are feasibly possible even if the resultant pool size is small. If by repeated attempts we do not get unique children then do not add duplicates to the pool.
+
+11. If zero no. of children have been generated from crossover operations since the last few iterations then we can stop the genetic algorithm
+because it does not help to continue further without any more improvements.

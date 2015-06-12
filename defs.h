@@ -28,14 +28,17 @@
 //#define step_size 2
 //#define step_size 100
 //#define step_size 125
-#define mut_prob 0.45
+#define mut_prob 0.15
 #define cross_prob 0.85
-#define _PROTECT 1
+//#define _PROTECT 1
 #define CHOICE 1
+#define MAX_CROSSOVER_ATTEMPTS 5
 //#define CHOICE 2
 //#define B  10      /* Project budget */
 #define GA_POPULATION_SIZE 10
 #define GA_ITERATIONS 10
+#define MAX_BEST_ITERATIONS 5
+#define MAX_RETRY 3
 //#define GA_ITERATIONS 3
 #define FILENAME_NET "IDP_Datasets/example_net.txt"    /* File with abosule path which has the information of the network for which you want
 //#define FILENAME_NET "IDP_Datasets/SiouxFalls_net.txt"   * File with abosule path which has the information of the network for which you want

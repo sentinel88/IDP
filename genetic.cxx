@@ -2,8 +2,6 @@
 #include <data.h>
 #include <funcs.h>
 
-#define MAX_RETRY 0
-
 int feasibility(candidate gen_cand, network_data netinfo) {
  float budget_sat = 0.0;
  int i = 0, orig, term;
@@ -68,6 +66,7 @@ int generate_rand(genetic_algo *ga, network_data netinfo) {
        //ga->population[count].binary_enc[k++] = rand_elem & 1;
        //i = i>>1;
        //rand_elem = rand_elem >> 1;
+       if (count == GA_POPULATION_SIZE) break;
        value = rand_elem & temp;
        if (value == 0) continue;
        encode_ga_cand(&(ga->population[count]), value);
@@ -133,6 +132,10 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
  int retry=0; 
  double rand_val;
  candidate temp, temp1;
+ int dup_parent_gen = 0;
+ int dup_child_gen = 0;
+ int retry_attempts = 0;
+ int crossover_point = 0;
 
  printf("\nEntering crossover function\n");
 
@@ -162,6 +165,8 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
    /* if (j > 1) {
        gen_children = (candidate *)(realloc(gen_children, k * sizeof(candidate)));
     }*/
+    crossover_point = (crossover_point + 1) % NL;
+    crossover_point = (crossover_point == 0) ? 1: crossover_point;
     if (j >= (ga->population_size-1)) break;
     if (rand_val > cross_prob) {
        rand_val = (double)rand() / (double)RAND_MAX;
@@ -179,6 +184,8 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
     if (value == 0) continue;
 
     value = count_set_bits(value);
+    value = crossover_point;
+    printf("\nCrossover point is %d\n", value);
 
 /* Following memory copy operations do not reference the binary_enc member inside structure candidate for every gen_children because it is 
    just a shortcut since the first member in the candidate data structure is binary_enc and the memcpy will work correctly without specfiying
@@ -195,8 +202,12 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
    
     if (compare(gen_children[k])) {
        if (retry == 5) {
+          printf("\nMade 5 attempts to avoid generating a zero child but now we will not perform any more crossover attempts for this pair \
+                    of candidates and move forward with the next consecutive pair\n");
           retry = 0;
+          retry_attempts = 0;
           j++;
+          rand_val = (double)rand() / (double)RAND_MAX;
           continue;
        }
        retry++;
@@ -204,18 +215,60 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
     }
 
     if (feasibility(gen_children[k], netinfo)) {  //Possibly consider to also increment retry here to avoid infinite attempts
+       printf("\nChild from crossover not feasible\n");
        memset(&gen_children[k], 0, sizeof(candidate));
+       if (retry_attempts == MAX_CROSSOVER_ATTEMPTS) {
+          printf("\nEnough attempts have been made to do a crossover operation for this pair but all crossovers have resulted in infeasible \
+                    children\n");
+          rand_val = (double)rand() / (double)RAND_MAX;
+          retry_attempts = 0;
+          retry = 0;
+          j++;
+          continue;
+       }
+       retry_attempts++;
        continue;
     }
 
-    if (k && check_duplicate(&gen_children[k], gen_children, k)) {
+    dup_parent_gen = check_duplicate(&gen_children[k], ga->population, GA_POPULATION_SIZE);
+
+    if (k) { dup_child_gen = check_duplicate(&gen_children[k], gen_children, k); }
+
+    if (dup_parent_gen) { 
+       if (retry_attempts == MAX_CROSSOVER_ATTEMPTS) {
+          //printf("\nAlready tried enough attempts at generating a unique child from crossover but now we will consider this even though \
+                    its a duplicate\n");
+          printf("\nAlready tried enough attempts at generating a unique child from crossover so we will not consider the crossover for this \
+                    pair and continue with the next consecutive pair\n");
+          memset(&gen_children[k], 0, sizeof(candidate));
+          rand_val = (double)rand() / (double)RAND_MAX;
+          retry_attempts = 0;
+          retry = 0;
+          j++;
+          continue;
+       } else {
+          printf("\nThis crossover operation has generated a child that is a duplicate of one of the candidates in the parent population. hence \
+                 we need to repeat this crossover operation for this pair of candidates with a different crossover point.\n");
+          memset(&gen_children[k], 0, sizeof(candidate));
+          retry_attempts++;
+          continue;
+       }
+    }    
+
+    //if (k && check_duplicate(&gen_children[k], gen_children, k)) {
+    if (k && dup_child_gen) {
+       printf("\nThis child generated from a crossover operation is already present in this population of children. We do not consider it \
+                 and continue with no more attempts\n");
        memset(&gen_children[k], 0, sizeof(candidate));
        rand_val = (double)rand() / (double)RAND_MAX;
+       retry = 0;
+       retry_attempts = 0;
        j++;
        continue;
     }
 
     retry = 0;
+    retry_attempts = 0;
     j = j+2;
     k++; 
     
@@ -413,9 +466,29 @@ int count_set_bits(int value) {
 
 int compare(candidate gen_child) {
    int i=0, k=0;
-   while (i<NL) {
+   while (i < NL) {
       if (gen_child.binary_enc[k++] & 1) return 0;
       i++;
    }
+   return 1;
+}
+
+int cache_lookup(candidate *pattern, candidate *cache, int *index) {
+   int i=0;
+   printf("\nEntering cache lookup\n");
+   while (i < GA_POPULATION_SIZE) {
+      if (!memcmp(&(pattern->binary_enc), &cache[i].binary_enc, NL)) {
+         printf("\nPattern:\n");
+         print_candidate(pattern);
+         printf("\nMatch:\n");
+         print_candidate(&cache[i]);
+         printf("\nCache hit. No need to re compute for this candidate again\n");
+         print_candidate(pattern);
+         *index = i;
+         return 0;
+      }
+      i++;
+   }
+   printf("\nExiting cache lookup\n");
    return 1;
 }
