@@ -60,11 +60,34 @@ Modern heuristic techniques, also called metaheuristics are a family of procedur
 The genetic algorithm will be used to solve the upper level problem whereas the nested problem is solved using BCL component of FICO Xpress software. For every candidate solution in the upper level problem the nested problem will be solved using BCL. This iterative process is continued to evolve towards stronger solutions for the leader by the use of genetic algorithm operations like crossover, mutation etc till the stopping criteria is satisfied.
 
 \subsection{InterDisciplinary Project}
-The implementation of this project requires knowledge of C/C++ programming, linear programming, usage of the C++ BCL(Builder component library) provided by a commercially well known optimization suite called FICO Xpress. The application of these technologies is for a well known real world problem like DNDP observed in transportation science resulting in this project to be of Inter-Disciplinary nature. As a part of the preparation for implementing this project, a good amount of knowledge on metaheuristics and DNDP was acquired from the course "TRANSPORTATION LOGISTICS" offered by the CHAIR OF LOGISTICS AND SUPPLY CHAIN MANAGEMENT. A rough timeline from when the project started till its anticipated completion time is given below.
+The implementation of this project requires knowledge of C/C++ programming, Data Structures, linear programming concepts, usage of the C++ BCL(Builder component library) provided by a commercially well known optimization suite called FICO Xpress. The application of these technologies is for a well known real world problem like DNDP observed in transportation science resulting in this project to be of Inter-Disciplinary nature. As a part of the preparation for implementing this project, a good amount of knowledge on \textbf{metaheuristics} and \textbf{DNDP} was acquired from the course \textbf{"TRANSPORTATION LOGISTICS"} offered by the \textbf{CHAIR OF LOGISTICS AND SUPPLY CHAIN MANAGEMENT.}\par
+\noindent
+\\
+The objective of this course was to get an overview of the modeling techniques, exact as well as heuristic search methods tailored to the different transportation problems studied. The course consists of a sequence of lectures, exercise classes and case studies. It also deals on how to model and analyze transportation problems using quantitative methods. It covers many of the real world problems observed in Transportation Planning such as Traveling Salesman Problem(TSP), Vehicle Routing Problems(VRP), Network Flow Problems, Inventory Routing etc. and techniques such as Metaheuristics used to solve them. In brief, The course covered the following topics listed below:\par
+\begin{itemize}
+\item \textbf{Transportation Problems}: Linear programming formulations, Solving methods like Northwest corner rule, Column minimum rule, Matrix minimum rule, MODI(Modified Distribution) method, Extensions to Transshipment problem and several others.
+\item \textbf{Traveling Salesman Problem}: TSP models(Symmetric and Asymmetric), Exact solution methods, Heuristics like nearest neighbor and r-opt method, Arc Routing problem.
+\item \textbf{Vehicle Routing Problem}: Different modeling schemes for VRP using Linear programming formulations, Sweep method, Savings method as solution techniques for VRP problems, Extensions of VRP and Savings method.
+\item \textbf{Inventory Routing Problem}: Lot-Sizing Problem, Inventory Routing Problem(IRP)
+\item \textbf{Transportation planning in networks}: Dynamic optimization, Hub-Spoke systems, Shortest path problem, dijkstra's algorithm, Minimum spanning tree problem, Maximum flow problem. 
+\item \textbf{Metaheuristics}: Basics of metaheuristics, Simulated Annealing with TSP as its case study, Tabu Search, Genetic Algorithm and its application to TSP as a case study, Application of metaheuristic on VRP.
+\item \textbf{Traffic Network Design Problems}: Covers Traffic assignment problem(TAP), Extensions of TAP like Discrete Network Design Problem(DNDP), Line planning.
+\item \textbf{Revenue Management}: Segmentation, Price differentiation, Models of Overbooking.
+\item \textbf{Packing logistics}: Fundamentals of Packing and its stages, Cutting Stock Problem, Knapsack Problem, Bin Packing Problem.
+\item \textbf{Container Shipping and Terminals}: Working of container terminals, Job-Shop and Flow-Shop Problems, Branch and Bound method, Usage of Gantt-Chart.
+\item Most of the above mentioned problems studied in transportation planning involved modeling them using Linear Programming and looking at their solving methods.
+\end{itemize}
+The course gave an introduction to many of the important problems observed in transportation science one of which is DNDP that the IDP deals with specifically. These optimization problems have to be solved computationally to good approximation and require the usage of sophisticated optimization softwares that can provide a library(API - Application programming interface) for the programmer to do the same. The programmer can use this to implement an application demonstrating the solving methods for DNDP. This is first done by modeling the DNDP in the form of a bilevel mixed integer linear program via the API provided by FICO Xpress BCL component and using its optimization modules to solve the nested optimization problem of TAP. In relevance to the project, the course dealt with the necessary topics such as different kinds of metaheuristics, their algorithms followed by case studies and numerical problems to better understand these techniques. The bilevel formulation of DNDP was also introduced with TAP as its nested optimization problem and some of the techniques to solve them exactly or approximately.\par
+\noindent
+\\
+A rough \textbf{timeline} from when the project started till its anticipated completion time is given below.
 \begin{itemize}
 \item Dec 2014 - Start of IDP with initial literature survey but main focus on the course.
-\item Early Feb 2015 to Mid April 2015 - Further literature reading, setup, understanding and practical usage of the FICO Xpress software, writing code using BCL component.
-\item Mid of April 2015 to present - Implementation phase with good amount of testing. Further testing will follow on larger datasets with additional code to provide extensions. This will be followed up by documentation and presentation resulting in an expected completion time of early Sep 2015.
+\item Feb 4, 2015 - Completion of the exam on the course \textbf{"TRANSPORTATION LOGISTICS"}.
+\item Feb 4, 2015 to April 14, 2015 - Further literature reading, setup, understanding and practical usage of the FICO Xpress software, learning to write code using BCL component.
+\item April 15, 2015 to July 31, 2015 - Implementation phase with good amount of testing. Further testing will follow on larger datasets with additional code to provide extensions. 
+\item Aug 1, 2015 to Aug 30, 2015 - Documentation and Presentation
+\item Early Sep 2015 - Completion of IDP
 \end{itemize}
 
 %\begin{figure}[h]
