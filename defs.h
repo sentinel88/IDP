@@ -10,9 +10,9 @@
 #include <xprb_cpp.h>
 //#define OD 144               /* Number of O-D pairs */
 #define OD 576               /* Number of O-D pairs */
-#define M 80
+//#define M 80
 //#define M 250
-//#define M 20
+#define M 20
 //#define N 12                 /* Number of nodes in the TAP */
 #define N 24                 /* Number of nodes in the TAP */
 #define R 1                  /* Number of origins */
@@ -23,12 +23,12 @@
 #define EL 76                /* Number of existing links for the network */ 
 //#define NL 6                /* Number of new links for the network */ 
 #define NL 10                /* Number of new links for the network */ 
-#define bigM 15000
+#define bigM 150000000
 //#define step_size 0.2
 //#define step_size 2
 //#define step_size 100
-//#define step_size 1250
-#define step_size 313
+#define step_size 1250
+//#define step_size 313
 #define mut_prob 0.15
 #define cross_prob 0.85
 //#define _PROTECT 1
@@ -37,8 +37,8 @@
 #define CHOICE 2
 //#define B  10      /* Project budget */
 #define GA_POPULATION_SIZE 10
-#define GA_ITERATIONS 10
-#define MAX_BEST_ITERATIONS 5
+#define GA_ITERATIONS 5
+#define MAX_BEST_ITERATIONS 4
 #define MAX_RETRY 3
 //#define GA_ITERATIONS 3
 

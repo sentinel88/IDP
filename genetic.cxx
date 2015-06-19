@@ -363,7 +363,9 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
       orig = netinfo->existing_links[i].orig;
       term = netinfo->existing_links[i].term;
       if (CHOICE == 2) {
-         summation += (netinfo->Ta[orig][term] * (1 + (netinfo->Ba[orig][term] * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
+         //summation += (netinfo->Ta[orig][term] * (1 + (netinfo->Ba[orig][term] * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
+         summation += (dndp->Xa[orig][term].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
+     
       } else {
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());
          summation += (dndp->Xa[orig][term].getSol()) * (netinfo->Ta[orig][term] + (0.008 * pow(dndp->Xa[orig][term].getSol(), 4)));
@@ -374,18 +376,19 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
    if (ga_cand->binary_enc[i]) {
       orig = netinfo->new_links[i].orig;
       term = netinfo->new_links[i].term;
-#ifdef _CODE   
+//#ifdef _CODE   
    if (CHOICE == 2) {
-         summation += (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
+         //summation += (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
+         summation += (dndp->Xa[orig][term].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
       } else {
-#endif
+//#endif
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());
          summation += (dndp->Xa[orig][term].getSol()) * (netinfo->Ta[orig][term] + (0.008 * pow(dndp->Xa[orig][term].getSol(), 4)));
-     // }
+      }
    } } 
 
    ga_cand->fitness_value = summation;
-   printf("\nCandidate fitness: %f\n", summation);
+   printf("\nCandidate fitness: %e\n", summation);
 
    printf("\nExiting candidate fitness function\n");
 }
@@ -399,7 +402,7 @@ int print_generation(candidate *ga_cand, int pool_size, bool disp_fitness) {
       for (j=0; j<NL; j++) {
          printf("%d", ga_cand[i].binary_enc[j]);
       }
-      printf("\tFitness value: %f", ga_cand[i].fitness_value);
+      printf("\tFitness value: %e", ga_cand[i].fitness_value);
       printf("\n");
    }  
    } else {
@@ -473,10 +476,10 @@ int compare(candidate gen_child) {
    return 1;
 }
 
-int cache_lookup(candidate *pattern, candidate *cache, int *index) {
+int cache_lookup(candidate *pattern, candidate *cache, int *index, int size) {
    int i=0;
    printf("\nEntering cache lookup\n");
-   while (i < GA_POPULATION_SIZE) {
+   while (i < size) {
       if (!memcmp(&(pattern->binary_enc), &cache[i].binary_enc, NL)) {
          printf("\nPattern:\n");
          print_candidate(pattern);

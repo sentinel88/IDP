@@ -38,8 +38,9 @@ int main(int argc, char **argv)
  
  int i, j, k, l, m;           /* Iteration variables */
  float ta, xa, ba, ca, Constant;
- int r, s, flag = 0, count = 0, ret = 0, pool_size;
+ int r, s, flag = 0, count = 0, ret = 0, pool_size = 0;
  int orig, term;
+ int ret_val = 0;
  float temp, best;
  clock_t start, end;
  double cpu_time_used;
@@ -53,7 +54,7 @@ int main(int argc, char **argv)
  
  gen_children = (candidate *)(malloc(ga.population_size * sizeof(candidate)));
  memset(gen_children, 0, sizeof(gen_children)); 
- cache = (candidate *)(malloc(ga.population_size * sizeof(candidate)));
+ cache = (candidate *)(malloc((2 * ga.population_size) * sizeof(candidate)));
  memset(cache, 0, sizeof(cache)); 
 
  if (argc < 2) {
@@ -102,7 +103,7 @@ int main(int argc, char **argv)
        }*/
        //start = clock();
        if (i) {
-          if (cache_lookup(&ga.population[j], cache, &index)) {
+          if (cache_lookup(&ga.population[j], cache, &index, GA_POPULATION_SIZE + pool_size)) {
              printf("\nCache miss. Will have to solve the TAP for this candidate\n");
           } else {
              printf("\nCache hit. Do not need to solve the TAP for this candidate. Setting the fitness as computed before\n");
@@ -228,6 +229,9 @@ int main(int argc, char **argv)
 
     //best = ga.population[0].fitness_value;
     //if (best < gen_children[0].fitness_value) best = gen_children[0].fitness_value;
+
+    //realloc(cache, GA_POPULATION_SIZE + pool_size);
+    memcpy((candidate *)cache + GA_POPULATION_SIZE, gen_children, sizeof(candidate) * pool_size); 
 
 /***Select the candidates for the next generation from the pool of children and current population***/
    candidate *new_gen = (candidate *)(malloc(GA_POPULATION_SIZE * sizeof(candidate)));

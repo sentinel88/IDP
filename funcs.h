@@ -39,6 +39,6 @@ int check_duplicate(candidate *, candidate *, int);
 
 int elem_compare(candidate *, candidate *);
 
-int cache_lookup(candidate *, candidate *, int *);
+int cache_lookup(candidate *, candidate *, int *, int);
 
 #endif

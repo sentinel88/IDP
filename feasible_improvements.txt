@@ -1,6 +1,6 @@
 1. Use a single bit for encoding of a new link. We can have a void * pointer in the candidate data structure and initialize this pointer to a memory location allocated in the main function for some number of bytes calculated using (NL/8).
 
-2. Implement tournament selection.
+2. Implement tournament selection. Otherwise better generations cannot be produced since crossover operations will always happen between the same pairs to a certain extent.
 
 3. Convert C to C++ code.
 
@@ -20,3 +20,9 @@
 
 11. If zero no. of children have been generated from crossover operations since the last few iterations then we can stop the genetic algorithm
 because it does not help to continue further without any more improvements.
+
+12. Siouxfalls network not producing correct values. We can try to test by just solving the TAP. For this case, we can add new links to the existing links itself and solve the TAP to verify. Produces correctly now as the problem was not defining the capacities for new links due to which the objective function value was always appearing to be the same.
+
+13. Cache should not only store the previous generation but also the generation of children.
+
+14. Removal of candidates in the pool to avoid selecting the same. We could restore the hole after removal of candidate in the pool by moving the last candidate in the pool to this hole and using realloc to shrink the pool's memory size.

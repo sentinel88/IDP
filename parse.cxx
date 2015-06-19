@@ -88,14 +88,27 @@ int parse (network_data *netinfo) {
    count = 0;
 
    while (fgets(str, 100, datafile)) {
-      if (sscanf(str, "%d %d %f %f", &i, &j, &ta, &ba) == 4) {
-         printf("\n%d %d %f %f\n", i, j, ta, ba);
-         netinfo->Ta[i][j] = ta;
-         netinfo->ba[i][j] = ba;
-         netinfo->new_links[count].orig = i;
-         netinfo->new_links[count].term = j;
-         netinfo->EdgeMatrix[i][j] = -1;
-         count++;
+      if (CHOICE == 1) {
+         if (sscanf(str, "%d %d %f %f", &i, &j, &ta, &ba) == 4) {
+            printf("\n%d %d %f %f\n", i, j, ta, ba);
+            netinfo->Ta[i][j] = ta;
+            netinfo->ba[i][j] = ba;
+            netinfo->new_links[count].orig = i;
+            netinfo->new_links[count].term = j;
+            netinfo->EdgeMatrix[i][j] = -1;
+            count++;
+         }
+      } else {
+         if (sscanf(str, "%d %d %f %f %f", &i, &j, &ta, &ba, &ca) == 5) {
+            printf("\n%d %d %f %f %f\n", i, j, ta, ba, ca);
+            netinfo->Ta[i][j] = ta;
+            netinfo->ba[i][j] = ba;
+            netinfo->Ca[i][j] = ca;
+            netinfo->new_links[count].orig = i;
+            netinfo->new_links[count].term = j;
+            netinfo->EdgeMatrix[i][j] = -1;
+            count++;
+         }
       }
    }
 
