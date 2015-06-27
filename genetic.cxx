@@ -42,6 +42,7 @@ int generate_rand(genetic_algo *ga, network_data netinfo) {
  printf("\nEntering generate_rand\n");
  count = 0;
  k = 0;
+ if (NL)
  intervals = (round((log2((double)RAND_MAX))))/NL;
  temp = round((pow(2, NL) - 1));
  srand(time(NULL));
@@ -145,6 +146,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
 
  //bits = ceil(log2((double)NL));
  //intervals = (round((log2((double)RAND_MAX)))) / bits;
+ if (NL)
  intervals = (round((log2((double)RAND_MAX)))) / NL;
  tempval = pow(2, NL) - 1;
  //tempval = !(1<<(NL-1)) + 1;
@@ -289,6 +291,7 @@ int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_siz
    int retry = 0;
    int i,j,l;
    int tempval, intervals, value;
+   if (NL)
    intervals = (round((log2((double)RAND_MAX)))) / NL;
    tempval = pow(2, NL) - 1;
    srand(time(NULL));

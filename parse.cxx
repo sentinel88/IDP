@@ -13,7 +13,7 @@ int parse (network_data *netinfo) {
 
    printf("\nInside parse function\n");
 
-   memset(netinfo->Ca, 0, sizeof(netinfo->Ca));
+   /*memset(netinfo->Ca, 0, sizeof(netinfo->Ca));
    memset(netinfo->Ba, 0, sizeof(netinfo->Ba));
    memset(netinfo->ba, 0, sizeof(netinfo->ba));
 
@@ -23,7 +23,7 @@ int parse (network_data *netinfo) {
    for (i=0; i<=N; i++) {
       netinfo->Demand[i] = (float *)malloc( (N+1) * sizeof(float));
       netinfo->Ta[i] = (float *)malloc( (N+1) * sizeof(float));
-   }
+   } */
 
    //memset(netinfo->Demand, 0, sizeof(netinfo->Demand));
    //memset(netinfo->Ta, 0, sizeof(netinfo->Ta));
@@ -37,6 +37,7 @@ int parse (network_data *netinfo) {
    count = 0;
 
    while (linecount < LC) {
+    // while(fgets(str, 100, datafile)) {
       fgets(str, 100, datafile);
       if (CHOICE == 2) {
          if (sscanf(str, "%d %d %f %f %f", &i, &j, &ca, &ta, &ba) == 5) {
@@ -81,6 +82,8 @@ int parse (network_data *netinfo) {
    }
 
    fclose(datafile);
+
+#ifdef ZONES
    datafile = fopen(FILENAME_NEW_LINKS, "r");
 
    memset(str, 0, 100);
@@ -111,6 +114,7 @@ int parse (network_data *netinfo) {
          }
       }
    }
+#endif 
 
    printf("\nPrinting network data\n");
    for (i=1; i<=N; i++) {

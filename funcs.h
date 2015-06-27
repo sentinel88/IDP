@@ -41,4 +41,8 @@ int elem_compare(candidate *, candidate *);
 
 int cache_lookup(candidate *, candidate *, int *, int);
 
+int init_net_data(network_data);
+
+int cleanup_net_data(network_data);
+
 #endif

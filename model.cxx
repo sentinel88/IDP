@@ -312,6 +312,8 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
 
 /****VARIABLES****/
 
+/* In case of networks having zones indicated in the dataset that do not allow traffic to pass through it, we need to handle this specially. We will have to initialize the value of link flows to zero for a given OD pair Fa_rs[OD] and for all those links which are incoming to the zonal point or outgoing from it. */
+
 /***Flow on link a***/
  for (i=1; i<=OD; i++) {
     r = (i/N);
@@ -323,6 +325,16 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
           j = netinfo->existing_links[l].orig;
           k = netinfo->existing_links[l].term;
           dndp->Fa_rs[i][j][k] = (dndp->p).newVar("Flow");
+#ifdef ZONES
+          if (ZONES) {
+             if (j <= ZONES && j != r && j != s) {  //Checks can be different in different ways like by testing if Ta is 0
+                dndp->Fa_rs[i][j][k].fix(0.0); 
+             } 
+             if (k <= ZONES && k != r && k != s) {  //Checks can be different in different ways like by testing if Ta is 0
+                dndp->Fa_rs[i][j][k].fix(0.0); 
+             } 
+          }
+#endif
        }
        
        for (l=0; l<NL; l++) { 
@@ -339,8 +351,11 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
  for (l=0; l<EL; l++) {
     i = netinfo->existing_links[l].orig;
     j = netinfo->existing_links[l].term;
-    for (k=0; k<=M; k++) {
-       dndp->x[i][j][k] = (dndp->p).newVar("x");
+    if (netinfo->Ta[i][j]) {  // Added this if condition to handle cases where there are zones involved through which no traffic can
+                              // pass through so the associated incoming/outgoing links have Ta as zero value.
+       for (k=0; k<=M; k++) {
+          dndp->x[i][j][k] = (dndp->p).newVar("x");
+       }
     }
     dndp->Xa[i][j] = (dndp->p).newVar("Travelers");
  }
@@ -404,10 +419,17 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
        incr = 0;
        summation = 0;
        for (k=1; k<=N; k++) {
-          if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1) 
-             summation += dndp->Fa_rs[(N*(j-1))+i][j][k];
-          if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1)
-             incr += dndp->Fa_rs[(N*(j-1))+i][k][j];          
+          if (ZONES) {
+             if (netinfo->EdgeMatrix[j][k] == 1) 
+                summation += dndp->Fa_rs[(N*(j-1))+i][j][k];
+             if (netinfo->EdgeMatrix[k][j] == 1)
+                incr += dndp->Fa_rs[(N*(j-1))+i][k][j];          
+          } else {
+             if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1) 
+                summation += dndp->Fa_rs[(N*(j-1))+i][j][k];
+             if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1)
+                incr += dndp->Fa_rs[(N*(j-1))+i][k][j];          
+          }
        }
        for (k=0; k<NL; k++) {
           if (ga_cand.binary_enc[k]) {
@@ -436,10 +458,17 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
        incr = 0;
        summation = 0;
        for (k=1; k<=N; k++) {
-          if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1) 
-             summation += dndp->Fa_rs[(N*(i-1))+j][k][j];
-          if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1)
-             incr += dndp->Fa_rs[(N*(i-1))+j][j][k];          
+          if (ZONES) {
+             if (netinfo->EdgeMatrix[j][k] == 1) 
+                incr += dndp->Fa_rs[(N*(i-1))+j][j][k];          
+             if (netinfo->EdgeMatrix[k][j] == 1)
+                summation += dndp->Fa_rs[(N*(i-1))+j][k][j];
+          } else {
+             if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1) 
+                summation += dndp->Fa_rs[(N*(i-1))+j][k][j];
+             if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1)
+                incr += dndp->Fa_rs[(N*(i-1))+j][j][k];          
+          }
        }
        for (k=0; k<NL; k++) {
           if (ga_cand.binary_enc[k]) {
@@ -472,10 +501,17 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
        summation = 0;
        incr = 0;
        for (k=1; k<=N; k++) {
+          if (ZONES) {
+             if (netinfo->EdgeMatrix[j][k] == 1) 
+                incr += dndp->Fa_rs[i][j][k];
+             if (netinfo->EdgeMatrix[k][j] == 1)
+                summation += dndp->Fa_rs[i][k][j];
+          } else {
           if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1)
              summation += dndp->Fa_rs[i][k][j];
           if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1)
              incr += dndp->Fa_rs[i][j][k];
+          }
        }
        for (k=0; k<NL; k++) {
           if (ga_cand.binary_enc[k]) {
@@ -491,6 +527,7 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
     } }
     }
  }
+
 
  summation = 0;
 

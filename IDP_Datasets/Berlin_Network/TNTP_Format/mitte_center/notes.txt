@@ -1,0 +1,6 @@
+1. Demand at origin constraints need to be handled as the condition of testing whether free flow time is zero will not work for this dataset as   here we have many artificial links that have many of their parameters equal to zero including free flow time.
+
+2. Flow conservation constraints also may face the same problem and hence will have to be handled correctly.  
+
+3. Traffic is not allowed to go through zones so we have to initialize the values for flows on links incoming/outgoing to/from zones other than
+   origin and destination pair for a certain TAP. We can try to initialize the flows on such edges for a given OD pair to 0 in the Fa_rs matrix

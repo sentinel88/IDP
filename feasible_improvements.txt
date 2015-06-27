@@ -19,7 +19,7 @@
 10. Create only how many children are feasibly possible even if the resultant pool size is small. If by repeated attempts we do not get unique children then do not add duplicates to the pool.
 
 11. If zero no. of children have been generated from crossover operations since the last few iterations then we can stop the genetic algorithm
-because it does not help to continue further without any more improvements.
+because it does not help to continue further without any more improvements. "Not correct".
 
 12. Siouxfalls network not producing correct values. We can try to test by just solving the TAP. For this case, we can add new links to the existing links itself and solve the TAP to verify. Produces correctly now as the problem was not defining the capacities for new links due to which the objective function value was always appearing to be the same.
 
