@@ -22,7 +22,7 @@ CFLAGS-linux-gnu=$(CFLAGS-linux)
 CFLAGS-solaris=-D_REENTRANT
 CFLAGS-hpux=+Z +DAportable -D_POSIX_C_SOURCE=199506L
 CFLAGS-aix=-q32 -D_THREAD_SAFE
-CFLAGS=-Wall -g $(CFLAGS-$(OSTYPE)) -I$(BCL)/include -I. -I$(XPRESSDIR)/include -DXPRBDATAPATH=\"../../Data\"
+CFLAGS=-g $(CFLAGS-$(OSTYPE)) -I$(BCL)/include -I. -I$(XPRESSDIR)/include -DXPRBDATAPATH=\"../../Data\"
 
 CXXFLAGS=$(CFLAGS)
 
@@ -38,7 +38,7 @@ LOADLIBES=-L$(BCL)/lib -L$(XPRESSDIR)/lib -lxprb -lxprs -lpthread -lm
 	$(CC) $(CFLAGS) $(LDFLAGS) $< $(LOADLIBES) -o $*
 
 .cxx: 
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< parse.cxx model.cxx genetic.cxx data.cxx $(LOADLIBES) -o $*
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< parse.cxx model.cxx genetic.cxx data.cxx common.cxx roulette_wheel.cxx $(LOADLIBES) -o $*
 
 .C:
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LOADLIBES) -o $*

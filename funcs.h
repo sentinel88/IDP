@@ -41,8 +41,16 @@ int elem_compare(candidate *, candidate *);
 
 int cache_lookup(candidate *, candidate *, int *, int);
 
-int init_net_data(network_data);
+int init_net_data(network_data *);
 
-int cleanup_net_data(network_data);
+int cleanup_net_data(network_data *);
+
+#ifdef ROULETTE_WHEEL_SELECTION
+int assign_selection_prob(candidate *, int);
+
+int genetic_rw_crossover(genetic_algo *, candidate *, network_data);
+
+int select_candidate(candidate *, int);
+#endif
 
 #endif

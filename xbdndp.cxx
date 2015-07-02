@@ -15,6 +15,10 @@
 
 int Budget;
 
+#ifdef ROULETTE_WHEEL_SELECTION
+double total_fitness;
+#endif
+
 /***********************************************************************/
 
 int main(int argc, char **argv)
@@ -44,6 +48,7 @@ int main(int argc, char **argv)
  float temp, best;
  clock_t start, end;
  double cpu_time_used;
+
 
  printf("\nWARNING:  Please remember to change the settings for low budget problems to avoid getting stuck in an infinite loop. For low budget problems check_duplicate function is not a good idea as there are few feasible candidates in problems for low budget and one cannot avoid duplicates\n\n");
 
@@ -75,14 +80,17 @@ int main(int argc, char **argv)
 
  //i = 0;
  //while (i <= ga.population_size) {
-#ifdef ZONES
+//#ifdef DONT_EXECUTE_NOW
     ret = generate_rand(&ga, netinfo);   
-#endif
+//#endif
   //  i++;
  //}
 
  i = 0;
  for (i=0; i<ga.iterations; i++) {
+#ifdef ROULETTE_WHEEL_SELECTION
+    total_fitness = 0;
+#endif
     printf("\nGenetic algorithm: Iteration %d\n", i+1);
     printf("\n\n************************************************\n");
     printf("Generation %d\n", i+1);
@@ -91,8 +99,8 @@ int main(int argc, char **argv)
     for (j=0; j<ga.population_size; j++) {
        index = -1;
        //dndp.p = XPRBnewprob("TAP");
-       model_data dndp;
-       dndp.init_model_data();
+       model_data *dndp = new model_data;
+       //dndp.init_model_data();
        //dndp = (model_data *)(malloc(sizeof(model_data)));
        //model_data dndp;
        //memset(dndp, 0, sizeof(model_data));
@@ -116,40 +124,45 @@ int main(int argc, char **argv)
              continue;
           } 
        }
-       remodel_problem(&dndp, &netinfo, ga.population[j]);
+       remodel_problem(dndp, &netinfo, ga.population[j]);
        //end = clock();
-       dndp.p.lpOptimize("");  
+       //dndp.p.lpOptimize("");  
+       dndp->p.lpOptimize("");  
        printf("\nTravelers on link a\n");
        /***Travelers on link a***/
        for (int m=0; m<EL; m++) {
           orig = netinfo.existing_links[m].orig;
           term = netinfo.existing_links[m].term;
-          printf("[%d, %d] = %lf\n", orig, term, (dndp.Xa[orig][term]).getSol());
+          printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
        }
        for (int m=0; m<NL; m++) {
           if (ga.population[j].binary_enc[m]) {
              orig = netinfo.new_links[m].orig;
              term = netinfo.new_links[m].term;
-             printf("[%d, %d] = %lf\n", orig, term, (dndp.Xa[orig][term]).getSol());
+             printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
           }
        }
        //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
        //printf("\nActual time: %lf\n", cpu_time_used);
-       printf("\nObjective value: %f\n", dndp.p.getObjVal());
-       candidate_fitness(&dndp, &netinfo, &(ga.population[j]));
+       printf("\nObjective value: %f\n", dndp->p.getObjVal());
+       candidate_fitness(dndp, &netinfo, &(ga.population[j]));
        printf("\n\n************************************************\n");
        printf("Iteration %d results:\n", i+1);
        print_candidate(&ga.population[j]);
        printf("Fitness: %f\n", ga.population[j].fitness_value);
        printf("************************************************\n");
+#ifdef ROULETTE_WHEEL_SELECTION
+       total_fitness += ga.population[j].fitness_value;
+#endif
        
-       dndp.cleanup_model_data();
+       //dndp.cleanup_model_data();
        /*for (k=0; k<NL; k++) {
           dndp->Ya[r][s].fix(0.0);
        }*/
        //free(dndp);
        //dndp.p.reset();
        //XPRBdelprob(&(dndp.p));
+       delete dndp;
     }
 
     printf("\n\n************************************************\n");
@@ -184,8 +197,13 @@ int main(int argc, char **argv)
     printf("\n\n************************************************\n");
     printf("Generation %d(After sorting)\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, true);
-#ifdef _USE
+#ifdef ROULETTE_WHEEL_SELECTION
+    assign_selection_prob(ga.population, GA_POPULATION_SIZE);
+    pool_size = genetic_rw_crossover(&ga, gen_children, netinfo);
+#else
     pool_size = genetic_sp_crossover(&ga, gen_children, netinfo);
+#endif
+//#ifdef _USE
     printf("\n\n************************************************\n");
     printf("Children generated after crossover for Generation %d\n", i+1);
     print_generation(gen_children, pool_size, false);
@@ -241,7 +259,7 @@ int main(int argc, char **argv)
 
 /***Select the candidates for the next generation from the pool of children and current population***/
    candidate *new_gen = (candidate *)(malloc(GA_POPULATION_SIZE * sizeof(candidate)));
-   memset(new_gen, 0, GA_POPULATION_SIZE * sizeof(candidate);
+   memset(new_gen, 0, GA_POPULATION_SIZE * sizeof(candidate));
 
    l = 0; k = 0; j = 0;
    //memcpy(new_gen, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
@@ -318,27 +336,8 @@ int main(int argc, char **argv)
    printf("\nFreed ga population\n");
    ga.population = new_gen;
    new_gen = NULL;
-#endif
+//#endif
  }
-
-/*
-
- k = 0;
-
- while(1) {
-    i = (rand() % NL);
-    printf("\n%d\t", i);
-    //i = ga.population[count].binary_enc = (rand() % NL);
-    if (i == 0) continue;
-    while(i) {
-       ga.population[count].binary_enc[k++] = i&1;
-       i = i>>1;
-       printf("%d ", ga.population[count].binary_enc[k-1]);
-    }
-    //printf("\n%d\n", ga.population[count].binary_enc);
-    count++;
-    if (count == 5) break;
- }*/
 
  printf("\nFinal objective value for DNDP is %f\n", ga.population[0].fitness_value);
  //printf("\nFinal objective value for DNDP is %f\n", best);
@@ -352,7 +351,7 @@ int main(int argc, char **argv)
  //end = clock();
  //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
  
- printf("\nActual time: %lf\n", cpu_time_used);
+ //printf("\nActual time: %lf\n", cpu_time_used);
 
  return 0;  
 }

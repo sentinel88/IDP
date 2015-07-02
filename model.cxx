@@ -312,29 +312,40 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
 
 /****VARIABLES****/
 
-/* In case of networks having zones indicated in the dataset that do not allow traffic to pass through it, we need to handle this specially. We will have to initialize the value of link flows to zero for a given OD pair Fa_rs[OD] and for all those links which are incoming to the zonal point or outgoing from it. */
+/* In case of networks having zones indicated in the dataset that do not allow traffic to pass through it, we need to handle this specially. We will have to initialize the value of link flows to zero for a given OD pair Fa_rs[OD] and for all those links which are incoming to the zonal point or outgoing from it. And also we know that there are no edges between zonal points. So an edge can atmost have one of the end points as a
+zone thereby validating our IF condition j <= ZONES and next IF condition k <= ZONES to be correct checks*/
 
 /***Flow on link a***/
  for (i=1; i<=OD; i++) {
+/*#if ZONES != 0
+    r = (i/ZONES);
+    s = (i%ZONES);
+    r = (r==0)?1 : (s==0?r : (r+1));
+    s = (s==0)?ZONES : s;    
+#else*/
     r = (i/N);
     s = (i%N);
     r = (r==0)?1 : (s==0?r : (r+1));
     s = (s==0)?N : s;    
+//#endif
     if (netinfo->Demand[r][s]) {
        for (l=0; l<EL; l++) {
           j = netinfo->existing_links[l].orig;
           k = netinfo->existing_links[l].term;
           dndp->Fa_rs[i][j][k] = (dndp->p).newVar("Flow");
-#ifdef ZONES
-          if (ZONES) {
+/*#if ZONES != 0*/   /*There is a Mistake here because if j is not a zone but k can be zone. Then this will make an edge from a non zonal point to
+                 a zonal point as zero rendering the destination unreachable and resulting in an infeasible constraint in the destination set
+                 Mistake is probable the fact that OD is 1296 and N is 398 in case of mitte_center network because of which the calculation 
+                 of OD numbers fo wrong. Needs to be handled carefully*/
+          /*if (ZONES) {
              if (j <= ZONES && j != r && j != s) {  //Checks can be different in different ways like by testing if Ta is 0
                 dndp->Fa_rs[i][j][k].fix(0.0); 
              } 
              if (k <= ZONES && k != r && k != s) {  //Checks can be different in different ways like by testing if Ta is 0
                 dndp->Fa_rs[i][j][k].fix(0.0); 
              } 
-          }
-#endif
+          }*/
+//#endif
        }
        
        for (l=0; l<NL; l++) { 
@@ -347,16 +358,18 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
     } 
  }
 
+ printf("\nDemand variables initialized\n");
+
 /***Decision variables for linear approximation, binary variables for construction of new links and travelers on link a***/
  for (l=0; l<EL; l++) {
     i = netinfo->existing_links[l].orig;
     j = netinfo->existing_links[l].term;
-    if (netinfo->Ta[i][j]) {  // Added this if condition to handle cases where there are zones involved through which no traffic can
+    //if (netinfo->Ta[i][j]) {  // Added this if condition to handle cases where there are zones involved through which no traffic can
                               // pass through so the associated incoming/outgoing links have Ta as zero value.
        for (k=0; k<=M; k++) {
           dndp->x[i][j][k] = (dndp->p).newVar("x");
        }
-    }
+    //}
     dndp->Xa[i][j] = (dndp->p).newVar("Travelers");
  }
 
@@ -381,10 +394,17 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
     j = netinfo->existing_links[l].term;
     summation = 0;
     for (k=1; k<=OD; k++) {
+/*#if ZONES != 0
+       r = (i/ZONES);
+       s = (i%ZONES);
+       r = (r==0)?1 : (s==0?r : (r+1));
+       s = (s==0)?ZONES : s;    
+#else*/
        r = (k/N);
        s = (k%N);
        r = (r==0)?1 : (s==0?r : (r+1));
        s = (s==0)?N : s;    
+//#endif
        if (netinfo->Demand[r][s]) 
           summation += dndp->Fa_rs[k][i][j];
     }
@@ -397,10 +417,17 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
        j = netinfo->new_links[l].term;
        summation = 0;
        for (k=1; k<=OD; k++) {
+/*#if ZONES != 0
+          r = (i/ZONES);
+          s = (i%ZONES);
+          r = (r==0)?1 : (s==0?r : (r+1));
+          s = (s==0)?ZONES : s;    
+#else*/
           r = (k/N);
           s = (k%N);
           r = (r==0)?1 : (s==0?r : (r+1));
           s = (s==0)?N : s;    
+//#endif
           if (netinfo->Demand[r][s]) 
              summation += dndp->Fa_rs[k][i][j];
        }
@@ -419,17 +446,17 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
        incr = 0;
        summation = 0;
        for (k=1; k<=N; k++) {
-          if (ZONES) {
+/*          if (ZONES) {
              if (netinfo->EdgeMatrix[j][k] == 1) 
                 summation += dndp->Fa_rs[(N*(j-1))+i][j][k];
              if (netinfo->EdgeMatrix[k][j] == 1)
                 incr += dndp->Fa_rs[(N*(j-1))+i][k][j];          
-          } else {
+          } else {*/
              if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1) 
                 summation += dndp->Fa_rs[(N*(j-1))+i][j][k];
              if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1)
                 incr += dndp->Fa_rs[(N*(j-1))+i][k][j];          
-          }
+         // }
        }
        for (k=0; k<NL; k++) {
           if (ga_cand.binary_enc[k]) {
@@ -458,17 +485,17 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
        incr = 0;
        summation = 0;
        for (k=1; k<=N; k++) {
-          if (ZONES) {
+     /*     if (ZONES) {
              if (netinfo->EdgeMatrix[j][k] == 1) 
                 incr += dndp->Fa_rs[(N*(i-1))+j][j][k];          
              if (netinfo->EdgeMatrix[k][j] == 1)
                 summation += dndp->Fa_rs[(N*(i-1))+j][k][j];
-          } else {
+          } else {*/
              if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1) 
                 summation += dndp->Fa_rs[(N*(i-1))+j][k][j];
              if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1)
                 incr += dndp->Fa_rs[(N*(i-1))+j][j][k];          
-          }
+         // }
        }
        for (k=0; k<NL; k++) {
           if (ga_cand.binary_enc[k]) {
@@ -490,10 +517,17 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
 
 /***Flow conservation constraints***/
  for (i=1; i<=OD; i++) {
+/*#if ZONES != 0
+    r = (i/ZONES);
+    s = (i%ZONES);
+    r = (r==0)?1 : (s==0?r : (r+1));
+    s = (s==0)?ZONES : s;    
+#else*/
     r = (i/N);
     s = (i%N);
     r = (r==0)?1 : (s==0?r : (r+1));
     s = (s==0)?N : s;    
+//#endif
     if (netinfo->Demand[r][s] != 0.0) {
     //r=1; s=12; i=12;
     for (j=1; (j<=N) /*&& (j!=r) && (j!=s)*/; j++) {
@@ -501,17 +535,17 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
        summation = 0;
        incr = 0;
        for (k=1; k<=N; k++) {
-          if (ZONES) {
+      /*    if (ZONES) {
              if (netinfo->EdgeMatrix[j][k] == 1) 
                 incr += dndp->Fa_rs[i][j][k];
              if (netinfo->EdgeMatrix[k][j] == 1)
                 summation += dndp->Fa_rs[i][k][j];
-          } else {
+          } else {*/
           if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1)
              summation += dndp->Fa_rs[i][k][j];
           if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1)
              incr += dndp->Fa_rs[i][j][k];
-          }
+         // }
        }
        for (k=0; k<NL; k++) {
           if (ga_cand.binary_enc[k]) {
@@ -549,6 +583,7 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
 
 /****OBJECTIVE****/
  for (i=1; i<=N; i++) {
+    printf("\n");
     for (j=1; j<=N; j++) {
     if (netinfo->Ta[i][j] != 0.0 && netinfo->EdgeMatrix[i][j] == 1) { //Condition to determine whether to have constraints for this edge or not
        cout<<i<<" "<<j<<"\t";
@@ -573,6 +608,7 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
     } 
     }
  }  
+ printf("\n");
  for (l=0; l<NL; l++) {
     if (ga_cand.binary_enc[l]) {
        i = netinfo->new_links[l].orig;
@@ -605,6 +641,7 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
  (dndp->p).setSense(XPRB_MINIM);
  //(dndp->p).lpOptimize("");         /* Solve the LP-problem */
  //p.mipOptimize("");         /* Solve the LP-problem */
+ (dndp->p).exportProb(XPRB_LP);
 
  return 0;  
 }

@@ -43,14 +43,14 @@ struct network_data {
 
 class model_data {
  public:
-       //XPRBvar x[N+1][N+1][M+1];           /* Decision variables for linear approximation = Number of arcs * Number of approximation points*/
-       XPRBvar ***x;
-       //XPRBvar Xa[N+1][N+1];                 /* Decision variables representing travelers on link a */
-       XPRBvar **Xa;
-       //XPRBvar Fa_rs[OD+1][N+1][N+1];          /* Decision variables representing travelers of O-D pair on link a */
-       XPRBvar ***Fa_rs;
-       //XPRBvar Ya[N+1][N+1];                /* Binary decision variables representing new links to be taken up/not for leader */
-       XPRBvar **Ya;
+       XPRBvar x[N+1][N+1][M+1];           /* Decision variables for linear approximation = Number of arcs * Number of approximation points*/
+       //XPRBvar ****x;
+       XPRBvar Xa[N+1][N+1];                 /* Decision variables representing travelers on link a */
+       //XPRBvar ***Xa;
+       XPRBvar Fa_rs[OD+1][N+1][N+1];          /* Decision variables representing travelers of O-D pair on link a */
+       //XPRBvar ****Fa_rs;
+       XPRBvar Ya[N+1][N+1];                /* Binary decision variables representing new links to be taken up/not for leader */
+       //XPRBvar ***Ya;
        XPRBprob p;                          /* Initialize a new problem in BCL */
        //XPRBexpr incr;              /* Increment to be added after x[1] */
        //XPRBexpr summation;         /* Auxiliary summation expression */
@@ -65,6 +65,9 @@ struct candidate {
  //unsigned int binary_enc : NL;
  unsigned char binary_enc[NL];
  float fitness_value;
+#ifdef ROULETTE_WHEEL_SELECTION
+ float selection_prob;
+#endif
 };
 
 struct genetic_algo {

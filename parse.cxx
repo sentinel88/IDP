@@ -42,7 +42,7 @@ int parse (network_data *netinfo) {
       if (CHOICE == 2) {
          if (sscanf(str, "%d %d %f %f %f", &i, &j, &ca, &ta, &ba) == 5) {
             netinfo->Ca[i][j] = ca; netinfo->Ba[i][j] = ba; netinfo->Ta[i][j] = ta;
-            // printf("\n%f %f %f\n", Ca[i][j], Ba[i][j], Ta[i][j]);
+            //printf("\n[%d %d]:%f %f %f\n", i, j, netinfo->Ca[i][j], netinfo->Ba[i][j], netinfo->Ta[i][j]);
             netinfo->existing_links[count].orig = i;
             netinfo->existing_links[count].term = j;
             netinfo->EdgeMatrix[i][j] = 1;
@@ -53,7 +53,7 @@ int parse (network_data *netinfo) {
             printf("\n%d %d %d\n", i, j, k);
             netinfo->Ta[i][j] = k;
             netinfo->existing_links[count].orig = i;
-            netinfo->existing_links[count].term = j;
+
             netinfo->EdgeMatrix[i][j] = 1;
             count++;
          }
@@ -83,7 +83,7 @@ int parse (network_data *netinfo) {
 
    fclose(datafile);
 
-#ifdef ZONES
+//#ifdef DONT_EXECUTE_NOW
    datafile = fopen(FILENAME_NEW_LINKS, "r");
 
    memset(str, 0, 100);
@@ -114,7 +114,6 @@ int parse (network_data *netinfo) {
          }
       }
    }
-#endif 
 
    printf("\nPrinting network data\n");
    for (i=1; i<=N; i++) {
@@ -123,6 +122,7 @@ int parse (network_data *netinfo) {
          printf("[%d,%d]:%.2f %.2f\t", i, j, netinfo->Demand[i][j], netinfo->Ta[i][j]);
       }
    }
+//#endif 
    printf("\nExiting parse function\n");
    return 0;
 } 
