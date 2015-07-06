@@ -47,6 +47,7 @@
 #define MAX_RETRY 3
 //#define GA_ITERATIONS 3
 //#define ROULETTE_WHEEL_SELECTION 1
+#define TOURNAMENT_SELECTION 1
 
 #define FILENAME_NET "IDP_Datasets/example_net.txt"    /* File with abosule path which has the information of the network for which you want */
 

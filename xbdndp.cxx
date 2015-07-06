@@ -100,6 +100,7 @@ int main(int argc, char **argv)
        index = -1;
        //dndp.p = XPRBnewprob("TAP");
        model_data *dndp = new model_data;
+       //model_data dndp;
        //dndp.init_model_data();
        //dndp = (model_data *)(malloc(sizeof(model_data)));
        //model_data dndp;
@@ -126,11 +127,11 @@ int main(int argc, char **argv)
        }
        remodel_problem(dndp, &netinfo, ga.population[j]);
        //end = clock();
-       //dndp.p.lpOptimize("");  
        dndp->p.lpOptimize("");  
+       //dndp->p.lpOptimize("");  
        printf("\nTravelers on link a\n");
        /***Travelers on link a***/
-       for (int m=0; m<EL; m++) {
+       /*for (int m=0; m<EL; m++) {
           orig = netinfo.existing_links[m].orig;
           term = netinfo.existing_links[m].term;
           printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
@@ -141,9 +142,9 @@ int main(int argc, char **argv)
              term = netinfo.new_links[m].term;
              printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
           }
-       }
+       }*/
        //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-       //printf("\nActual time: %lf\n", cpu_time_used);
+	       //printf("\nActual time: %lf\n", cpu_time_used);
        printf("\nObjective value: %f\n", dndp->p.getObjVal());
        candidate_fitness(dndp, &netinfo, &(ga.population[j]));
        printf("\n\n************************************************\n");
@@ -168,6 +169,11 @@ int main(int argc, char **argv)
     printf("\n\n************************************************\n");
     printf("Generation %d(Before sorting)\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, true);
+
+#ifdef TOURNAMENT_SELECTION
+    tournament_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
+    memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+#else
 
     candidates_sort(ga.population, GA_POPULATION_SIZE);
 
@@ -330,12 +336,17 @@ int main(int argc, char **argv)
       }
 #endif
    }
+#endif
 
    printf("\nFinished creating the next generation\n");
    free(ga.population);
    printf("\nFreed ga population\n");
+#ifdef TOURNAMENT_SELECTION
+   ga.population = gen_children;
+#else
    ga.population = new_gen;
    new_gen = NULL;
+#endif
 //#endif
  }
 

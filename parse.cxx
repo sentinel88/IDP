@@ -53,7 +53,7 @@ int parse (network_data *netinfo) {
             printf("\n%d %d %d\n", i, j, k);
             netinfo->Ta[i][j] = k;
             netinfo->existing_links[count].orig = i;
-
+            netinfo->existing_links[count].term = j;
             netinfo->EdgeMatrix[i][j] = 1;
             count++;
          }
