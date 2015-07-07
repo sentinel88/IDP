@@ -38,6 +38,7 @@ int main(int argc, char **argv)
 
  double last_best_fitness = 99999999999.0000;
  int last_best_iter = 0;
+ int last_best_index = -1;
  int index = -1;
  
  int i, j, k, l, m;           /* Iteration variables */
@@ -154,6 +155,13 @@ int main(int argc, char **argv)
        printf("************************************************\n");
 #ifdef ROULETTE_WHEEL_SELECTION
        total_fitness += ga.population[j].fitness_value;
+#endif
+
+#ifdef TOURNAMENT_SELECTION
+       if (last_best_fitness > ga.population[j].fitness_value) {
+          last_best_fitness = ga.population[j].fitness_value;
+          last_best_index = j;
+       }
 #endif
        
        //dndp.cleanup_model_data();

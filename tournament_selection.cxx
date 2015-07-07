@@ -104,6 +104,7 @@ while(1) {
     printf("\nCrossover point is %d\n", value);
     i1 = get_random(size/2, true);
     i2 = get_random(size/2, true);
+    if (i1 == i2) continue;
 /* Following memory copy operations do not reference the binary_enc member inside structure candidate for every gen_children because it is 
    just a shortcut since the first member in the candidate data structure is binary_enc and the memcpy will work correctly without specfiying
    the binary_enc */
