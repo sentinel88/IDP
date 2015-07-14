@@ -107,15 +107,6 @@ int main(int argc, char **argv)
        //model_data dndp;
        //memset(dndp, 0, sizeof(model_data));
        printf("\nIteration %d: Candidate %d\n", i+1, j+1);
-    /***Construction of new links***/
-      /* for (k=0; k<NL; k++) {
-          r = netinfo.new_links[k].orig;
-          s = netinfo.new_links[k].term;
-          dndp.Ya[r][s] = dndp.p.newVar("New link", XPRB_BV);
-          printf("\tbin value: %d", ga.population[j].binary_enc[k]);
-          dndp.Ya[r][s].fix(ga.population[j].binary_enc[k]);
-          printf("\nValue fixed for Ya is: %f", dndp.Ya[r][s].getSol());
-       }*/
        //start = clock();
        if (i) {
           if (cache_lookup(&ga.population[j], cache, &index, GA_POPULATION_SIZE + pool_size)) {
@@ -158,19 +149,11 @@ int main(int argc, char **argv)
 #endif
 
 #ifdef TOURNAMENT_SELECTION
-       if (last_best_fitness > ga.population[j].fitness_value) {
+       if (last_best_fitness >= ga.population[j].fitness_value) {
           last_best_fitness = ga.population[j].fitness_value;
           last_best_index = j;
        }
 #endif
-       
-       //dndp.cleanup_model_data();
-       /*for (k=0; k<NL; k++) {
-          dndp->Ya[r][s].fix(0.0);
-       }*/
-       //free(dndp);
-       //dndp.p.reset();
-       //XPRBdelprob(&(dndp.p));
        delete dndp;
     }
 
@@ -178,9 +161,17 @@ int main(int argc, char **argv)
     printf("Generation %d(Before sorting)\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, true);
 
-#ifdef TOURNAMENT_SELECTION
-    tournament_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
+#ifdef RANK_BASED_SELECTION
+    //memcpy(&gen_children[0], &ga.population[last_best_index], sizeof(candidate));
+    candidates_sort(ga.population, GA_POPULATION_SIZE);
+    assign_selection_rb_prob(ga.population, GA_POPULATION_SIZE);
     memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+    rank_based_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
+//#endif
+/*#ifdef TOURNAMENT_SELECTION
+    memcpy(&gen_children[0], &ga.population[last_best_index], sizeof(candidate));
+    tournament_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
+    memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);*/
 #else
 
     candidates_sort(ga.population, GA_POPULATION_SIZE);
@@ -347,11 +338,13 @@ int main(int argc, char **argv)
 #endif
 
    printf("\nFinished creating the next generation\n");
+#ifdef RANK_BASED_SELECTION
+   /* Do nothing as the  next generation of population is already present in ga.population */
+/*#ifdef TOURNAMENT_SELECTION
+   ga.population = gen_children;*/
+#else
    free(ga.population);
    printf("\nFreed ga population\n");
-#ifdef TOURNAMENT_SELECTION
-   ga.population = gen_children;
-#else
    ga.population = new_gen;
    new_gen = NULL;
 #endif

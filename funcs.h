@@ -53,14 +53,24 @@ int genetic_rw_crossover(genetic_algo *, candidate *, network_data);
 int select_candidate(candidate *, int);
 #endif
 
-#ifdef TOURNAMENT_SELECTION
 int get_random(int, bool);
 
+#ifdef TOURNAMENT_SELECTION
 int select_candidates_k(candidate *, int);
 
 int tournament_selection(candidate *, candidate *, network_data, int);
 
 int genetic_ts_crossover(candidate *, candidate *, network_data, int);
+#endif
+
+#ifdef RANK_BASED_SELECTION
+int assign_selection_rb_prob(candidate *, int);
+
+int select_candidate_rb(candidate *, int);
+
+int rank_based_selection(candidate *, candidate *, network_data, int);
+
+int genetic_rb_crossover(candidate *, candidate *, candidate *, network_data, int);
 #endif
 
 #endif

@@ -65,7 +65,8 @@ struct candidate {
  //unsigned int binary_enc : NL;
  unsigned char binary_enc[NL];
  float fitness_value;
-#ifdef ROULETTE_WHEEL_SELECTION
+//#ifdef ROULETTE_WHEEL_SELECTION
+#ifdef RANK_BASED_SELECTION
  float selection_prob;
 #endif
 };

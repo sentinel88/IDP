@@ -34,3 +34,5 @@ because it does not help to continue further without any more improvements. "Not
 17. We can use bitmasks to check if a previous point was selected.
 
 18. Use elitism strategy to copy over the fittest in a particular generation to the next generation.
+
+19. Use children of both the crossover orders for the same pair of parent chromosomes.
