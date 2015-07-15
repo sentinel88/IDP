@@ -36,3 +36,5 @@ because it does not help to continue further without any more improvements. "Not
 18. Use elitism strategy to copy over the fittest in a particular generation to the next generation.
 
 19. Use children of both the crossover orders for the same pair of parent chromosomes.
+
+20. We can try in sequence with 1 point, 2 point and multi point crossover in the crossover function in the order of failure of these operations to produce any valid child.

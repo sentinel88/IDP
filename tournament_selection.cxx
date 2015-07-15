@@ -28,17 +28,26 @@ int select_candidates_k(candidate *ga_cand, int size) {
 
 
 int tournament_selection(candidate *ga_cand, candidate *gen_children, network_data netinfo, int size) {
-   unsigned int i = 1;
+   unsigned int i = 0;
    int index = -1;
-   // Fill half of the next generation by doing tournament selection on the candidates of parent population
-   while (i < (size/2) ){
+   candidate *pool = (candidate *)malloc((size) * sizeof(candidate));
+   memset(pool, 0, size * sizeof(candidate));
+   printf("\nSelect candidates  for crossover operation as below\n");
+   while (i < size ){
       index = select_candidates_k(ga_cand, size);
-      memcpy(gen_children[i].binary_enc, ga_cand[index].binary_enc, NL * sizeof(unsigned char));
+      memcpy(&pool[i], &ga_cand[index], sizeof(candidate));
+      printf("\n");
+      print_candidate(&pool[i]);
+      //memcpy(gen_children[i].binary_enc, ga_cand[index].binary_enc, NL * sizeof(unsigned char));
       i++;
    }
+   print_generation(pool, size, false);
    // Remaining half of the next generation will be filled by doing crossover and mutation operations on the first half of the mating pool
-   genetic_ts_crossover(ga_cand, gen_children, netinfo, size);
+   //genetic_ts_crossover(ga_cand, gen_children, netinfo, size);
+   genetic_rb_crossover(ga_cand, pool, gen_children, netinfo, size);
    genetic_mutation(gen_children, netinfo, size);
+   free(pool);
+   memcpy(&ga_cand[1], gen_children, (size-1) * sizeof(candidate));
    return 0;
 }
 

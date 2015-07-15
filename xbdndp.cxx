@@ -161,23 +161,19 @@ int main(int argc, char **argv)
     printf("Generation %d(Before sorting)\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, true);
 
-#ifdef RANK_BASED_SELECTION
     //memcpy(&gen_children[0], &ga.population[last_best_index], sizeof(candidate));
-    candidates_sort(ga.population, GA_POPULATION_SIZE);
-    assign_selection_rb_prob(ga.population, GA_POPULATION_SIZE);
-    memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
-    rank_based_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
 //#endif
-/*#ifdef TOURNAMENT_SELECTION
-    memcpy(&gen_children[0], &ga.population[last_best_index], sizeof(candidate));
-    tournament_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
-    memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);*/
+#ifdef TOURNAMENT_SELECTION
+    if (i < (ga.iterations - 1)) {
+       memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+       tournament_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
+       memcpy(&ga.population[0], &cache[last_best_index], sizeof(candidate));
+       last_best_index = 0;
+    }
 #else
-
     candidates_sort(ga.population, GA_POPULATION_SIZE);
 
     memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
-
 /* One of the other termination criterias for genetic algorithm is objective function value */ 
     if (i == 0) {
        last_best_fitness = ga.population[0].fitness_value;
@@ -198,16 +194,22 @@ int main(int argc, char **argv)
           fitness will be on top and in such a case last_best_fitness should retain its top place */
        }
     }
-
     printf("\n\n************************************************\n");
     printf("Generation %d(After sorting)\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, true);
-#ifdef ROULETTE_WHEEL_SELECTION
+#ifdef RANK_BASED_SELECTION
+    if (i < (ga.iterations - 1)) {
+       assign_selection_rb_prob(ga.population, GA_POPULATION_SIZE);
+       memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+       rank_based_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
+    }
+#else
+/*#ifdef ROULETTE_WHEEL_SELECTION
     assign_selection_prob(ga.population, GA_POPULATION_SIZE);
     pool_size = genetic_rw_crossover(&ga, gen_children, netinfo);
-#else
+#else*/
     pool_size = genetic_sp_crossover(&ga, gen_children, netinfo);
-#endif
+//#endif
 //#ifdef _USE
     printf("\n\n************************************************\n");
     printf("Children generated after crossover for Generation %d\n", i+1);
@@ -336,12 +338,13 @@ int main(int argc, char **argv)
 #endif
    }
 #endif
+#endif
 
    printf("\nFinished creating the next generation\n");
-#ifdef RANK_BASED_SELECTION
+//#ifdef RANK_BASED_SELECTION
    /* Do nothing as the  next generation of population is already present in ga.population */
-/*#ifdef TOURNAMENT_SELECTION
-   ga.population = gen_children;*/
+#ifdef TOURNAMENT_SELECTION
+   //ga.population = gen_children;*/
 #else
    free(ga.population);
    printf("\nFreed ga population\n");

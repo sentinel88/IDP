@@ -16,11 +16,12 @@ int assign_selection_rb_prob(candidate *ga_cand, int size) {
 
 int select_candidate_rb(candidate *ga_cand, int size) {
    int i;
+   int count = 3;
    float sum = 0.0;
    double rand_elem = (double)rand()/(double)RAND_MAX;
    for (i=0; i<size; i++) {
       sum += ga_cand[i].selection_prob;
-      if (sum >= rand_elem)
+      if (sum >= rand_elem) 
          return i;
    }
    return -1;         
@@ -29,25 +30,32 @@ int select_candidate_rb(candidate *ga_cand, int size) {
 int rank_based_selection(candidate *ga_cand, candidate *gen_children, network_data netinfo, int size) {
    unsigned int i = 0;
    int index = -1;
-   candidate *pool = (candidate *)malloc((size/2) * sizeof(candidate));
-   memset(pool, 0, (size/2) * sizeof(candidate));
+   candidate *pool = (candidate *)malloc((size) * sizeof(candidate));
+   memset(pool, 0, size * sizeof(candidate));
+   //Elitism: Best candidate from current population goes to the next generation automatically as we do not touch the 0th index in population.
    // Fill the mating pool with chromosomes from the parent population to be used for crossover operation
-   while (i < (size/2) ) {
+   printf("\nSelected candidates for crossover operations are as below\n");
+   while (i < size ) {
       index = select_candidate_rb(ga_cand, size);
       memcpy(&pool[i], &ga_cand[index], sizeof(candidate));
+      print_candidate(&pool[i]);
       i++;
    }
-   // Remaining half of the next generation will be filled by doing crossover and mutation operations on the first half of the mating pool
    genetic_rb_crossover(ga_cand, pool, gen_children, netinfo, size);
    genetic_mutation(gen_children, netinfo, size);
    free(pool);
-   memcpy(ga_cand, gen_children, size * sizeof(candidate));
+   memcpy(&ga_cand[1], gen_children, (size-1) * sizeof(candidate));
    return 0;
 }
+#endif
 
 int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_children, network_data netinfo, int size) {
  int i, j, k=0, l, i1, i2, m, rand_elem, bits;
  int intervals, tempval, srand, value;
+#ifdef TWO_POINT_CROSSOVER
+ int value2;
+ int crossover[2];
+#endif
  int index[2] = {-1, -1};
  int best_fit_index = -1;
  int retry=0;
@@ -76,14 +84,14 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
  l = intervals;
  rand_val = (double)rand() / (double)RAND_MAX;
 
-while(1) {
+ while(1) {
     if (error_flag) {
           retry = 0;
           retry_attempts = 0;
           rand_val = (double)rand() / (double)RAND_MAX;
           error_flag = 0;
     }
-    if (k >= size) break;
+    if (k >= (size - 1)) break;
     if (rand_val > cross_prob) {
        rand_val = (double)rand() / (double)RAND_MAX;
        continue;
@@ -99,11 +107,28 @@ while(1) {
     if (value == 0) continue;*/
     printf("\n");
     value = get_random(NL, false);
-    printf("\nCrossover point is %d\n", value);
-    if (!retry_attempts) {
-       i1 = get_random(size/2, true);
-       i2 = get_random(size/2, true);
+#ifdef TWO_POINT_CROSSOVER
+    do {   
+       value2 = get_random(NL, false);
+    }while(value2 == value);
 
+    if (value < value2) {
+       crossover[0] = value;
+       crossover[1] = value2;
+    } else {
+       crossover[0] = value2;
+       crossover[1] = value;
+    }
+#endif
+    printf("\n");
+    printf("\nCrossover point is %d\n", value);
+#ifdef TWO_POINT_CROSSOVER
+    printf("\nSecond crossover point is %d\n", value2);
+#endif
+    if (!retry_attempts) {
+       i1 = get_random(size, true);
+       i2 = get_random(size, true);
+       printf("\n");
        if (i1 == i2) continue;
 
        best_fit_index = i1;
@@ -132,21 +157,32 @@ while(1) {
    just a shortcut since the first member in the candidate data structure is binary_enc and the memcpy will work correctly without specfiying
    the binary_enc */
 //    memcpy(&gen_children[k], &(ga->population[j].binary_enc), i);
-    /*if (switch_order) {
+    if (switch_order) {
        i1 = i1 + i2;
        i2 = i1 - i2;
        i1 = i1 - i2;
-    }*/
+       //switch_order = false;
+    }
+
+#ifdef TWO_POINT_CROSSOVER
+    memcpy((char *)&gen_children[k].binary_enc, (char *)&pool[i1].binary_enc, crossover[0]);
+    memcpy((char *)&gen_children[k].binary_enc + crossover[0], (char *)&pool[i2].binary_enc + crossover[0], crossover[1] - crossover[0]);
+    memcpy((char *)&gen_children[k].binary_enc + crossover[1], (char *)&pool[i1].binary_enc + crossover[0], NL - crossover[1]);
+    //memcpy((char *)&gen_children[k].binary_enc + crossover[0], (char *)&pool[i2].binary_enc + crossover[0], crossover[1] - crossover[0]);
+#else
     memcpy((char *)&gen_children[k].binary_enc, (char *)&pool[i1].binary_enc, value);
 //    memcpy((char *)(&gen_children[k]) + i, (char *)(&ga->population[j+1]) + i, sizeof(temp) - i);
     memcpy((char *)&gen_children[k].binary_enc + value, (char *)&pool[i2].binary_enc + value, sizeof(temp) - value);
+#endif
 
-    if (compare(gen_children[k])) {
+//Commented the below section to avoid crossover in the other direction to make the implementation easier and consider the other order only in case we need to switch the order.
+    /*if (compare(gen_children[k])) {
        memcpy((char *)&gen_children[k], &pool[i2].binary_enc, value);
-       memcpy((char *)&gen_children[k] + value, (char *)&pool[i1].binary_enc + value, sizeof(temp) - value);
-    }// else {
-      // switch_order = true;
-    //} 
+       memcpy((char *)&gen_children[k] + value, (char *)&pool[i1].binary_enc + value, NL - value);
+    } //else {
+       //switch_order == true ? false: true;
+       //switch_order = true;
+    //} */
          // memcpy((char *)&gen_children[k+1].binary_enc, (char *)&pool[i2].binary_enc, value);
          // memcpy((char *)&gen_children[k+1].binary_enc + value, (char *)&pool[i1].binary_enc + value, sizeof(temp) - value);
 // Still need to handle the scenarios where we need to decide what to do after retry attempts are equal to 5. Need to do this for all conditions below
@@ -163,6 +199,7 @@ while(1) {
           error_flag = 1;
           continue;
        }
+       switch_order = false;
        retry++;
        continue;
     }
@@ -181,6 +218,7 @@ while(1) {
           error_flag = 1;
           continue;
        }
+       switch_order = false;
        retry_attempts++;
        continue;
     }
@@ -204,6 +242,7 @@ while(1) {
           printf("\nThis crossover operation has generated a child that is a duplicate of one of the candidates in the parent population. hence \
                  we need to repeat this crossover operation for this pair of candidates with a different crossover point.\n");
           memset(&gen_children[k], 0, sizeof(candidate));
+          switch_order = false;
           retry_attempts++;
           continue;
        }
@@ -224,6 +263,7 @@ while(1) {
           continue;
        } else {
           memset(&gen_children[k], 0, sizeof(candidate));
+          switch_order = false;
           retry_attempts++;
           continue;
        }
@@ -234,7 +274,8 @@ while(1) {
     k++;
     error_flag = 0;
     rand_val = (double)rand() / (double)RAND_MAX;
-    if (k >= size) break;
+    if (k >= (size - 1)) break;
+    if (!switch_order) { retry_attempts = 1; switch_order = true; } else { switch_order = false; }
  }
  //memcpy(&gen_children[0], &temp_gen[0], sizeof(candidate) * GA_POPULATION_SIZE);
  //free(temp_gen);
@@ -242,4 +283,3 @@ while(1) {
  return 0;
 }
 
-#endif
