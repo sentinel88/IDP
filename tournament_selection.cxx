@@ -18,12 +18,31 @@ int get_random(int range, bool incl_zero) {
 
 // The below selection procedure for tournament selection is binary which means it selects 2 candidates at random and returns the fitter one.
 int select_candidates_k(candidate *ga_cand, int size) {
-   int index_arr[2] = {-1, -1};
-   index_arr[0] = get_random(size, true);
+   int index[3] = {-1, -1, -1};
+   //int index[2] = {-1, -1};
+   int i = 0;
+   double fittest = 999999999;
+   int fittest_index = 0;
+   while (i < 3) {
+      index[i] = get_random(size, true);
+      if (i && (index[i] == index[i -1])) {
+         continue;
+      } else {
+         if (fittest > ga_cand[index[i]].fitness_value) {
+            fittest = ga_cand[index[i]].fitness_value;
+            fittest_index = i;
+         }
+         i++;
+      }
+
+   }      
+   /*index_arr[0] = get_random(size, true);
    index_arr[1] = get_random(size, true);
+   index_arr[2] = get_random(size, true);
    if (ga_cand[index_arr[0]].fitness_value < ga_cand[index_arr[1]].fitness_value) 
       return index_arr[0];
-   return index_arr[1];         
+   return index_arr[1];         */
+   return fittest_index;
 }   
 
 
