@@ -21,7 +21,7 @@ int remodel_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
 
  XPRBexpr incr;              /* Increment to be added after x[1] */
  XPRBexpr summation;         /* Auxiliary summation expression */
- XPRBexpr increment[N+1][N+1];
+ XPRBexpr increment[EL+NL];
 
  float points[M+1], slopes[M+1];        /* Approximation points,  Function to approximate is (x^5) */
  int i, j, k, l;           /* Iteration variables */
@@ -194,7 +194,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
           } else {*/
              if ( (r == j) && netinfo->Ta[j][s] != 0.0 && netinfo->EdgeMatrix[j][s] == 1) 
                 summation += dndp->Fa_rs[(N*(j-1))+i][k];
-             if ( (s == j) && netinfo->Ta[s][j] != 0.0 && netinfo->EdgeMatrix[s][j] == 1)
+             if ( (s == j) && netinfo->Ta[r][j] != 0.0 && netinfo->EdgeMatrix[r][j] == 1)
                 incr += dndp->Fa_rs[(N*(j-1))+i][k];          
          // }
        }
@@ -206,7 +206,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
                 summation += dndp->Fa_rs[(N*(j-1))+i][EL+k];
              }
              if (j == s) {
-                incr += dndp->Fa_rs[(N*(j-1))+i][k];
+                incr += dndp->Fa_rs[(N*(j-1))+i][EL+k];
              }
           }
        }
@@ -226,7 +226,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
        if (netinfo->Demand[i][j] != 0.0) {
        incr = 0;
        summation = 0;
-       for (k=1; k<EL; k++) {
+       for (k=0; k<EL; k++) {
             r = netinfo->existing_links[k].orig;
             s = netinfo->existing_links[k].term;
             if (r != j && s != j)
@@ -237,19 +237,21 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
              if (netinfo->EdgeMatrix[k][j] == 1)
                 summation += dndp->Fa_rs[(N*(i-1))+j][k][j];
           } else {*/
-             if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1) 
-                summation += dndp->Fa_rs[(N*(i-1))+j][k][j];
-             if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1)
-                incr += dndp->Fa_rs[(N*(i-1))+j][j][k];          
-         // }
+             if ( (r == j) && netinfo->Ta[j][s] != 0.0 && netinfo->EdgeMatrix[j][s] == 1) 
+                incr += dndp->Fa_rs[(N*(i-1))+j][k];          
+             if ( (s == j) && netinfo->Ta[r][j] != 0.0 && netinfo->EdgeMatrix[r][j] == 1)
+                summation += dndp->Fa_rs[(N*(i-1))+j][k];
+
        }
        for (k=0; k<NL; k++) {
           if (ga_cand.binary_enc[k]) {
-             if (j == netinfo->new_links[k].orig) {
-                incr += dndp->Fa_rs[(N*(i-1))+j][j][netinfo->new_links[k].term];
+             r = netinfo->new_links[k].orig;
+             s = netinfo->new_links[k].term;
+             if (j == r) {
+                incr += dndp->Fa_rs[(N*(i-1))+j][EL+k];
              }
-             if (j == netinfo->new_links[k].term) {
-                summation += dndp->Fa_rs[(N*(i-1))+j][netinfo->new_links[k].orig][j];
+             if (j == s) {
+                summation += dndp->Fa_rs[(N*(i-1))+j][EL+k];
              }
           }
        }
@@ -280,26 +282,30 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
        if (j!=r && j!=s) { 
        summation = 0;
        incr = 0;
-       for (k=1; k<=N; k++) {
+       for (k=0; k<EL; k++) {
+            r = netinfo->existing_links[k].orig;
+            s = netinfo->existing_links[k].term;
       /*    if (ZONES) {
              if (netinfo->EdgeMatrix[j][k] == 1) 
                 incr += dndp->Fa_rs[i][j][k];
              if (netinfo->EdgeMatrix[k][j] == 1)
                 summation += dndp->Fa_rs[i][k][j];
           } else {*/
-          if (netinfo->Ta[k][j] != 0.0 && netinfo->EdgeMatrix[k][j] == 1)
-             summation += dndp->Fa_rs[i][k][j];
-          if (netinfo->Ta[j][k] != 0.0 && netinfo->EdgeMatrix[j][k] == 1)
-             incr += dndp->Fa_rs[i][j][k];
+          if ((s == j) && netinfo->Ta[r][j] != 0.0 && netinfo->EdgeMatrix[r][j] == 1)
+             summation += dndp->Fa_rs[i][k];
+          if ((r == j) && netinfo->Ta[j][s] != 0.0 && netinfo->EdgeMatrix[j][s] == 1)
+             incr += dndp->Fa_rs[i][k];
          // }
        }
        for (k=0; k<NL; k++) {
           if (ga_cand.binary_enc[k]) {
-             if (j == netinfo->new_links[k].orig) {
-                incr += dndp->Fa_rs[i][j][netinfo->new_links[k].term];
+             r = netinfo->new_links[k].orig;
+             s = netinfo->new_links[k].term;
+             if (j == r) {
+                incr += dndp->Fa_rs[i][EL+k];
              }
-             if (j == netinfo->new_links[k].term) {
-                summation += dndp->Fa_rs[i][netinfo->new_links[k].orig][j];
+             if (j == s) {
+                summation += dndp->Fa_rs[i][EL+k];
              }
           }
        }
@@ -318,8 +324,8 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
     if (ga_cand.binary_enc[i]) {
        j = netinfo->new_links[i].orig;
        k = netinfo->new_links[i].term;
-       summation += (netinfo->ba[j][k] * dndp->Ya[j][k]);
-       (dndp->p).newCtr("bigM constraint", dndp->Xa[j][k] <= (bigM * (dndp->Ya[j][k])) );
+       summation += (netinfo->ba[j][k] * dndp->Ya[i]);
+       (dndp->p).newCtr("bigM constraint", dndp->Xa[EL+k] <= (bigM * (dndp->Ya[i])) );
     }
  }
 
@@ -328,10 +334,13 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
  cout<<"\nBefore objective\n";
 
 /****OBJECTIVE****/
- for (i=1; i<=N; i++) {
+/* for (i=1; i<=N; i++) {
     printf("\n");
     for (j=1; j<=N; j++) {
-    if (netinfo->Ta[i][j] != 0.0 && netinfo->EdgeMatrix[i][j] == 1) { //Condition to determine whether to have constraints for this edge or not
+    if (netinfo->Ta[i][j] != 0.0 && netinfo->EdgeMatrix[i][j] == 1) { //Condition to determine whether to have constraints for this edge or not*/
+ for (l=0; l<EL; l++) {
+       i = netinfo->existing_links[l].orig;
+       j = netinfo->existing_links[l].term;
        cout<<i<<" "<<j<<"\t";
        ta = netinfo->Ta[i][j];
        //xa = Xa[i][j];
@@ -339,17 +348,17 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
        ba = netinfo->Ba[i][j];
        Constant = ( (ta * ba)/(5 * pow(ca, 4)) );
        //dndp->increment[i][j] = 0;
-       increment[i][j] = 0;
+       increment[l] = 0;
        for (k=2; k<=M; k++) {
-          increment[i][j] += ( (slopes[k] - slopes[k-1]) * dndp->x[i][j][k] );
+          increment[l] += ( (slopes[k] - slopes[k-1]) * dndp->x[l][k] );
           //p.newCtr("Increments", x[i][j][1] <= (x[i][j][k] + points[k-1]) );
-          (dndp->p).newCtr("Increments", dndp->Xa[i][j] <= (dndp->x[i][j][k] + points[k-1]) );
+          (dndp->p).newCtr("Increments", dndp->Xa[l] <= (dndp->x[l][k] + points[k-1]) );
        }
        if (CHOICE == 2) {
-          summation += (ta * dndp->Xa[i][j]) + (Constant * (0 + (slopes[1]*dndp->Xa[i][j]) + increment[i][j]) );  /* 0 represents function value at X{0} which is                                                                                                zero since the non linear function here is x^5*/
+          summation += (ta * dndp->Xa[l]) + (Constant * (0 + (slopes[1]*dndp->Xa[l]) + increment[l]) );  /* 0 represents function value at X{0} which is                                                                                                zero since the non linear function here is x^5*/
        } else {
           //summation += (ta * Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*x[i][j][1]) + increment[i][j]) );
-          summation += (ta * dndp->Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*dndp->Xa[i][j]) + increment[i][j]) );
+          summation += (ta * dndp->Xa[l]) + ( (0.008/5) * (0 + (slopes[1]*dndp->Xa[l]) + increment[l]) );
        }
     } 
     }
@@ -364,19 +373,19 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
        //ba = netinfo->Ba[i][j];
        ba = 0.15;
        Constant = ( (ta * ba)/(5 * pow(ca, 4)) );
-       increment[i][j] = 0;
+       increment[EL+l] = 0;
        for (k=2; k<=M; k++) {
-          increment[i][j] += ( (slopes[k] - slopes[k-1]) * dndp->x[i][j][k] );
+          increment[EL+l] += ( (slopes[k] - slopes[k-1]) * dndp->x[EL+l][k] );
           //p.newCtr("Increments", x[i][j][1] <= (x[i][j][k] + points[k-1]) );
-          (dndp->p).newCtr("Increments", dndp->Xa[i][j] <= (dndp->x[i][j][k] + points[k-1]) );
+          (dndp->p).newCtr("Increments", dndp->Xa[EL+l] <= (dndp->x[EL+l][k] + points[k-1]) );
        }
 //#ifdef _CODE
        if (CHOICE == 2) {
-          summation += (ta * dndp->Xa[i][j]) + (Constant * (0 + (slopes[1]*dndp->Xa[i][j]) + increment[i][j]) );  /* 0 represents function value at X{0} which is                                                                                                zero since the non linear function here is x^5*/
+          summation += (ta * dndp->Xa[EL+l]) + (Constant * (0 + (slopes[1]*dndp->Xa[EL+l]) + increment[EL+l]) );  /* 0 represents function value at X{0} which is                                                                                                zero since the non linear function here is x^5*/
        } else {
 //#endif 
           //summation += (ta * Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*x[i][j][1]) + increment[i][j]) );
-          summation += (ta * dndp->Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*dndp->Xa[i][j]) + increment[i][j]) );
+          summation += (ta * dndp->Xa[EL+l]) + ( (0.008/5) * (0 + (slopes[1]*dndp->Xa[EL+l]) + increment[EL+l]) );
        }
     }  
  }
