@@ -1,0 +1,4 @@
+Enter main
+
+WARNING:  Please remember to change the settings for low budget problems to avoid getting stuck in an infinite loop. For low budget problems check_duplicate function is not a good idea as there are few feasible candidates in problems for low budget and one cannot avoid duplicates
+

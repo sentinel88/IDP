@@ -11,7 +11,11 @@ int init_net_data(network_data *netinfo) {
    netinfo->Ca = (float **)(malloc( (N+1) * sizeof(float *) ));
    netinfo->Ba = (float **)(malloc( (N+1) * sizeof(float *) ));
    netinfo->Ta = (float **)(malloc( (N+1) * sizeof(float *) ));
+#ifdef ZONES
+   netinfo->Demand = (float **)(malloc( (ZONES+1) * sizeof(float *) ));
+#else
    netinfo->Demand = (float **)(malloc( (N+1) * sizeof(float *) ));
+#endif
    netinfo->ba = (float **)(malloc( (N+1) * sizeof(float *) ));
    netinfo->EdgeMatrix = (int **)(malloc( (N+1) * sizeof(int *) ));
    netinfo->existing_links = (link_set *)(malloc( EL * sizeof(link_set *) ));
@@ -21,7 +25,11 @@ int init_net_data(network_data *netinfo) {
       netinfo->Ca[i] = (float *)malloc( (N+1) * sizeof(float));
       netinfo->Ba[i] = (float *)malloc( (N+1) * sizeof(float));
       netinfo->Ta[i] = (float *)malloc( (N+1) * sizeof(float));
+#ifdef ZONES
+      netinfo->Demand[i] = (float *)malloc( (ZONES+1) * sizeof(float));
+#else
       netinfo->Demand[i] = (float *)malloc( (N+1) * sizeof(float));
+#endif
       netinfo->ba[i] = (float *)malloc( (N+1) * sizeof(float));
       netinfo->EdgeMatrix[i] = (int *)malloc( (N+1) * sizeof(int));
    }
@@ -50,10 +58,18 @@ int cleanup_net_data(network_data *netinfo) {
       free(netinfo->Ca[i]);
       free(netinfo->Ba[i]);
       free(netinfo->Ta[i]);
+#ifndef ZONES
       free(netinfo->Demand[i]);
+#endif
       free(netinfo->ba[i]);
       free(netinfo->EdgeMatrix[i]);
    }
+
+#ifdef ZONES
+   for (i=0; i<=ZONES; i++) {
+      free(netinfo->Demand[i]);
+   }
+#endif
 
    free(netinfo->Ca);
    free(netinfo->Ba);

@@ -21,15 +21,15 @@
 11. If zero no. of children have been generated from crossover operations since the last few iterations then we can stop the genetic algorithm
 because it does not help to continue further without any more improvements. "Not correct".
 
-12. Siouxfalls network not producing correct values. We can try to test by just solving the TAP. For this case, we can add new links to the existing links itself and solve the TAP to verify. Produces correctly now as the problem was not defining the capacities for new links due to which the objective function value was always appearing to be the same.
+12. Siouxfalls network not producing correct values. We can try to test by just solving the TAP. For this case, we can add new links to the existing links itself and solve the TAP to verify. Produces correctly now as the problem was not defining the capacities for new links due to which the objective function value was always appearing to be the same. [DONE]
 
 13. Cache should not only store the previous generation but also the generation of children.
 
 14. Removal of candidates in the pool to avoid selecting the same. We could restore the hole after removal of candidate in the pool by moving the last candidate in the pool to this hole and using realloc to shrink the pool's memory size.
 
-15. We can optimize the space usage by having for each OD pair in Fa_rs only EL+NL number of cells.
+15. We can optimize the space usage by having for each OD pair in Fa_rs only EL+NL number of cells. [DONE]
 
-16. Optimize the XPRB.....   2D array data members in the model data structure and minimize their space usage. It looks like the biggest bottleneck in performance.
+16. Optimize the XPRB.....   2D array data members in the model data structure and minimize their space usage. It looks like the biggest bottleneck in performance. [DONE]
 
 17. We can use bitmasks to check if a previous point was selected.
 

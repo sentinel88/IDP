@@ -431,8 +431,8 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
           if (netinfo->Demand[r][s]) 
              summation += dndp->Fa_rs[k][i][j];
        }
-    }
     (dndp->p).newCtr("Flow Aggregation", dndp->Xa[i][j] == summation);
+    }
  }
 
  cout<<"\nFlow aggregation constraints declared\n";
@@ -641,7 +641,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
  (dndp->p).setSense(XPRB_MINIM);
  //(dndp->p).lpOptimize("");         /* Solve the LP-problem */
  //p.mipOptimize("");         /* Solve the LP-problem */
- //(dndp->p).exportProb(XPRB_LP);
+ (dndp->p).exportProb(XPRB_LP);
 
  return 0;  
 }

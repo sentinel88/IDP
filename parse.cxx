@@ -7,6 +7,7 @@ int parse (network_data *netinfo) {
    char str[100], *temp;
    float value;
    int num, count = 0;
+   int valcount = 0;
    int linecount = 0;
    int i, j, k;
    float ta, ba, ca;
@@ -25,7 +26,12 @@ int parse (network_data *netinfo) {
       netinfo->Ta[i] = (float *)malloc( (N+1) * sizeof(float));
    } */
 
-   //memset(netinfo->Demand, 0, sizeof(netinfo->Demand));
+/*#ifdef ZONES
+   memset(netinfo->Demand, 0, sizeof(float *) * (ZONES+1));
+#else
+   memset(netinfo->Demand, 0, sizeof(float *) * (N+1));
+#endif*/
+
    //memset(netinfo->Ta, 0, sizeof(netinfo->Ta));
 
    datafile = fopen(FILENAME_NET, "r");   /*Open datafile for read access*/
@@ -64,6 +70,9 @@ int parse (network_data *netinfo) {
    fclose(datafile);
    
    count = 0;
+#ifdef ZONES
+   valcount = 0;
+#endif
 
    printf("\nPartial parsing finished\n");
 
@@ -75,7 +84,18 @@ int parse (network_data *netinfo) {
       while (temp != NULL) {
          if (sscanf(temp, "%d :%f", &num, &value) == 2) {
             netinfo->Demand[count + 1][num] = value;
-            if (num == N) count++;
+            #ifdef ZONES
+               valcount++;
+               if (valcount == ZONES-1) {
+                  netinfo->Demand[count+1][count+1] = 0;
+                  count++;
+                  valcount = 0;
+               }
+            #else
+               if (num == N) {
+                  count++;
+               }
+            #endif
          }
          temp = strtok(NULL, ";");
       }
@@ -114,7 +134,7 @@ int parse (network_data *netinfo) {
          }
       }
    }
-
+#ifdef DONT_EXECUTE_NOW
    printf("\nPrinting network data\n");
    for (i=1; i<=N; i++) {
       printf("\n");
@@ -122,6 +142,7 @@ int parse (network_data *netinfo) {
          printf("[%d,%d]:%.2f %.2f\t", i, j, netinfo->Demand[i][j], netinfo->Ta[i][j]);
       }
    }
+#endif
 //#endif 
    printf("\nExiting parse function\n");
    return 0;

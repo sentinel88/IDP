@@ -81,9 +81,9 @@ int main(int argc, char **argv)
 
  //i = 0;
  //while (i <= ga.population_size) {
-//#ifdef DONT_EXECUTE_NOW
+#ifdef DONT_EXECUTE_NOW
     ret = generate_rand(&ga, netinfo);   
-//#endif
+#endif
   //  i++;
  //}
 
@@ -97,7 +97,8 @@ int main(int argc, char **argv)
     printf("Generation %d\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, false);
        //model_data dndp;
-    for (j=0; j<ga.population_size; j++) {
+    //for (j=0; j<ga.population_size; j++) {
+    for (j=0; j<1; j++) {
        index = -1;
        //dndp.p = XPRBnewprob("TAP");
        model_data *dndp = new model_data;
@@ -123,18 +124,20 @@ int main(int argc, char **argv)
        //dndp->p.lpOptimize("");  
        printf("\nTravelers on link a\n");
        /***Travelers on link a***/
-       /*for (int m=0; m<EL; m++) {
+       for (int m=0; m<EL; m++) {
           orig = netinfo.existing_links[m].orig;
           term = netinfo.existing_links[m].term;
-          printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
+          //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
+          printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[m]).getSol());
        }
        for (int m=0; m<NL; m++) {
           if (ga.population[j].binary_enc[m]) {
              orig = netinfo.new_links[m].orig;
              term = netinfo.new_links[m].term;
-             printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
+             //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
+             printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[EL+m]).getSol());
           }
-       }*/
+       }
        //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 	       //printf("\nActual time: %lf\n", cpu_time_used);
        printf("\nObjective value: %f\n", dndp->p.getObjVal());

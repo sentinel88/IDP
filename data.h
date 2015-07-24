@@ -43,17 +43,10 @@ struct network_data {
 
 class model_data {
  public:
-       XPRBvar Ya[N+1][N+1];                /* Binary decision variables representing new links to be taken up/not for leader */
-       XPRBvar x[N+1][N+1][M+1];           /* Decision variables for linear approximation = Number of arcs * Number of approximation points*/
-       //XPRBvar ****x;
-       XPRBvar Xa[N+1][N+1];                 /* Decision variables representing travelers on link a */
-       //XPRBvar ***Xa;
-       XPRBvar Fa_rs[OD+1][N+1][N+1];          /* Decision variables representing travelers of O-D pair on link a */
-       //XPRBvar ****Fa_rs;
-       //XPRBvar ***Ya;
-       //XPRBexpr incr;              /* Increment to be added after x[1] */
-       //XPRBexpr summation;         /* Auxiliary summation expression */
-       //XPRBexpr increment[N+1][N+1];   /* Summation expressions for each arc that is used to replace the non linear term in TAP objective */
+       XPRBvar Ya[NL];                /* Binary decision variables representing new links to be taken up/not for leader */
+       XPRBvar x[EL+NL][M+1];           /* Decision variables for linear approximation = Number of arcs * Number of approximation points*/
+       XPRBvar Xa[EL+NL];                 /* Decision variables representing travelers on link a */
+       XPRBvar Fa_rs[OD+1][EL+NL];          /* Decision variables representing travelers of O-D pair on link a */
        XPRBprob p;                          /* Initialize a new problem in BCL */
        
        int init_model_data(); /* Allocate and initialize(may not be needed as the BCL library may itself be doing it already while creating

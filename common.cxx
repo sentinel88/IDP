@@ -48,11 +48,11 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
       term = netinfo->existing_links[i].term;
       if (CHOICE == 2) {
          //summation += (netinfo->Ta[orig][term] * (1 + (netinfo->Ba[orig][term] * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
-         summation += (dndp->Xa[orig][term].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
+         summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4))) );
 
       } else {
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());
-         summation += (dndp->Xa[orig][term].getSol()) * (netinfo->Ta[orig][term] + (0.008 * pow(dndp->Xa[orig][term].getSol(), 4)));
+         summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term] + (0.008 * pow(dndp->Xa[i].getSol(), 4)));
       }
    }
 
@@ -63,11 +63,11 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
 //#ifdef _CODE   
    if (CHOICE == 2) {
          //summation += (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
-         summation += (dndp->Xa[orig][term].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
+         summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4))) );
       } else {
 //#endif
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());
-         summation += (dndp->Xa[orig][term].getSol()) * (netinfo->Ta[orig][term] + (0.008 * pow(dndp->Xa[orig][term].getSol(), 4)));
+         summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] + (0.008 * pow(dndp->Xa[EL+i].getSol(), 4)));
       }
    } }
 
