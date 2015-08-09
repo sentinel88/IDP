@@ -38,3 +38,8 @@ because it does not help to continue further without any more improvements. "Not
 19. Use children of both the crossover orders for the same pair of parent chromosomes.
 
 20. We can try in sequence with 1 point, 2 point and multi point crossover in the crossover function in the order of failure of these operations to produce any valid child.
+
+21. To test the correctness of the solution, the below approach can be followed:
+	From the data on OD flows, compute internally the total incoming and outgoing flow for every node. Compare this with the same data
+	that we can compute using the flows obtained by solving a TAP everytime. The difference in these values could be represented
+	as an absolute value.

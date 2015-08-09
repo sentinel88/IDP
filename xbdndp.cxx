@@ -41,7 +41,7 @@ int main(int argc, char **argv)
  int last_best_index = -1;
  int index = -1;
  
- int i, j, k, l, m;           /* Iteration variables */
+ int i, j, k, l, m, n;           /* Iteration variables */
  float ta, xa, ba, ca, Constant;
  int r, s, flag = 0, count = 0, ret = 0, pool_size = 0;
  int orig, term;
@@ -81,9 +81,9 @@ int main(int argc, char **argv)
 
  //i = 0;
  //while (i <= ga.population_size) {
-#ifdef DONT_EXECUTE_NOW
+//#ifdef DONT_EXECUTE_NOW
     ret = generate_rand(&ga, netinfo);   
-#endif
+//#endif
   //  i++;
  //}
 
@@ -97,8 +97,8 @@ int main(int argc, char **argv)
     printf("Generation %d\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, false);
        //model_data dndp;
-    //for (j=0; j<ga.population_size; j++) {
-    for (j=0; j<1; j++) {
+    for (j=0; j<ga.population_size; j++) {
+    //for (j=0; j<1; j++) {
        index = -1;
        //dndp.p = XPRBnewprob("TAP");
        model_data *dndp = new model_data;
@@ -129,6 +129,12 @@ int main(int argc, char **argv)
           term = netinfo.existing_links[m].term;
           //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
           printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[m]).getSol());
+#ifdef _DEBUG
+          for (int n=1; n<=M; n++) {
+             printf("%lf\t", dndp->x[m][n].getSol());
+          }
+          printf("\n\n");
+#endif
        }
        for (int m=0; m<NL; m++) {
           if (ga.population[j].binary_enc[m]) {
@@ -136,6 +142,12 @@ int main(int argc, char **argv)
              term = netinfo.new_links[m].term;
              //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
              printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[EL+m]).getSol());
+#ifdef _DEBUG
+             for (int n=1; n<=M; n++) {
+                printf("%lf\t", dndp->x[EL+m][n].getSol());
+             }
+             printf("\n\n");
+#endif
           }
        }
        //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;

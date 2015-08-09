@@ -31,7 +31,8 @@
 #define bigM 150000000
 //#define step_size 0.2
 //#define step_size 2
-#define step_size 100
+//#define step_size 100
+#define step_size 80
 //#define step_size 1250
 //#define step_size 313
 #define mut_prob 0.15
@@ -45,7 +46,7 @@
 //#define B  10      /* Project budget */
 #define GA_POPULATION_SIZE 10
 //#define GA_POPULATION_SIZE 1
-#define GA_ITERATIONS 1
+#define GA_ITERATIONS 5
 #define MAX_BEST_ITERATIONS 4
 #define MAX_RETRY 3
 #define TWO_POINT_CROSSOVER 1

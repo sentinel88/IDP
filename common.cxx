@@ -40,6 +40,7 @@ int encode_ga_cand(candidate *ga_cand, int value) {
 int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_cand) {
    float summation = 0.0;
    int i = 0, orig, term;
+   int ba = 1;
 
    printf("\nEntering candidate fitness function\n");
 
@@ -48,7 +49,8 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
       term = netinfo->existing_links[i].term;
       if (CHOICE == 2) {
          //summation += (netinfo->Ta[orig][term] * (1 + (netinfo->Ba[orig][term] * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
-         summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4))) );
+         //summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4))) );
+         summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term]  + (netinfo->Ba[orig][term] * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4)) );
 
       } else {
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());
@@ -63,7 +65,9 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
 //#ifdef _CODE   
    if (CHOICE == 2) {
          //summation += (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
-         summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4))) );
+         //summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4))) );
+         //summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] + (netinfo->Ba[orig][term] * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4)) );
+         summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] + (ba * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4)) );
       } else {
 //#endif
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());

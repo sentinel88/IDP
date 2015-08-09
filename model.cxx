@@ -131,8 +131,8 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
     summation = 0;
     for (k=1; k<=OD; k++) {
 #if ZONES 
-       r = (i/ZONES);
-       s = (i%ZONES);
+       r = (k/ZONES);
+       s = (k%ZONES);
        r = (r==0)?1 : (s==0?r : (r+1));
        s = (s==0)?ZONES : s;    
 #else
@@ -154,8 +154,8 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
        summation = 0;
        for (k=1; k<=OD; k++) {
 #if ZONES 
-          r = (i/ZONES);
-          s = (i%ZONES);
+          r = (k/ZONES);
+          s = (k%ZONES);
           r = (r==0)?1 : (s==0?r : (r+1));
           s = (s==0)?ZONES : s;    
 #else
@@ -307,8 +307,8 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
              }
           }
        }
-       (dndp->p).newCtr("destination", summation == netinfo->Demand[i][j]);
-       (dndp->p).newCtr("Demand at destination", incr == 0);
+       (dndp->p).newCtr("Demand at destination", summation == netinfo->Demand[i][j]);
+       (dndp->p).newCtr("destination", incr == 0);
        }
     }
  }
@@ -377,7 +377,8 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
        j = netinfo->new_links[i].orig;
        k = netinfo->new_links[i].term;
        summation += (netinfo->ba[j][k] * dndp->Ya[i]);
-       (dndp->p).newCtr("bigM constraint", dndp->Xa[EL+k] <= (bigM * (dndp->Ya[i])) );
+       //(dndp->p).newCtr("bigM constraint", dndp->Xa[EL+k] <= (bigM * (dndp->Ya[i])) );
+       (dndp->p).newCtr("bigM constraint", dndp->Xa[EL+i] <= (bigM * (dndp->Ya[i])) );
     }
  }
 
@@ -424,7 +425,8 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
        ta = netinfo->Ta[i][j];
        ca = netinfo->Ca[i][j];
        //ba = netinfo->Ba[i][j];
-       ba = 0.15;
+       //ba = 0.15;  //Temporarily commented out for mitte center dataset
+       ba = 1.0;
        Constant = ( (ta * ba)/(5 * pow(ca, 4)) );
        increment[EL+l] = 0;
        for (k=2; k<=M; k++) {
@@ -449,7 +451,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
  (dndp->p).setSense(XPRB_MINIM);
  //(dndp->p).lpOptimize("");         /* Solve the LP-problem */
  //p.mipOptimize("");         /* Solve the LP-problem */
-(dndp->p).exportProb(XPRB_LP);
+ (dndp->p).exportProb(XPRB_LP);
 
  return 0;  
 }
