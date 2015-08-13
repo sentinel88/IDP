@@ -1,0 +1,214 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+%\usepackage[a4paper, total={4in, 6in},margin=4in]{geometry}
+%\usepackage[export]{adjustbox}
+%\usepackage[paperwidth=7.0in, paperheight=10.7in]{geometry}
+%\usepackage{layout}
+%\layout{layoutwidth=180mm,layoutheight=227mm}
+%\geometry{a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm,heightrounded}
+%\usepackage[a4paper]{geometry}
+\usepackage{listings}
+\usepackage{subfigure}
+\usepackage{wrapfig}
+\usepackage[hyperindex=false,colorlinks=false]{hyperref}
+\usepackage{fullpage}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\DeclareMathSizes{20}{20}{20}{20}
+
+\tikzstyle{startstop}=[rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black,fill=red!30]
+
+\tikzstyle{io}=[trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=blue!30]
+
+\tikzstyle{process}=[rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black,fill=orange!30]
+
+\tikzstyle{decision}=[diamond, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=green!30]
+
+\tikzstyle{arrow}=[thick,->,>=stealth]
+
+\begin{document}
+
+\begin{titlepage}
+
+%\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+\newcommand{\HRule}{\rule{135mm}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+
+%----------------------------------------------------------------------------------------
+%   HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE Technische Universit{\"a}t M{\"u}nchen}\\[1.5cm] % Name of your university/college
+\textsc{\Large Logistics and Supply Chain Management}\\[0.5cm] % Major heading such as course name
+
+%----------------------------------------------------------------------------------------
+%   TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \Large \bfseries Implementation of a Metaheuristic\\for the\\Discrete Network Design Problem}\\[0.5cm] % Title of your document
+\HRule \\[1.5cm]
+
+%----------------------------------------------------------------------------------------
+%   AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Student:}\\
+Nishanth Nagendra % Your name
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth} 
+\begin{flushright} \large
+\emph{Supervisor:} \\
+Prof. Dr. Stefan Minner \\~\\ % Supervisor's Name
+\emph{Advisor:} \\
+Dipl.-Math. Pirmin Fontaine % Advisor's Name
+\end{flushright}
+\end{minipage}\\[2cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+%\Large \emph{Author:}\\
+%John \textsc{Smith}\\[3cm] % Your name
+
+%----------------------------------------------------------------------------------------
+%   DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+
+\end{titlepage}
+
+\begin{center}
+\huge \bfseries Abstract
+\end{center}
+
+\vspace{15mm}
+
+The field of transportation planning involves a large class of problems that are characterized by multiple levels of decision making. Examples include selection of links for capacity improvements(network design), toll setting, traffic signal setting etc. In each of these problems, government or industry officials make one set of decisions to improve the network performance and at another level users make choices with regard to route, origin-destination etc. The discrete network design problem(DNDP) is one such problem which deals with the selection of link additions to an existing road network, with given demand from each origin to destination. The objective is to make an optimal investment decision to minimize the total travel cost in the network, while accounting for the route choice behavior of network users. This optimization problem is recognized to be NP hard because it is computationally difficult due to its non convexity owing to the bilevel nature and non-linear objective functions in most of the real cases. Finding exact or globally optimum solutions for such problems is very difficult. In mathematical optimization, a metaheuristic is a general high level procedure that can be quickly applied to different kinds of problems to provide a sufficiently good solution especially when there is limited computation capacity. These techniques sample a set of solutions which is too large to be completely sampled. Genetic algorithm is one such kind of a metaheuristic which tries to imitate the evolution of population by starting with a random set of candidate solutions that is evolved towards better solutions. The aim of the project is to implement this metaheuristic on the DNDP and to experiment with small to large size datasets(networks) widely mentioned in the literature to derive empirical results and to conclude on the effectiveness, solvability and quality of solutions obtained.
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Introduction}
+The network design problem(NDP) is concerned with the modification of a transport infrastructure by adding new links or improving existing ones. In most applications, one is interested in selecting from among a relatively small set of improvements to an existing network rather than designing an entirely new network from scratch. Network design problems arise in many transportation modes: urban mass transit, highway, rail etc. Most applications have been in highway improvement, however. The discrete network design problem(DNDP) deals with the selection of link additions to an existing road network, with given demand from each origin to destination. The objective is to make an optimal investment decision in order to minimize the total travel cost in the network, while accounting for the route choice behavior of network users. Another form of this problem is the continuous network design problem(CNDP) which deals with the optimal capacity expansion of existing links.\par
+\noindent
+\\These combinatorial problems are recognized as NP Hard due to the considerable amount of computational difficulties faced in trying to solve them because of their non-convex nature and due to the form of a bi-level mixed integer program with a large number of 0-1 variables. This Inter disciplinary project deals with only the discrete form of the NDP and considers the following kind of problem which often arises in transportation planning: minimize total travel expenditure subject to a budget constraint on the total construction cost of new links.
+ 
+\subsection{Problem Formulation}
+Bilevel problems are mathematical programming problems consisting of a special kind of optimization where one problem is embedded within another. The outer optimization task is commonly referred to as the upper level(or the leader) optimization task with a nested optimization problem(the lower one - also called follower) in the constraints. First, the leader has to decide over a subset of the decision variables which effects the objective value of the follower. Afterwards, the follower has to decide over the other subset of decision variables, which affects the objective value of the leader. The problem we are considering to solve here is a bilevel linear program with binary leader variables and continuous follower variables. An application of bilevel programming is network design problems where the objective of the network designer is to reduce congestion in the network and the objective of the follower is to find the fastest way from origin to destination. Existing methods for solving this problem can be roughly divided into the following categories:\par
+\begin{itemize}
+\item Methods based on vertex enumeration
+\item Methods based on kuhn tucker conditions
+\item Fuzzy approach
+\item Methods based on meta heuristics
+\end{itemize}
+
+\subsection{Model}
+Travel time function on link a: 
+\boldmath\begin{equation*}
+t_{a}\left(x\right) = T_{a}\left(1+B_{a}\left(\frac{x}{c_a}\right)^4\right)
+\end{equation*}
+Objective:
+\boldmath\begin{equation*}
+min\sum_{a\in{A}} \int\limits_{0}^{x_a}t_{a}\left(x\right)dx = min\sum_{a\in{A}}\left(T_{a}x_{a}+\frac{T_{a}x_{a}}{5{c_{a}}^4}{x_{a}}^5\right) 
+\end{equation*}
+Demand at origin: 
+\boldmath\begin{equation*}
+\sum_{j\in{N}} f_{rj}^{rs} = q_{rs}\  \wedge \ \sum_{j\in{N}} {f_{jr}}^{rs} = 0 \ \ \ \ \forall{r}\in{R},\forall{s}\in{S} 
+\end{equation*}
+Demand at destination: 
+\boldmath\begin{equation*}
+\sum_{i\in{N}} f_{is}^{rs} = q_{rs}\  \wedge \ \sum_{i\in{N}} {f_{si}}^{rs} = 0 \ \ \ \ \forall{r}\in{R},\forall{s}\in{S} 
+\end{equation*}
+Flow conservation: 
+\boldmath\begin{equation*}
+\sum_{i\in{N}} f_{ik}^{rs} = \sum_{j\in{N}} {f_{kj}}^{rs} \ \ \ \ \forall{r}\in{R},\forall{s}\in{S},{k}\in{N}{\backslash}{\{}r,s{\}}
+\end{equation*}
+Flow aggregation: 
+\boldmath\begin{equation*}
+x_{a} = \sum_{r\in{R},s\in{S}} {f_{a}}^{rs} \ \ \ \ \forall{a}\in{A}
+\end{equation*}
+Non negativity: 
+\boldmath\begin{equation*}
+ f_{a}^{rs} \geq 0 \ \ \ \ \forall{r}\in{R},\forall{s}\in{S},\forall{a}\in{A} 
+\end{equation*}
+
+\subsection{Meta Heuristics}
+Modern heuristic techniques, also called metaheuristics are a family of procedures which benefit from some sort of intelligence in their search for finding the solution to a problem. It is a higher level procedure designed to find, generate, or select a heuristic(partial search algorithm) that may provide a sufficiently good solution to an optimization problem, especially with incomplete or imperfect information or limited computation capacity. They may not provide optimal solution but they provide a sufficiently good solution rapidly and effectively. Simulated annealing, genetic algorithm, tabu search, neural network, ant system are some examples of such meta heuristics.\par
+\noindent
+\\This project implements the genetic algorithm on DNDP. Genetic algorithm (GA) is a search heuristic that mimics the process of natural selection. This meta heuristic is used to generate useful solutions to optimization and search problems. Genetic algorithms belong to the larger class of evolutionary algorithms (EA), which generate solutions to optimization problems using techniques inspired by natural evolution, such as inheritance, mutation, selection, and crossover. A generic pseudo code of GA is given below:
+\begin{lstlisting}[mathescape]
+	Initialize population P
+	Repeat
+	$P'$ = { }
+	for i = 1 to n
+	   x := Selection of individual of P
+	   y := Selection of individual of P
+	   child := Crossover(x, y)
+	   if random(0,1) $\leq$ (probability of mutation) then
+	   	child := Mutation(child)
+	   $P'$ := $P'$ $\cup$ child
+	end for
+	P := $P'$
+\end{lstlisting}
+\begin{itemize}
+\item Stopping criteria: Time limit, iteration limit, objective function value reached.
+\end{itemize}
+The genetic algorithm will be used to solve the upper level problem whereas the nested problem is solved using BCL component of FICO Xpress software. For every candidate solution in the upper level problem the nested problem will be solved using BCL. This iterative process is continued to evolve towards stronger solutions for the leader by the use of genetic algorithm operations like crossover, mutation etc till the stopping criteria is satisfied.
+
+\subsection{InterDisciplinary Project}
+The implementation of this project requires knowledge of C/C++ programming, Data Structures, linear programming concepts, usage of the C++ BCL(Builder component library) provided by a commercially well known optimization suite called FICO Xpress. The application of these technologies is for a well known real world problem like DNDP observed in transportation science resulting in this project to be of Inter-Disciplinary nature. As a part of the preparation for implementing this project, a good amount of knowledge on \textbf{metaheuristics} and \textbf{DNDP} was acquired from the course \textbf{"TRANSPORTATION LOGISTICS"} offered by the \textbf{CHAIR OF LOGISTICS AND SUPPLY CHAIN MANAGEMENT.}\par
+\noindent
+\\
+The objective of this course was to get an overview of the modeling techniques, exact as well as heuristic search methods tailored to the different transportation problems studied. The course consists of a sequence of lectures, exercise classes and case studies. It also deals on how to model and analyze transportation problems using quantitative methods. It covers many of the real world problems observed in Transportation Planning such as Traveling Salesman Problem(TSP), Vehicle Routing Problems(VRP), Network Flow Problems, Inventory Routing etc. and techniques such as Metaheuristics used to solve them. In brief, The course covered the following topics listed below:\par
+\begin{itemize}
+\item \textbf{Transportation Problems}: Linear programming formulations, Solving methods like Northwest corner rule, Column minimum rule, Matrix minimum rule, MODI(Modified Distribution) method, Extensions to Transshipment problem and several others.
+\item \textbf{Traveling Salesman Problem}: TSP models(Symmetric and Asymmetric), Exact solution methods, Heuristics like nearest neighbor and r-opt method, Arc Routing problem.
+\item \textbf{Vehicle Routing Problem}: Different modeling schemes for VRP using Linear programming formulations, Sweep method, Savings method as solution techniques for VRP problems, Extensions of VRP and Savings method.
+\item \textbf{Inventory Routing Problem}: Lot-Sizing Problem, Inventory Routing Problem(IRP)
+\item \textbf{Transportation planning in networks}: Dynamic optimization, Hub-Spoke systems, Shortest path problem, dijkstra's algorithm, Minimum spanning tree problem, Maximum flow problem. 
+\item \textbf{Metaheuristics}: Basics of metaheuristics, Simulated Annealing with TSP as its case study, Tabu Search, Genetic Algorithm and its application to TSP as a case study, Application of metaheuristic on VRP.
+\item \textbf{Traffic Network Design Problems}: Covers Traffic assignment problem(TAP), Extensions of TAP like Discrete Network Design Problem(DNDP), Line planning.
+\item \textbf{Revenue Management}: Segmentation, Price differentiation, Models of Overbooking.
+\item \textbf{Packing logistics}: Fundamentals of Packing and its stages, Cutting Stock Problem, Knapsack Problem, Bin Packing Problem.
+\item \textbf{Container Shipping and Terminals}: Working of container terminals, Job-Shop and Flow-Shop Problems, Branch and Bound method, Usage of Gantt-Chart.
+\item Most of the above mentioned problems studied in transportation planning involved modeling them using Linear Programming and looking at their solving methods.
+\end{itemize}
+The course gave an introduction to many of the important problems observed in transportation science one of which is DNDP that the IDP deals with specifically. These optimization problems have to be solved computationally to good approximation and require the usage of sophisticated optimization softwares that can provide a library(API - Application programming interface) for the programmer to do the same. The programmer can use this to implement an application demonstrating the solving methods for DNDP. This is first done by modeling the DNDP in the form of a bilevel mixed integer linear program via the API provided by FICO Xpress BCL component and using its optimization modules to solve the nested optimization problem of TAP. In relevance to the project, the course dealt with the necessary topics such as different kinds of metaheuristics, their algorithms followed by case studies and numerical problems to better understand these techniques. The bilevel formulation of DNDP was also introduced with TAP as its nested optimization problem and some of the techniques to solve them exactly or approximately.\par
+\noindent
+\\
+A rough \textbf{timeline} from when the project started till its anticipated completion time is given below.
+\begin{itemize}
+\item Dec 2014 - Start of IDP with initial literature survey but main focus on the course.
+\item Feb 4, 2015 - Completion of the exam on the course \textbf{"TRANSPORTATION LOGISTICS"}.
+\item Feb 4, 2015 to April 14, 2015 - Further literature reading, setup, understanding and practical usage of the FICO Xpress software, learning to write code using BCL component.
+\item April 15, 2015 to July 31, 2015 - Implementation phase with good amount of testing. Further testing will follow on larger datasets with additional code to provide extensions. 
+\item Aug 1, 2015 to Aug 30, 2015 - Documentation and Presentation
+\item Early Sep 2015 - Completion of IDP
+\end{itemize}
+
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.65\textwidth, clip, trim=0mm 60mm 0mm 0mm]{data/architecture.pdf}
+%\vspace{-0.15in}
+%\caption{Invasive resource management architecture}
+%\label{fig:arch}
+%\end{figure}
+
+\nocite{fontaine,gao,poorzahedy2,tianze,leblanc,kuo,poorzahedy1,wen}
+
+\bibliographystyle{unsrt}
+% Literature sources are to be found in seminarpaper.bib
+\bibliography{nishanth}
+
+\end{document}
