@@ -87,10 +87,19 @@ Dipl.-Math. Pirmin Fontaine % Advisor's Name
 \end{titlepage}
 
 \begin{center}
+\huge \bfseries Acknowledgement
+\end{center}
+
+\vspace{35mm}
+I would like to thank Mr. Fontaine for his constant support and guidance throughout the project especially when I faced some challenges in understanding certain topics. I would also like to thank Prof. Dr. Stefan Minner for providing me with this opportunity to work on such an Inter-Disciplinary project.
+
+\newpage
+
+\begin{center}
 \huge \bfseries Abstract
 \end{center}
 
-\vspace{15mm}
+\vspace{35mm}
 
 The field of transportation planning involves a large class of problems that are characterized by multiple levels of decision making. Examples include selection of links for capacity improvements(network design), toll setting, traffic signal setting etc. In each of these problems, government or industry officials make one set of decisions to improve the network performance and at another level users make choices with regard to route, origin-destination etc. The discrete network design problem(DNDP) is one such problem which deals with the selection of link additions to an existing road network, with given demand from each origin to destination. The objective is to make an optimal investment decision to minimize the total travel cost in the network, while accounting for the route choice behavior of network users. This optimization problem is recognized to be NP hard because it is computationally difficult due to its non convexity owing to the bilevel nature and non-linear objective functions in most of the real cases. Finding exact or globally optimum solutions for such problems is very difficult. In mathematical optimization, a metaheuristic is a general high level procedure that can be quickly applied to different kinds of problems to provide a sufficiently good solution especially when there is limited computation capacity. These techniques sample a set of solutions which is too large to be completely sampled. Genetic algorithm is one such kind of a metaheuristic which tries to imitate the evolution of population by starting with a random set of candidate solutions that is evolved towards better solutions. The aim of the project is to implement this metaheuristic on the DNDP and to experiment with small to large size datasets(networks) widely mentioned in the literature to derive empirical results and to conclude on the effectiveness, solvability and quality of solutions obtained.
 
@@ -113,35 +122,138 @@ Bilevel problems are mathematical programming problems consisting of a special k
 \item Methods based on meta heuristics
 \end{itemize}
 
-\subsection{Model}
+\section{Modeling}
+\subsection{Traffic Assignment Problem (TAP)}
+\vspace{5mm}
+\begin{large}\textbf{Definitions:}\end{large}
+\begin{itemize}
+\item Set of Nodes \textit{N}
+\item Set of links A with
+\begin{itemize}
+\item capacity $c_{a}$
+\item congestion factor $B_{a}$
+\item free flow travel time $T_{a}$
+\end{itemize}
+\item Set of origins $R\ \subseteq\ N$ and destination $S\ \subseteq\ N$ with demand $q_{rs}$ 
+\end{itemize}
+\begin{large}\textbf{Decision variables:}\end{large}
+\begin{itemize}
+\item $x_{a}$ travelers on link a
+\item ${f_{a}}^{rs}$ travelers of OD-pair (r,s) on link a
+\end{itemize}
+\begin{large}\textbf{Constraints:}\end{large}\\
 Travel time function on link a: 
+\begin{large}
 \boldmath\begin{equation*}
 t_{a}\left(x\right) = T_{a}\left(1+B_{a}\left(\frac{x}{c_a}\right)^4\right)
 \end{equation*}
+\end{large}
 Objective:
+\begin{large}
 \boldmath\begin{equation*}
-min\sum_{a\in{A}} \int\limits_{0}^{x_a}t_{a}\left(x\right)dx = min\sum_{a\in{A}}\left(T_{a}x_{a}+\frac{T_{a}x_{a}}{5{c_{a}}^4}{x_{a}}^5\right) 
+\mathrm{min}\sum_{a\in{A}} \int\limits_{0}^{x_a}t_{a}\left(x\right)dx = \mathrm{min}\sum_{a\in{A}}\left(T_{a}B_{a}+\frac{T_{a}x_{a}}{5{c_{a}}^4}{x_{a}}^5\right) 
 \end{equation*}
+\end{large}
 Demand at origin: 
+\begin{large}
 \boldmath\begin{equation*}
-\sum_{j\in{N}} f_{rj}^{rs} = q_{rs}\  \wedge \ \sum_{j\in{N}} {f_{jr}}^{rs} = 0 \ \ \ \ \forall{r}\in{R},\forall{s}\in{S} 
+\sum_{j\in{N}} f_{rj}^{rs} = q_{rs}\  \wedge \ \sum_{j\in{N}} {f_{jr}}^{rs} = 0 \ \ \ \ \mathrm{\forall{r}\in{R},\forall{s}\in{S}} 
 \end{equation*}
+\end{large}
 Demand at destination: 
+\begin{large}
 \boldmath\begin{equation*}
-\sum_{i\in{N}} f_{is}^{rs} = q_{rs}\  \wedge \ \sum_{i\in{N}} {f_{si}}^{rs} = 0 \ \ \ \ \forall{r}\in{R},\forall{s}\in{S} 
+\sum_{i\in{N}} f_{is}^{rs} = q_{rs}\  \wedge \ \sum_{i\in{N}} {f_{si}}^{rs} = 0 \ \ \ \ \mathrm{\forall{r}\in{R},\forall{s}\in{S}} 
 \end{equation*}
+\end{large}
 Flow conservation: 
+\begin{large}
 \boldmath\begin{equation*}
-\sum_{i\in{N}} f_{ik}^{rs} = \sum_{j\in{N}} {f_{kj}}^{rs} \ \ \ \ \forall{r}\in{R},\forall{s}\in{S},{k}\in{N}{\backslash}{\{}r,s{\}}
+\sum_{i\in{N}} f_{ik}^{rs} = \sum_{j\in{N}} {f_{kj}}^{rs} \ \ \ \ \mathrm{\forall{r}\in{R},\forall{s}\in{S},{k}\in{N}{\backslash}{\{}r,s{\}}}
 \end{equation*}
+\end{large}
 Flow aggregation: 
+\begin{large}
 \boldmath\begin{equation*}
-x_{a} = \sum_{r\in{R},s\in{S}} {f_{a}}^{rs} \ \ \ \ \forall{a}\in{A}
+x_{a} = \sum_{r\in{R},s\in{S}} {f_{a}}^{rs} \ \ \ \ \mathrm{\forall{a}\in{A}}
 \end{equation*}
+\end{large}
 Non negativity: 
+\begin{large}
 \boldmath\begin{equation*}
- f_{a}^{rs} \geq 0 \ \ \ \ \forall{r}\in{R},\forall{s}\in{S},\forall{a}\in{A} 
+ f_{a}^{rs} \geq 0 \ \ \ \ \mathrm{\forall{r}\in{R},\forall{s}\in{S},\forall{a}\in{A}} 
 \end{equation*}
+\end{large}
+\subsection{DNDP model}
+Decision variables
+\begin{itemize}
+\item $x_{a}$ travelers on link a
+\item ${f_{a}}^{rs}$ travelers of OD-pairs $\left(r,s\right)$ on link a
+\item $y_{a}\ \in\ {\{}0,1{\}}$ if link is built 1, otherwise 0
+\end{itemize}
+Objective: Minimization of total travel time in the network.
+\begin{large}
+\boldmath\begin{equation*}
+\mathrm{min}\sum_{a\in{A}} t_{a}\left(x_{a}\right)x_{a} 
+\end{equation*}
+\end{large}
+Budget:
+\begin{large}
+\boldmath\begin{equation*}
+\mathrm{s.t.}\ \sum_{a\in{A_{2}}} b_{a}y_{a}\ \leq \ B \\
+\end{equation*}
+\end{large}
+Additional flow restriction constraint for possible new routes in TAP
+\begin{large}
+\boldmath\begin{equation*}
+x_{a}\ \leq\ M_{a}\ \ \mathrm{\forall{a}\in{A_{2}}}
+\end{equation*}
+\end{large} 
+Bilevel formulation:
+\begin{large}
+\boldmath\begin{equation*}
+\mathrm{min}\sum_{a\in{A}} t_{a}\left(x_{a}\right)x_{a} 
+\end{equation*}
+\end{large}
+\begin{large}
+%\boldmath\begin{equation*}
+\boldmath\begin{equation*}
+\mathrm{s.t.}\ \sum_{a\in{A_{2}}} b_{a}y_{a}\ \leq \ B \\
+\end{equation*}
+\end{large}
+\begin{large}
+\boldmath\begin{equation*}
+\mathrm{min}\sum_{a\in{A}} \int\limits_{0}^{x_a}t_{a}\left(x\right)
+%\end{align*}
+\end{equation*}
+\end{large}
+\indent\boldmath\begin{large}
+\begin{equation*}
+\mathrm{s.t.}\ \mathrm{\left(TAP\ constraints\right)}
+\end{equation*}
+\end{large}
+\begin{large}
+\boldmath\begin{equation*}
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ x_{a}\ \leq\ M_{a}\ \ \mathrm{\forall{a}\in{A_{2}}}
+\end{equation*}
+\end{large}
+\begin{large}
+\boldmath\begin{equation*}
+\ \ \ \ \ \ \ \ \ \ y_{a}\ \in\ {0,1}\ \mathrm{\forall{a}\in{A_{2}}}
+\end{equation*}
+\end{large} \\
+\textbf{Linearization of non-linear convex functions}\\~\\
+Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $m+1$ approximation points $\left(\nu_{0},f_{0}\right)$, $\left(\nu_{1},f_{1}\right)$,...,$\left(\nu_{m},f_{m}\right)$ with $f_{i}:=f\left(\nu_{i}\right)$
+%with f i :¼ f ð#iÞ. Further, f ðxÞ is a function in the single flow variable xa and #m P maxa2Axa has to hold. The trivial upper
+%bound is
+%P
+%r2R;s2Sqrs. However, as xa can be much smaller than
+%P
+%r2R;s2Sqrs, empirical upper bounds can further improve the
+%quality of the approximation. Define ai :¼ f if i1
+%#i#i1
+%and bi :¼ #i1ai þ f i1. Then f ðxÞ can be approximated by the following
+%piecewise linear function:
 
 \subsection{Meta Heuristics}
 Modern heuristic techniques, also called metaheuristics are a family of procedures which benefit from some sort of intelligence in their search for finding the solution to a problem. It is a higher level procedure designed to find, generate, or select a heuristic(partial search algorithm) that may provide a sufficiently good solution to an optimization problem, especially with incomplete or imperfect information or limited computation capacity. They may not provide optimal solution but they provide a sufficiently good solution rapidly and effectively. Simulated annealing, genetic algorithm, tabu search, neural network, ant system are some examples of such meta heuristics.\par
