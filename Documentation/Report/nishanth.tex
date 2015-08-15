@@ -122,6 +122,69 @@ Bilevel problems are mathematical programming problems consisting of a special k
 \item Methods based on meta heuristics
 \end{itemize}
 
+
+\subsection{InterDisciplinary Project}
+The implementation of this project required knowledge of C/C++ programming, Data Structures, linear programming concepts, usage of the C++ BCL(Builder component library) provided by a commercially well known optimization suite called FICO Xpress. The application of these technologies is for a well known real world problem like DNDP observed in transportation science resulted in this project to be of Inter-Disciplinary nature. As a part of the preparation for implementing this project, a good amount of knowledge on \textbf{metaheuristics} and \textbf{DNDP} was acquired from the course \textbf{"TRANSPORTATION LOGISTICS"} offered by the \textbf{CHAIR OF LOGISTICS AND SUPPLY CHAIN MANAGEMENT.}\par
+\noindent
+\\
+The objective of this course was to get an overview of the modeling techniques, exact as well as heuristic search methods tailored to the different transportation problems studied. The course consisted of a sequence of lectures, exercise classes and case studies. It also deals on how to model and analyze transportation problems using quantitative methods. It covers many of the real world problems observed in Transportation Planning such as Traveling Salesman Problem(TSP), Vehicle Routing Problems(VRP), Network Flow Problems, Inventory Routing etc. and techniques such as Metaheuristics used to solve them.\par
+\begin{itemize}
+\item \textbf{Transportation Problems}: Linear programming formulations, Solving methods like Northwest corner rule, Column minimum rule, Matrix minimum rule, MODI(Modified Distribution) method, Extensions to Transshipment problem and several others.
+\item \textbf{Traveling Salesman Problem}: TSP models(Symmetric and Asymmetric), Exact solution methods, Heuristics like nearest neighbor and r-opt method, Arc Routing problem.
+\item \textbf{Vehicle Routing Problem}: Different modeling schemes for VRP using Linear programming formulations, Sweep method, Savings method as solution techniques for VRP problems, Extensions of VRP and Savings method.
+\item \textbf{Inventory Routing Problem}: Lot-Sizing Problem, Inventory Routing Problem(IRP)
+\item \textbf{Transportation planning in networks}: Dynamic optimization, Hub-Spoke systems, Shortest path problem, dijkstra's algorithm, Minimum spanning tree problem, Maximum flow problem.
+\item \textbf{Metaheuristics}: Basics of metaheuristics, Simulated Annealing with TSP as its case study, Tabu Search, Genetic Algorithm and its application to TSP as a case study, Application of metaheuristic on VRP.
+\item \textbf{Traffic Network Design Problems}: Covers Traffic assignment problem(TAP), Extensions of TAP like Discrete Network Design Problem(DNDP), Line planning.
+\item \textbf{Revenue Management}: Segmentation, Price differentiation, Models of Overbooking.
+\item \textbf{Packing logistics}: Fundamentals of Packing and its stages, Cutting Stock Problem, Knapsack Problem, Bin Packing Problem.
+\item \textbf{Container Shipping and Terminals}: Working of container terminals, Job-Shop and Flow-Shop Problems, Branch and Bound method, Usage of Gantt-Chart.
+\item Most of the above mentioned problems studied in transportation planning involved modeling them using Linear Programming and looking at their solving methods.
+\end{itemize}
+The course gave an introduction to many of the important problems observed in transportation science one of which is DNDP that the IDP deals with specifically. In relevance to the project, the course dealt with the necessary topics such as different kinds of metaheuristics, their algorithms followed by case studies and numerical problems to better understand these techniques. The bilevel formulation of DNDP was also introduced with TAP as its nested optimization problem and some of the techniques to solve them exactly or approximately.\par
+\noindent
+\\
+A rough \textbf{timeline} from when the project started till its anticipated completion time is given below.
+\begin{itemize}
+\item Dec 2014 - Start of IDP with initial literature survey but main focus on the course.
+\item Feb 4, 2015 - Completion of the exam on the course \textbf{"TRANSPORTATION LOGISTICS"}.
+\item Feb 4, 2015 to April 14, 2015 - Further literature reading, setup, understanding and practical usage of the FICO Xpress software, learning to write code using BCL component.
+\item April 15, 2015 to July 31, 2015 - Implementation phase with good amount of testing. Further testing will follow on larger datasets with additional code to provide extensions.
+\item Aug 1, 2015 to Aug 30, 2015 - Documentation and Presentation
+\item Early Sep 2015 - Completion of IDP
+\end{itemize}
+
+\subsection{Software Requirements}
+The project has been implemented in C with the help of an API(Linux version) provided by a commercial software suite for C++.
+\vspace{8mm}
+\textbf{\boldmath$FICO^{TM}$ Xpress Optimization Suite}\\~\\
+FICO Xpress Optimization Suite is a sophisticated mathematical modeling and optimization software. Its tools enable operational research and management professionals, analysts, and consultants to rapidly develop optimization applications that solve complex, real-world business and customer engagement challenges. It provides easy ways to create, deploy and utilize business optimization solutions based on scalable high-performance algorithms, a flexible modeling environment and rapid application and reporting capabilities.\\~\\
+Optimization problems have to be solved computationally to good approximation and require the usage of sophisticated optimization 
+softwares that can provide a library(API- Application programming interface) for the programmer to do the same. The programmer can use this to
+ implement an application demonstrating the solving methods for DNDP. This is first done by modeling the DNDP in the form of a bilevel mixed 
+integer linear program via the API provided by FICO Xpress BCL component and using its optimization modules to solve the nested optimization 
+problem of TAP.\par                   
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.65\textwidth, clip]{./Xpress.jpg}
+\vspace{-0.15in}
+\caption{Xpress product suite}
+\label{fig:1}
+\end{figure}
+\noindent
+\textbf{Libraries for embedding:}\\~\\
+An option available from this software for embedding mathematical models into large applications is by developing a model directly in a programming language with the help of a model builder library \textit{Xpresss-BCL}. BCL(Builder Component Library) allows a user to formulate models with objects(decision variables, constraints, index sets) similar to those of a dedicated modeling language. All libraries are available for C, C++, Java, C\#, and Visual Basic(VB). For this project we will be using the library for C++.\\ \par
+\noindent
+The Xpress-BCL Builder Component Library(BCL) provides an environment in which the Xpress user may readily formulate and solve linear, mixed integer and quadratic programming models. Using BCL’s extensive collection of functions, complicated models may be swiftly and simply constructed, preparing problems for optimization. Not merely limited to specific model construction, however, BCL’s flexibility makes it the ideal engine 
+for embedding in custom applications for the construction of generic modeling software. In combination with the Xpress-Optimizer, the two form 
+a powerful combination.\\ \par
+\noindent
+Model formulation using Xpress-BCL is constraint-oriented. Such constraints may be built up either coefficient-wise, incrementally adding 
+linear or quadratic terms until the constraint is complete, or through use of arrays of variables, constructing the constraint through a 
+scalar product of variable and coefficient arrays. The former method allows for easier modification of models once constructed, whilst the 
+latter enables swifter construction of new constraints. To complement the model construction routines, BCL supports a number of functions which allow a completed model to be passed directly to the Xpress-Optimizer, solved by the optimizer, and solution information reported back 
+directly from BCL.
+
 \section{Modeling}
 \subsection{Traffic Assignment Problem (TAP)}
 \vspace{5mm}
@@ -243,71 +306,173 @@ Bilevel formulation:
 \end{equation*}
 \end{large} \\
 \textbf{Linearization of non-linear convex functions}\\~\\
-Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $m+1$ approximation points $\left(\nu_{0},f_{0}\right)$, $\left(\nu_{1},f_{1}\right)$,...,$\left(\nu_{m},f_{m}\right)$ with $f_{i}:=f\left(\nu_{i}\right)$
-%with f i :¼ f ð#iÞ. Further, f ðxÞ is a function in the single flow variable xa and #m P maxa2Axa has to hold. The trivial upper
-%bound is
-%P
-%r2R;s2Sqrs. However, as xa can be much smaller than
-%P
-%r2R;s2Sqrs, empirical upper bounds can further improve the
-%quality of the approximation. Define ai :¼ f if i1
-%#i#i1
-%and bi :¼ #i1ai þ f i1. Then f ðxÞ can be approximated by the following
-%piecewise linear function:
+Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $m+1$ approximation points $\left(\nu_{0},f_{0}\right)$, $\left(\nu_{1},f_{1}\right)$,...,$\left(\nu_{m},f_{m}\right)$ with $f_{i}:=f\left(\nu_{i}\right)$. Further, $f\left(x\right)$ is a function in the single flow variable $x_{a}$ and $v_{m}\geq\ \max_{a\in{A}}{x_{a}}$. The trivial upper bound is $\sum_{r\in{R},s\in{S}} q_{rs}$. However, as $x_{a}$ can be much smaller than $\sum_{r\in{R},s\in{S}} q_{rs}$, empirical upper bounds can further improve the quality of the approximation. Define $a_{i}=\frac{f_{i}-f_{i-1}}{\nu_{i}-\nu_{i-1}}$ and $b_{i}:=-v_{i-1}a_{i}+f_{i-1}$. Then $f\left(x\right)$ can be approximated by the following function:
+\begin{large}
+\[
+ \overline{f}(x) := 
+  \begin{cases} 
+   a_{i}x+b_{i}, & \text{for }  x \in{[\nu_{i-1},\nu_{i})},i=1,...,m-1  \\
+   a_{i}x+b_{i}, & \text{for }  x \in{[\nu_{i-1},\infty)},i=m
+  \end{cases}
+\]
+\end{large}
+It is clear that $a_{i}-a_{i-1}\geq0$ and Nemhauser and Wolsey(1988) stated that no binary variables are needed for the approximation.\\
+Instead $\overline{f}(x)$ can be minimzed by the following LP:\\~\\
+\begin{large}
+\begin{equation*}
+\mathrm{min}\ f_{0}+a_{1}x_{1}+\sum_{i=2}^m\left(a_{i}-a_{i-1}\right)x_{i}
+\end{equation*}
+\end{large}
+\begin{large}
+\begin{align*}
+\mathrm{s.t.}\ &x_{1}\leq x_{i}+\nu_{i-1}\ \ i=2,...,m \\
+&x_{1}\geq0\ \ i=1,...,m
+\end{align*}
+\end{large}
+As in each $\left(\nu_{i},f_{i}\right)$ a new slope $a_i$ starts, we have to add $\left(a_i-a_{i-1}\right)x_{i}$ from that point on with $x_{i}=x_{1}-\nu_{i-1}$, but do not subtract anything if $x_{1} \le \nu_{i-1}$. Because of the minimization problem and the definition of the objective function constraints, (51) and (52) (52) ensure that $x_{i}$ takes the value of $\min\{0,x_{1}-\nu_{i-1}\}$ and the defined optimization problem minimizes $f(x)$. In the example of Fig. 2, $x_1 \ge v_1$ and we have to add $\left(a_2 - a_1\right)x_2$ with $x_2=\left(x_1-\nu_1\right)$ (gray area), but $x_3=0$.
 
 \subsection{Meta Heuristics}
 Modern heuristic techniques, also called metaheuristics are a family of procedures which benefit from some sort of intelligence in their search for finding the solution to a problem. It is a higher level procedure designed to find, generate, or select a heuristic(partial search algorithm) that may provide a sufficiently good solution to an optimization problem, especially with incomplete or imperfect information or limited computation capacity. They may not provide optimal solution but they provide a sufficiently good solution rapidly and effectively. Simulated annealing, genetic algorithm, tabu search, neural network, ant system are some examples of such meta heuristics.\par
 \noindent
-\\This project implements the genetic algorithm on DNDP. Genetic algorithm (GA) is a search heuristic that mimics the process of natural selection. This meta heuristic is used to generate useful solutions to optimization and search problems. Genetic algorithms belong to the larger class of evolutionary algorithms (EA), which generate solutions to optimization problems using techniques inspired by natural evolution, such as inheritance, mutation, selection, and crossover. A generic pseudo code of GA is given below:
+\\This project implements the genetic algorithm on DNDP. Genetic algorithm (GA) is a search heuristic that mimics the process of natural selection. This heuristic (also sometimes called a metaheuristic) is routinely used to generate useful solutions to optimization and search problems.[1] Genetic algorithms belong to the larger class of evolutionary algorithms (EA), which generate solutions to optimization problems using techniques inspired by natural evolution, such as inheritance, mutation, selection, and crossover. Genetic algorithms find application in bioinformatics, phylogenetics, computational science, signal and image processing, Bayesian inference, machine learning, risk analysis and rare event sampling, Engineering and robotics, economics, manufacturing, mathematics, mathematical finance, molecular chemistry, computational physics, pharmacokinetic, pharmacometrics, and other fields.\par
+\noindent
+%\newpage
+\section{Genetic Algorithm}
+Genetic algorithms are robust search and optimization techniques which are finding applications in a number of practical problems. The robustness of GAs is due to their capacity to locate the global optimum in a multimodal landscape. A plethora of such multimodal functions exist in engineering problems(optimization of neural network structure and learning neural network weights, solving optimal control problems, designing structures, and solving flow problems) are a few examples. It is for the above reason that considerable attention has been paid to the design of GAs for optimizing multimodal functions.\\ \par
+\noindent
+In a genetic algorithm, a population of candidate solutions (called individuals, creatures, or phenotypes) to an optimization problem is evolved toward better solutions. Each candidate solution has a set of properties (its chromosomes or genotype) which can be mutated and altered; traditionally, solutions are represented in binary as strings of 0s and 1s, but other encodings are also possible.[6]\par
+\noindent
+\\The evolution usually starts from a population of randomly generated individuals, and is an iterative process, with the population in each iteration called a generation. In each generation, the fitness of every individual in the population is evaluated; the fitness is usually the value of the objective function in the optimization problem being solved. The more fit individuals are stochastically selected from the current population, and each individual's genome is modified (recombined and possibly randomly mutated) to form a new generation. The new generation of candidate solutions is then used in the next iteration of the algorithm. Commonly, the algorithm terminates when either a maximum number of generations has been produced, or a satisfactory fitness level has been reached for the population.
+ A generic pseudo code of GA is given below:
 \begin{lstlisting}[mathescape]
-	Initialize population P
-	Repeat
-	$P'$ = { }
-	for i = 1 to n
-	   x := Selection of individual of P
-	   y := Selection of individual of P
-	   child := Crossover(x, y)
-	   if random(0,1) $\leq$ (probability of mutation) then
-	   	child := Mutation(child)
-	   $P'$ := $P'$ $\cup$ child
-	end for
-	P := $P'$
+        Initialize population P
+        Repeat
+        $P'$ = { }
+        for i = 1 to n
+           x := Selection of individual of P
+           y := Selection of individual of P
+           child := Crossover(x, y)
+           if random(0,1) $\leq$ (probability of mutation) then
+                child := Mutation(child)
+           $P'$ := $P'$ $\cup$ child
+        end for
+        P := $P'$
 \end{lstlisting}
+A typical genetic algorithm requires:
 \begin{itemize}
-\item Stopping criteria: Time limit, iteration limit, objective function value reached.
+\item a genetic representation of the solution domain,
+\item a fitness function to evaluate the solution domain.
 \end{itemize}
-The genetic algorithm will be used to solve the upper level problem whereas the nested problem is solved using BCL component of FICO Xpress software. For every candidate solution in the upper level problem the nested problem will be solved using BCL. This iterative process is continued to evolve towards stronger solutions for the leader by the use of genetic algorithm operations like crossover, mutation etc till the stopping criteria is satisfied.
+A standard representation of each candidate solution is as an array of bits.[6] Arrays of other types and structures can be used in essentially the same way. The main property that makes these genetic representations convenient is that their parts are easily aligned due to their fixed size, which facilitates simple crossover operations. Variable length representations may also be used, but crossover implementation is more complex in this case. Tree-like representations are explored in genetic programming and graph-form representations are explored in evolutionary programming; a mix of both linear chromosomes and trees is explored in gene expression programming.
 
-\subsection{InterDisciplinary Project}
-The implementation of this project requires knowledge of C/C++ programming, Data Structures, linear programming concepts, usage of the C++ BCL(Builder component library) provided by a commercially well known optimization suite called FICO Xpress. The application of these technologies is for a well known real world problem like DNDP observed in transportation science resulting in this project to be of Inter-Disciplinary nature. As a part of the preparation for implementing this project, a good amount of knowledge on \textbf{metaheuristics} and \textbf{DNDP} was acquired from the course \textbf{"TRANSPORTATION LOGISTICS"} offered by the \textbf{CHAIR OF LOGISTICS AND SUPPLY CHAIN MANAGEMENT.}\par
-\noindent
-\\
-The objective of this course was to get an overview of the modeling techniques, exact as well as heuristic search methods tailored to the different transportation problems studied. The course consists of a sequence of lectures, exercise classes and case studies. It also deals on how to model and analyze transportation problems using quantitative methods. It covers many of the real world problems observed in Transportation Planning such as Traveling Salesman Problem(TSP), Vehicle Routing Problems(VRP), Network Flow Problems, Inventory Routing etc. and techniques such as Metaheuristics used to solve them. In brief, The course covered the following topics listed below:\par
+Once the genetic representation and the fitness function are defined, a GA proceeds to initialize a population of solutions and then to improve it through repetitive application of the mutation, crossover, inversion and selection operators.\\~\\
+\begin{large}\textbf{Initialization:}\end{large}\\
+The population size depends on the nature of the problem, but typically contains several hundreds or thousands of possible solutions. Often, the initial population is generated randomly, allowing the entire range of possible solutions (the search space). Occasionally, the solutions may be "seeded" in areas where optimal solutions are likely to be found.\\~\\
+\begin{large}\textbf{Selection:}\end{large}\\
+During each successive generation, a proportion of the existing population is selected to breed a new generation. Individual solutions are selected through a fitness-based process, where fitter solutions (as measured by a fitness function) are typically more likely to be selected. Certain selection methods rate the fitness of each solution and preferentially select the best solutions. Other methods rate only a random sample of the population, as the former process may be very time-consuming.
+
+The fitness function is defined over the genetic representation and measures the quality of the represented solution. The fitness function is always problem dependent. For instance, in the knapsack problem one wants to maximize the total value of objects that can be put in a knapsack of some fixed capacity. A representation of a solution might be an array of bits, where each bit represents a different object, and the value of the bit (0 or 1) represents whether or not the object is in the knapsack. Not every such representation is valid, as the size of objects may exceed the capacity of the knapsack. The fitness of the solution is the sum of values of all objects in the knapsack if the representation is valid, or 0 otherwise.
+
+In some problems, it is hard or even impossible to define the fitness expression; in these cases, a simulation may be used to determine the fitness function value of a phenotype (e.g. computational fluid dynamics is used to determine the air resistance of a vehicle whose shape is encoded as the phenotype), or even interactive genetic algorithms are used.\\~\\
+\begin{large}\textbf{Genetic operators:}\end{large}\\
+The next step is to generate a second generation population of solutions from those selected through a combination of genetic operators: crossover (also called recombination), and mutation.
+
+For each new solution to be produced, a pair of "parent" solutions is selected for breeding from the pool selected previously. By producing a "child" solution using the above methods of crossover and mutation, a new solution is created which typically shares many of the characteristics of its "parents". New parents are selected for each new child, and the process continues until a new population of solutions of appropriate size is generated. Although reproduction methods that are based on the use of two parents are more "biology inspired", some research[7][8] suggests that more than two "parents" generate higher quality chromosomes.
+
+These processes ultimately result in the next generation population of chromosomes that is different from the initial generation. Generally the average fitness will have increased by this procedure for the population, since only the best organisms from the first generation are selected for breeding, along with a small proportion of less fit solutions. These less fit solutions ensure genetic diversity within the genetic pool of the parents and therefore ensure the genetic diversity of the subsequent generation of children.
+
+Opinion is divided over the importance of crossover versus mutation. There are many references in Fogel (2006) that support the importance of mutation-based search.
+
+Although crossover and mutation are known as the main genetic operators, it is possible to use other operators such as regrouping, colonization-extinction, or migration in genetic algorithms.[9]
+
+It is worth tuning parameters such as the mutation probability, crossover probability and population size to find reasonable settings for the problem class being worked on. A very small mutation rate may lead to genetic drift (which is non-ergodic in nature). A recombination rate that is too high may lead to premature convergence of the genetic algorithm. A mutation rate that is too high may lead to loss of good solutions, unless elitist selection is employed.\\~\\
+\begin{large}\textbf{Termination:}\end{large}\\
+This generational process is repeated until a termination condition has been reached. Common terminating conditions are:
 \begin{itemize}
-\item \textbf{Transportation Problems}: Linear programming formulations, Solving methods like Northwest corner rule, Column minimum rule, Matrix minimum rule, MODI(Modified Distribution) method, Extensions to Transshipment problem and several others.
-\item \textbf{Traveling Salesman Problem}: TSP models(Symmetric and Asymmetric), Exact solution methods, Heuristics like nearest neighbor and r-opt method, Arc Routing problem.
-\item \textbf{Vehicle Routing Problem}: Different modeling schemes for VRP using Linear programming formulations, Sweep method, Savings method as solution techniques for VRP problems, Extensions of VRP and Savings method.
-\item \textbf{Inventory Routing Problem}: Lot-Sizing Problem, Inventory Routing Problem(IRP)
-\item \textbf{Transportation planning in networks}: Dynamic optimization, Hub-Spoke systems, Shortest path problem, dijkstra's algorithm, Minimum spanning tree problem, Maximum flow problem. 
-\item \textbf{Metaheuristics}: Basics of metaheuristics, Simulated Annealing with TSP as its case study, Tabu Search, Genetic Algorithm and its application to TSP as a case study, Application of metaheuristic on VRP.
-\item \textbf{Traffic Network Design Problems}: Covers Traffic assignment problem(TAP), Extensions of TAP like Discrete Network Design Problem(DNDP), Line planning.
-\item \textbf{Revenue Management}: Segmentation, Price differentiation, Models of Overbooking.
-\item \textbf{Packing logistics}: Fundamentals of Packing and its stages, Cutting Stock Problem, Knapsack Problem, Bin Packing Problem.
-\item \textbf{Container Shipping and Terminals}: Working of container terminals, Job-Shop and Flow-Shop Problems, Branch and Bound method, Usage of Gantt-Chart.
-\item Most of the above mentioned problems studied in transportation planning involved modeling them using Linear Programming and looking at their solving methods.
+\item A solution is found that satisfies minimum criteria
+\item Fixed number of generations reached
+\item Allocated budget (computation time/money) reached
+\item The highest ranking solution's fitness is reaching or has reached a plateau such that successive iterations no longer produce better results
+\item Manual inspection
+\item Combinations of the above
 \end{itemize}
-The course gave an introduction to many of the important problems observed in transportation science one of which is DNDP that the IDP deals with specifically. These optimization problems have to be solved computationally to good approximation and require the usage of sophisticated optimization softwares that can provide a library(API - Application programming interface) for the programmer to do the same. The programmer can use this to implement an application demonstrating the solving methods for DNDP. This is first done by modeling the DNDP in the form of a bilevel mixed integer linear program via the API provided by FICO Xpress BCL component and using its optimization modules to solve the nested optimization problem of TAP. In relevance to the project, the course dealt with the necessary topics such as different kinds of metaheuristics, their algorithms followed by case studies and numerical problems to better understand these techniques. The bilevel formulation of DNDP was also introduced with TAP as its nested optimization problem and some of the techniques to solve them exactly or approximately.\par
-\noindent
-\\
-A rough \textbf{timeline} from when the project started till its anticipated completion time is given below.
+\subsection{Selection Schemes}
+Genetic algorithms(GA) use a selection mechanism to select individuals from the population to insert into the mating pool. Individuals from the mating pool are used to generate new offspring with the resulting offspring forming the basis of the next generation. As the individuals in themating pool are the ones whose genes are inherited by the next generation, it is desirable that the mating pool be comprised of "good" individuals. A selection mechanism in GAs is simply a process that favors the selection of better individuals in the population for the mating pool. 
+The selection pressure is the degree to which the better individuals are favored: the higher the selection pressure, the more the better
+individuals are favored. This selection pressure drives the GA to improve the population fitness over succeeding generations . The convergence
+rate of a GA is largely determined by the selection pressure, wit higher selection pressures resulting in higher convergence rates. GAs are 
+able to identify optimal or near-optimal solutions under a wide range of selection pressure[5]. However , if the selection pressure is too low, the convergence rate will be slow, and the GA will unnecessarily take longer to find the optimal solution. If the selection pressure is too 
+high, there is an increased chance of the GA prematurely converging to an incorrect (suboptimal) solution.
 \begin{itemize}
-\item Dec 2014 - Start of IDP with initial literature survey but main focus on the course.
-\item Feb 4, 2015 - Completion of the exam on the course \textbf{"TRANSPORTATION LOGISTICS"}.
-\item Feb 4, 2015 to April 14, 2015 - Further literature reading, setup, understanding and practical usage of the FICO Xpress software, learning to write code using BCL component.
-\item April 15, 2015 to July 31, 2015 - Implementation phase with good amount of testing. Further testing will follow on larger datasets with additional code to provide extensions. 
-\item Aug 1, 2015 to Aug 30, 2015 - Documentation and Presentation
-\item Early Sep 2015 - Completion of IDP
+\item Fitness proportionate selection
+\item Rank selection
+\item Tournament selection
+\item steady state selection
+\item Truncation selection
+\item Local selection
 \end{itemize}
+%\begin{large}\textbf{Fitness Proportionate Selection:}\end{large}
+\subsection{Fitness Proportionate Selection:}
+This method is also known as Roulette wheel selection. It is a genetic operator used in genetic algorithms for selecting potentially useful 
+solutions for recombination. This selection principle is similar to that of a roulette wheel. The probability of selection of a sector in a 
+roulette wheel is proportional to the magnitude of the central angle of the sector. Similarly in Genetic Algorithm, whole population in
+partitioned on the wheel and each sector represents an individual. The proportion of individual’s fitness to the total fitness values of the 
+ whole population decides the probability of selection of that individual in the next generation. This consequently decides the area occupied 
+by that individual on the wheel. Following are the steps for Roulette Wheel Selection:
+\begin{itemize}
+\item Calculate the sum of the fitness values of every individual in the population.
+\item Calculate the fitness value of each individual and their probability of selection by dividing individual chromosome’s fitness by the sum 
+of fitness values of whole population.
+\item Partition the roulette wheel into sectors according to the probabilities calculated in the second step.
+\item Spin the wheel ‘n’ number of times. When the roulette stops, the sector on which the pointer points corresponds to the individual being 
+selected.
+\end{itemize}
+The probability of selection of an individual $a_j$ is:
+\begin{large}
+\boldmath\begin{equation*}
+P\left(a_{i}\right) = \frac{f\left(a_{i}\right)}{\sum_{i=1}^{N}f\left(a_j\right)}; j=1,2,...,n 
+\end{equation*}
+\end{large}
+%\begin{large}\textbf{Tournament Selection:}\end{large}
+\subsection{Rank Selection:}
+Ranking Selection in Genetic Algorithm was introduced by Baker to eliminate the disadvantages of Proportionate selection. In Linear Ranking 
+selection method, individuals are first sorted according to their fitness value and then the ranks are assigned to them. Best individual gets 
+rank ‘N’ and the worst one gets rank ‘1’. The selection probability is then assigned linearly to the individuals according to their ranks.\\
+\\The probability of the best individual to be selected is:
+\begin{large}
+\boldmath\begin{equation*}
+P\left(a_{best}\right) = \frac{N}{\frac{\left(N*\left(N+1\right)\right)}{2}}\ \approx\ \frac{2}{N}
+\end{equation*}
+\end{large}
+The probability of the worst individual to be selected is:
+\begin{large}
+\boldmath\begin{equation*}
+P\left(a_{best}\right) = \frac{1}{\frac{\left(N*\left(N+1\right)\right)}{2}}\ \approx\ \frac{2}{N^2}
+\end{equation*}
+\end{large}
+The probability of the $i^{th}$ individual(sorted oorder) to be selected is:
+\begin{large}
+\boldmath\begin{equation*}
+P\left(a_i\right) = \frac{N-i+1}{\frac{\left(N*\left(N+1\right)\right)}{2}}\ \approx\ \frac{2\left(N-i+1\right)}{N^2}
+\end{equation*}
+\end{large}
+\subsection{Tournament Selection:}
+Tournament selection is a useful and robust selection mechanism commonly used by genetic algorithms (GAs). The selection pressure of
+tournament selection directly varies with the tournament size-the more competitors , the higher the resulting selection pressure. Due to the 
+efficiency and ease of implementation, Tournament selection is the most popular selection technique of Genetic Algorithm. In Tournament 
+Selection, ‘n’ individuals are chosen at random from the entire population. These individuals compete against each other. The individual with 
+the highest fitness value wins and gets selected for further processing in Genetic Algorithm. The number of individual taking part in every 
+tournament is referred as tournament size. Most commonly used tournament size is 2 i.e. in Binary Tournament Selection. There are several advantages of Tournament selection strategy that makes it more efficient than other techniques. These include less time complexity i.e. O(n) , easy 
+parallel implementation, low vulnerability to takeover by dominant individuals, and no requirement for fitness scaling or sorting.\\
+In the above figure, Tournament size is three, which means three individuals compete against each other in one tournament. The larger the 
+tournament size, the greater is the probability of loss of diversity. There are two reasons for loss of diversity. Either the individual did 
+not get the opportunity to be selected (because of random selection), or the individual didn’t get selected in the intermediate population 
+because they lost some tournament.\\
+\begin{large}\textbf{Crossover:}\end{large}\\
+Crossover is the process by which the chromosomes selected from a source population are combined to form offspring which are potential members
+of a successor population.\\
+\begin{large}\textbf{Mutation:}\end{large}\\
+The genetic algorithm will be used to solve the upper level problem whereas the nested problem is solved using BCL component of FICO Xpress software. For every candidate solution in the upper level problem the nested problem will be solved using BCL. This iterative process is continued to evolve towards stronger solutions for the leader by the use of genetic algorithm operations like crossover, mutation etc till the stopping criteria is satisfied.\\
 
 %\begin{figure}[h]
 %\centering
@@ -316,7 +481,6 @@ A rough \textbf{timeline} from when the project started till its anticipated com
 %\caption{Invasive resource management architecture}
 %\label{fig:arch}
 %\end{figure}
-
 \nocite{fontaine,gao,poorzahedy2,tianze,leblanc,kuo,poorzahedy1,wen}
 
 \bibliographystyle{unsrt}
