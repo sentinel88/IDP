@@ -366,6 +366,63 @@ A typical genetic algorithm requires:
 A standard representation of each candidate solution is as an array of bits.[6] Arrays of other types and structures can be used in essentially the same way. The main property that makes these genetic representations convenient is that their parts are easily aligned due to their fixed size, which facilitates simple crossover operations. Variable length representations may also be used, but crossover implementation is more complex in this case. Tree-like representations are explored in genetic programming and graph-form representations are explored in evolutionary programming; a mix of both linear chromosomes and trees is explored in gene expression programming.
 
 Once the genetic representation and the fitness function are defined, a GA proceeds to initialize a population of solutions and then to improve it through repetitive application of the mutation, crossover, inversion and selection operators.\\~\\
+\begin{large}\textbf{Encoding:}\end{large}\\
+Fundamental to GA structure is the encoding mechanism for representing the optimization problem's variables. The encoding mechanism depends on
+the nature of the problem variables. For example, when solving for the optimal flows in a transportation problem, the variables(flows in 
+different channels) assume continuous values, while the variables in a traveling salesman problem are binary quantities representing the 
+inclusion or exclusion of an edge in the Hamiltonian circuit. In each case the encoding mechanism should map each solution to a unique binary
+string. A large number of optimization problems have real-valued continuous variables. A common method of encoding them uses their integer 
+representation. Each variable is first linearly mapped to an integer is encoded in a specified range and the integer is encoded using a fixed
+number of binary bits. The binary codes of all the variables are then concatenated to obtain a binary string. For example consider a continuous
+variable defined in a range from $-1.28$ to $1.28$. We could encode this continuous variable with an accuracy of two decimal places by 
+multiplying its real value by 100 and then discarding the decimal portion of the product. Thus the value that the variable attain is linearly 
+mapped to integers in the range [-128, 128]. The binary code corresponding to each integer can be easily computed.\\
+Encoding of chromosomes is one of the problems faced during the usage of genetic algorithm for solving a particular problem. Encoding depends very much of kind of problem. The convergence of the genetic algorithm has close relation with its encoding method. Encoding method is the prime
+attention in design of the algorithm. Holland's schema theorem advocates the binary encoding gives the encoding rule of the minimum signs. 
+Although binary encoding is simple and easy to do, it will add extra-calculated time for encoding and decoding to the algorithm. Also, when 
+encoding real numbers, the binary coding will generate the encoding error which will decrease the precision of the algorithm. While real 
+encoding can overcome the above problems and search a larger seach space.
+\textbf{Binary Encoding}\\~\\
+Binary encoding is the most common, mainly because the first works about GA used this type of encoding. In binary encoding every chromosome is
+a string of bits, 0 or 1.
+Diagram here
+Binary encoding gives many possible chromosomes even with a small number of alleles. On the other hand, this encoding is often not natural for 
+many problems and sometimes corrections must be made after crossover/or mutation.\\~\\
+Example of a problem:  Knapsack problem
+The problem:  There are things with given value and size. The knapsack has given capacity. Select things to maximize the value of things in 
+knapsack, but do not extend knapsack capacity.
+Encoding: Each bit says, if the corresponding thing is in knapsack.\\~\\
+\textbf{Permutation Encoding}\\~\\
+This type of encoding can be used in ordering problems, such as traveling salesman problem or task ordering problem. In permutation encoding,
+every chromosome is a string of numbers, which represents number in a sequence.
+Diagram here
+Examples of chromosomes with permutation encoding.
+Permutation encoding is only useful for ordering problems. Even for these problems, for some types of crossover and mutation corrections must
+be made to leave the chromosome consistent(i.e. have real sequence in it).
+
+Example problem: Traveling Salesman Problem(TSP)
+The problem: There are cities and given distances between them. Traveling salesman has to visit all of them, but he does wants to travel very
+much. Find a sequence of cities to minimize travelled distance.
+Encoding: Chromosome says order of cities, in which salesman will visit them.\\
+\textbf{Value Encoding}\\~\\
+ Direct value encoding can be used in problems, where some complicated value, such as real numbers, are used. Use of binary encoding for this
+ type of problems would be very difficult. In value encoding, every chromosome is a string of some values. Values can be anything connected to 
+problem, form numbers, real numbers or chars to some complicated objects. 
+Diagram here
+Example of chromosomes with value encoding:
+Value encoding is very good for some special problems. On the other hand, for this encoding is often necessary to develop some new crossover and mutation specific for the problem. 
+Example of Problem: Finding weights for neural network
+The problem: There is some neural network with given architecture. Find weights for inputs of neurons to train the network for wanted output.
+Encoding: Real values in chromosomes represent corresponding weights for inputs.\\~\\
+\textbf{Tree Encoding}\\~\\
+Tree encoding is used mainly for evolving programs or expressions, for genetic programming. In tree encoding every chromosome is a tree of some objects, such as functions or commands in programming language. \\
+Diagram here
+ Example of chromosomes with tree encoding
+Tree encoding is good for evolving programs. Programing language LISP is often used to this, because programs in it are represented in this form and can be easily parsed as a tree, so the crossover and mutation can be done relatively easily.
+Example of Problem: Finding a function from given values
+The problem: Some input and output values are given. Task is to find a function, which will give the best (closest to wanted) output to all inputs.
+Encoding: Chromosome are functions represented in a tree.\\~\\
+
 \begin{large}\textbf{Initialization:}\end{large}\\
 The population size depends on the nature of the problem, but typically contains several hundreds or thousands of possible solutions. Often, the initial population is generated randomly, allowing the entire range of possible solutions (the search space). Occasionally, the solutions may be "seeded" in areas where optimal solutions are likely to be found.\\~\\
 \begin{large}\textbf{Selection:}\end{large}\\
@@ -435,10 +492,11 @@ P\left(a_{i}\right) = \frac{f\left(a_{i}\right)}{\sum_{i=1}^{N}f\left(a_j\right)
 \end{large}
 %\begin{large}\textbf{Tournament Selection:}\end{large}
 \subsection{Rank Selection:}
-Ranking Selection in Genetic Algorithm was introduced by Baker to eliminate the disadvantages of Proportionate selection. In Linear Ranking 
-selection method, individuals are first sorted according to their fitness value and then the ranks are assigned to them. Best individual gets 
-rank ‘N’ and the worst one gets rank ‘1’. The selection probability is then assigned linearly to the individuals according to their ranks.\\
-\\The probability of the best individual to be selected is:
+Rank Selection in Genetic Algorithm was introduced by Baker to eliminate the disadvantages of fitness proportionate selection. In Linear 
+Ranking selection method, individuals are first sorted according to their fitness value and then the ranks are assigned to them. Best 
+individual gets rank ‘N’ and the worst one gets rank ‘1’. The selection probability is then assigned linearly to the individuals according to 
+their ranks.\\
+The probability of the best individual to be selected is:
 \begin{large}
 \boldmath\begin{equation*}
 P\left(a_{best}\right) = \frac{N}{\frac{\left(N*\left(N+1\right)\right)}{2}}\ \approx\ \frac{2}{N}
@@ -468,6 +526,10 @@ In the above figure, Tournament size is three, which means three individuals com
 tournament size, the greater is the probability of loss of diversity. There are two reasons for loss of diversity. Either the individual did 
 not get the opportunity to be selected (because of random selection), or the individual didn’t get selected in the intermediate population 
 because they lost some tournament.\\
+\\\textbf{Elitist Strategy:}
+Find the individual with the maximum fitness value in the mating pool and preserve it in the offspring. So the individual with the maximum 
+fitness value in the previous generation can be kept. For this reason, the algorithm will be convergent to the global optimal solution with the
+probability of 1.
 \begin{large}\textbf{Crossover:}\end{large}\\
 Crossover is the process by which the chromosomes selected from a source population are combined to form offspring which are potential members
 of a successor population.\\
