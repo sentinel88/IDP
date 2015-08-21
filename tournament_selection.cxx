@@ -25,7 +25,7 @@ int select_candidates_k(candidate *ga_cand, int size) {
    int fittest_index = 0;
    while (i < 3) {
       index[i] = get_random(size, true);
-      if (i && (index[i] == index[i -1])) {
+      if (i && (index[i] == index[i -1])) { // Wrong check. index[i] needs to be compared with all the previous indices
          continue;
       } else {
          if (fittest > ga_cand[index[i]].fitness_value) {
@@ -52,7 +52,7 @@ int tournament_selection(candidate *ga_cand, candidate *gen_children, network_da
    candidate *pool = (candidate *)malloc((size) * sizeof(candidate));
    memset(pool, 0, size * sizeof(candidate));
    printf("\nSelect candidates  for crossover operation as below\n");
-   while (i < size ){
+   while (i < size) {
       index = select_candidates_k(ga_cand, size);
       memcpy(&pool[i], &ga_cand[index], sizeof(candidate));
       printf("\n");
@@ -107,7 +107,7 @@ int genetic_ts_crossover(candidate* ga_cand, candidate *gen_children, network_da
  l = intervals;
  rand_val = (double)rand() / (double)RAND_MAX;
 
-while(1) {
+ while(1) {
     if (error_flag) {
           retry = 0;
           retry_attempts = 0;
