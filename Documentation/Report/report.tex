@@ -1,0 +1,321 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University Assignment Title Page 
+% LaTeX Template
+% Version 1.0 (27/12/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% WikiBooks (http://en.wikibooks.org/wiki/LaTeX/Title_Creation)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+% Instructions for using this template:
+% This title page is capable of being compiled as is. This is not useful for 
+% including it in another document. To do this, you have two options: 
+%
+% 1) Copy/paste everything between \begin{document} and \end{document} 
+% starting at \begin{titlepage} and paste this into another LaTeX file where you 
+% want your title page.
+% OR
+% 2) Remove everything outside the \begin{titlepage} and \end{titlepage} and 
+% move this file to the same directory as the LaTeX file you wish to add it to. 
+% Then add \input{./title_page_1.tex} to your LaTeX file where you want your
+% title page.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\title{Title page with logo}
+%----------------------------------------------------------------------------------------
+%   PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[14pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[export]{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+
+\tikzstyle{startstop}=[rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black,fill=red!30]
+
+\tikzstyle{io}=[trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=blue!30]
+
+\tikzstyle{process}=[rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black,fill=orange!30]
+
+\tikzstyle{decision}=[diamond, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=green!30]
+
+\tikzstyle{arrow}=[thick,->,>=stealth]
+
+
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%   HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE Technische Universit{\"a}t M{\"u}nchen}\\[1.5cm] % Name of your university/college
+\textsc{\Large Logistics and Supply Chain Management}\\[0.5cm] % Major heading such as course name
+
+
+%----------------------------------------------------------------------------------------
+%   TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \Large \bfseries Implementation of a Metaheuristic \\for the \\Discrete Network Design Problem}\\[0.5cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%   AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Developer:}\\
+Oliver Xavier Baptista % Your name
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisor:} \\
+Patrick Bielstein % Supervisor's Name
+\end{flushright}
+\end{minipage}\\[2cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+%\Large \emph{Author:}\\
+%John \textsc{Smith}\\[3cm] % Your name
+
+%----------------------------------------------------------------------------------------
+%   DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%   LOGO SECTION
+%----------------------------------------------------------------------------------------
+\vspace{15mm}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\linewidth]{./cm}
+\end{figure}
+
+%\includegraphics{cm.png}\\[15cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Introduction}
+
+Harry Markowitz coined the idea of mean-variance portfolios in 1952 \cite{mar:har}, theorizing that an investor can either maximize the expected return for a given level of risk, or minimize the risk for a given expected return. These principles can help the investor to compute various portfolios known as the efficient frontier of portfolios.\\
+The goal of this interdisciplinary project is to develop a web based application to calculate this efficient frontier of portfolios for various assets like stocks, bonds, commodities etc. traded on various exchanges around the world.
+
+\subsection{Markowitz Portfolio Theory}
+
+When Markowitz published his paper, he provided the foundation for modern portfolio theory as a mathematical problem \cite {wit:dob}.\\
+The return $R_t$ of a portfolio at time \textit{t} can be defined as the ratio of the total value $T_t$ of the portfolio to the total value at an earlier time \textit{t - 1}, i.e.\\\\
+\centerline{$R_t$ = $\frac{T_t}{T_{t-1}} - 1$}\\\\
+Markowitz portfolio theory analyzes how good a portfolio is based on only the mean and the variance of the returns of the assets in the portfolio.\\
+\subsection{Portfolio selection as an optimization problem}
+An investor is supposed to be risk-averse, i.e the investor wants high expected returns for a small risk (i.e. a small variance of the return) \cite {wes:gra}. Markowitz portfolio theory states that an investor should choose a portfolio from the efficient set, depending upon his/her risk aversion. One way to handle this is to consider the optimization problem. Here we try to minimize:\\\\
+\centerline{$\frac{A}{2}[\left[W\right]^T\left[C\right]\left[W\right]-\left[W\right]^T\left[R\right]]$; subject to $\left|\left[w\right]\right| =1$}\\\\
+Where \textit{A} is risk aversion factor, \textit{C} is the matrix of co-variances, \textit{R} are the expected returns and \textit{W} are the weights of individual assets.
+
+\subsection{Problem Statement}
+Given various assets like stocks, bonds, commodities etc. traded in different currencies, the application should convert all assets to a common currency and calculate an efficient frontier of portfolios for the given assets. Once all the portfolios are generated with different risk aversion factors, the performance of these portfolios should be tested for a period of 1, 3 and 5 years from the date of portfolio creation.\\
+
+\subsection{Motivation}
+As the number of financial assets is ever increasing in today's market, investors are exposed to greater opportunities and risks. Since these assets have different risk return characteristics, there is a need for a mechanism that can select assets in appropriate proportions to create a portfolio. Since Markowitz portfolio selection model laid the foundation for modern portfolio theory and many sophisticated models for portfolio creation have been developed on the basics of Markowitz portfolio theory, it is crucial to study and understand the Markowitz model.\\
+
+\subsection{Objective}
+The goal of the project was twofold:
+\begin{enumerate}
+ \item Understanting and implementing the Markowitz Efficient Frontier. 
+ \item A user friendly web based application for building and analyzing the portfolios created by the Markowitz Efficient Frontier.
+\end{enumerate}
+\subsection{Methodology}
+To implement the above goals , the following methodology needs to be followed:
+\begin{enumerate}
+ \item Specifying the application and various components of the architecture.
+ \item Identification of all components and tools required.
+ \item Specifying the dependencies between the resources.
+ \item Extracting the data required for building such a model.
+ \item Building a robust model satisfying the criteria.
+ \item Evaluation of the model.
+\end{enumerate}
+
+\section{Project Management}
+\subsection{Planning}
+As with any software development task, planning played a major role in the development of the project. The development model chosen for this project was the waterfall model.\\
+\clearpage
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\linewidth, frame]{./waterfall}
+\caption{Waterfall development model.}
+\label{fig:waterfall}
+\end{figure}
+\subsubsection{Requirements}
+During this phase, reasearch was conducted on what is the purpose and the functionalities of the application. In this stage, the reqirement from the supervisor were collected and understood. Understanding of each reqirement was validated with the supervisor so as to be on the same page. As per the requirements, the appropriate software needed for the implementation of the application was analyzed. This stage is critical since we decided on the very basics of the application right from the language, patterns for designing the software to the type of database system needed.
+\subsubsection{Design}
+In this phase the design of the application and the program structure was created. This phase forms the backbone for the acutal implementation process. Proper planning related to design of user interfaces, flowcharts etc. was performed here. The wireframes shown in figure \ref{fig:wireframe} of the Appendix section, were discussed with the supervisor. Feedback from the supervisor was noted and some basic modifications were carried out.\\
+The first aspect of the design stage was to distribute the objectives into a number of tasks and subtasks. Approximate durations were assigned, taking into account their difficulty and any other concurrent commitments such as exams and coursework. A number of milestones were then identified by analysing the project deliverables.\\
+The task list was then used to produce a Gantt chart, which can be found in the figure \ref{fig:Milestones} of the Appendix section. This gave a clearer breakdown of the tasks and allowed for them to be easily scheduled. The Gantt chart played a crucial role in time keeping of the project.\\
+\subsubsection{Implementation}
+Based on the feedback, the design was improved and the actual coding was carried out at this stage All the functions were developed independently and later integrated.
+\subsubsection{Verification}
+The application designed, was subject to various tests and error correction processes to find out any flaws in the implementation or the design. Any test errors that were found were fixed and the whole process was reiterated.
+\subsubsection{Maintainence}
+In this phase the developed application was beta tested and any functional requirements that were not fulfilled were implemented.\\
+
+\subsection{Management}
+A folder structure was maintained to keep backups on an external hard disk along with the use GitHub repository. GitHub maintains a web-based repository of the codebase and provides the revision control and source code management (SCM) functionalities, using which we can minimize the impact of lost work (drive failure, theft, etc). It also provides previous working versions should any faulty code need reverting to a previous state. The repository can be accessed at https://github.com/echorosso/Markowitz .\\
+Coding standards were adhered to during the development of the project, keeping uniform layouts and styles throughout all source files to increase readability. All variables and functions were designed to follow the CamelCase naming convention.\\
+
+\section{Application Architecture}
+Earlier most of the applications used to be single tier applications; a centralized mainframe used to contain the presentation, business and data logic all interwined as a single monolitic application. Making changes to any part of the application was a very diffcult and cumbersome task. Over the period of time the applications have evolved to a much more flexible multi-tier models. We have developed our application on the Spring Application Framework since it is one of the stable and robust multi-tier architecture widely used today. 
+\subsection{Why Spring Application Framework ?}
+Spring is a layered JAVA/J2EE application framework which has following key features:
+\begin{itemize}
+\item A \textbf{lightweight container}, which provides centralized, automated configuration and wiring of our application objects. The container provides increase application testability and scalibility by allowing us to develop individual components. These individual components can be tested in isolation and then scaled up.
+\item Robust \textbf{transaction management}, which allows us to configure various transaction managers without needing to deal with the low-level issues.
+\item A \textbf{JDBC abstraction layer}, which simplifies SQL error handling and minimizes the need for writing block JDBC codes.
+\item Flexible \textbf{MVC framework}, which is highly configurable via interfaces and can accomodate multiple view technologies like JSP, Tiles etc.
+\end{itemize}
+
+\section{Software Development}
+\subsection{Implementation}
+The application is built using the Spring Application Framework a J2EE MVC technology and is deployed on Apache Tomcat v7.0 web server. The historical asset data is retrieved using YAHOO! Finance API.\\
+Technologies like JFreeChart API, HyperSQL Database and ojAlgo API were also used for the development. All these are open source technologies and have very active communities.\\
+
+\subsection{Application Design}
+The figure \ref{fig:fc1} of the Appendix section, depicts the flowchart of the process that is invoked when the user selects a Market index whose components needs to be fetched.\\
+The figure \ref{fig:fc2} of the Appendix section, depicts the process of creating the Markowtiz Efficient Frontier when a set of assets are selected by the user.\\
+Please refer to \textit{Software Design Specification} document provided, it gives a much detailed and thorough understanding about the systems's architecture, database design and implementation. The \textit{Sequence Diagrams} document provided will help to thoroughly understand the internal workings of the application. These two documents are critical to getting a complete understanding of the entire application.
+
+\subsection{Deployment}
+To deploy the application, please read the \textit{Deployment Document} provided.\\
+
+\section{Testing}
+To ensure the software functioned without any issues and all the requirement specifications were met, various methods of testing were performed at each stage of the development cycle.
+
+\subsection{Unit and Integration Testing}
+Unit testing is the process of ensuring the individual components/ functionalities of the application work as intended. This
+meant that each individual functionality of application could be tested in isolation without interference of any other component. That being the case, we could account for all the possible behaviours of the application.\\
+When the various components were brought together, they were integration
+tested. This was to ensure that each individual component retain its original behaviour while functioning together as an application. Majority of work involved during integration was to replace appropriate components in place of the proxies and stubs and runtime analysis of the the internal state of each object.\\
+
+\subsection{Requirement testing}
+Another continuous process that was performed throughout the life of the software development process was requirement testing. This concerned whether or not the software was satisfying the requirements outlined at the start of the project. This kept the development in process and allowed us to determine when the final system was at an acceptable stage of completion.\\
+
+\subsection{User Acceptance Testing}
+With all of the requirements satisfied and a usable piece of software complete, the project supervisor was requested to test the application. This was done in an attempt to gain an account of the applications usability. After testing the software, the supervisor advised with some basic modifications and alterations. These modifications were implemented and the process was reiterated.\\
+
+\section{Experimentation}
+With a fully functioning piece of software, the experimentation phase could begin. Below are the screenshots for generating the Efficient Frontier with the following assets: 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\linewidth, frame]{./1}
+\caption{User selecting an index to fetch its corresponding components.}
+\label{fig:1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\linewidth, frame]{./3}
+\caption{A set of different assets selected by user for portfolio creation.}
+\label{fig:3}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=1\linewidth, frame]{./4}
+\caption{The plot of frontier and the corresponding individual assets}
+\label{fig:4}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=1\linewidth, frame]{./5}
+\caption{Different portfolios and their 1, 3 and 5 year performance.}
+\label{fig:5}
+\end{figure}
+
+
+\section{Conclusion}
+With all requirements and objectives achieved, I am satisfied with the work done on this project. Working on this project has proved to be a challenging yet extremely rewarding experience. The experience of learning about the domain and applying the knowledge gained over the course has been benificial in the development of the project and I have also learnt new Software development practices along the way.
+\section{Future Work}
+The work carried out in on this project opens itself to a possibility of future improvements. The structure of the software was designed with code reuse and future extensibility in mind. Future work recommendations include incorporating other portfolio creation models into the application and using custom data streams rather than relying on Yahoo! Finance API.
+\vspace{-0.3cm}
+\section{Appendix}
+\begin{figure}[!h]
+\centering
+\vspace{-0.6cm}
+\includegraphics[width=1\linewidth, frame]{./Milestones}
+\caption{Gantt chart of tasks described in section 2.1}
+\label{fig:Milestones}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\vspace{-3cm}
+\includegraphics[width=1.3\linewidth]{./fc1}
+\caption{Flowchart To Fetch Market Components.}
+\label{fig:fc1}
+\end{figure}
+
+
+
+\begin{figure}[!h]
+\centering
+\vspace{-3cm}
+\includegraphics[width=1\linewidth]{./wf1}
+\caption{Wireframes during the Design Phase.}
+\label{fig:wireframe}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\vspace{-3cm}
+\includegraphics[width=1.2\linewidth]{./fc2}
+\caption{Flowchart To Calculate the Efficient Frontier and 1, 3 and 5 Year Returns(Back Testing).}
+\label{fig:fc2}
+\end{figure}
+
+
+\clearpage
+\begin{thebibliography}{1}
+\bibitem {mar:har}
+Markowitz, Harry. "Portfolio selection*." The journal of finance 7, no. 1 (1952): 77-91.
+
+\bibitem {wit:dob}
+Witt, Stephen F., and Richard Dobbins. "The Markowitz Contribution to Portfolio Theory." Managerial Finance 5, no. 1 (1979): 3-17.
+
+
+\bibitem {wes:gra}
+West, Graeme. "An introduction to Modern Portfolio Theory: Markowitz, CAP-M, APT and Black-Litterman." Parktown North: Financial Modelling Agency (2006).
+\end{thebibliography}
+\end{document}

@@ -1,12 +1,14 @@
 \documentclass[a4paper, 12pt]{article}
-
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{verbatim}
 \setcounter{tocdepth}{3}
 \usepackage{graphicx}
+\usepackage{afterpage}
+\usepackage{floatpag}
+\floatpagestyle{empty}
 %\usepackage[a4paper, total={4in, 6in},margin=4in]{geometry}
-%\usepackage[export]{adjustbox}
+\usepackage[export]{adjustbox}
 %\usepackage[paperwidth=7.0in, paperheight=10.7in]{geometry}
 %\usepackage{layout}
 %\layout{layoutwidth=180mm,layoutheight=227mm}
@@ -45,12 +47,12 @@
 %----------------------------------------------------------------------------------------
 
 \textsc{\LARGE Technische Universit{\"a}t M{\"u}nchen}\\[1.5cm] % Name of your university/college
-\textsc{\Large Logistics and Supply Chain Management}\\[0.5cm] % Major heading such as course name
+\textsc{\Large Chair For Logistics and Supply Chain Management}\\[0.5cm] % Major heading such as course name
 
 %----------------------------------------------------------------------------------------
 %   TITLE SECTION
 %----------------------------------------------------------------------------------------
-
+\vspace{48mm}
 \HRule \\[0.4cm]
 { \Large \bfseries Implementation of a Metaheuristic\\for the\\Discrete Network Design Problem}\\[0.5cm] % Title of your document
 \HRule \\[1.5cm]
@@ -58,7 +60,7 @@
 %----------------------------------------------------------------------------------------
 %   AUTHOR SECTION
 %----------------------------------------------------------------------------------------
-
+\vspace{48mm}
 \begin{minipage}{0.4\textwidth}
 \begin{flushleft} \large
 \emph{Student:}\\
@@ -89,7 +91,7 @@ Dipl.-Math. Pirmin Fontaine % Advisor's Name
 \begin{center}
 \huge \bfseries Acknowledgement
 \end{center}
-
+\thispagestyle{empty}
 \vspace{35mm}
 I would like to thank Mr. Fontaine for his constant support and guidance throughout the project especially when I faced some challenges in understanding certain topics. I would also like to thank Prof. Dr. Stefan Minner for providing me with this opportunity to work on such an Inter-Disciplinary project.
 
@@ -98,16 +100,17 @@ I would like to thank Mr. Fontaine for his constant support and guidance through
 \begin{center}
 \huge \bfseries Abstract
 \end{center}
-
+\thispagestyle{empty}
 \vspace{35mm}
 
 The field of transportation planning involves a large class of problems that are characterized by multiple levels of decision making. Examples include selection of links for capacity improvements(network design), toll setting, traffic signal setting etc. In each of these problems, government or industry officials make one set of decisions to improve the network performance and at another level users make choices with regard to route, origin-destination etc. The discrete network design problem(DNDP) is one such problem which deals with the selection of link additions to an existing road network, with given demand from each origin to destination. The objective is to make an optimal investment decision to minimize the total travel cost in the network, while accounting for the route choice behavior of network users. This optimization problem is recognized to be NP hard because it is computationally difficult due to its non convexity owing to the bilevel nature and non-linear objective functions in most of the real cases. Finding exact or globally optimum solutions for such problems is very difficult. In mathematical optimization, a metaheuristic is a general high level procedure that can be quickly applied to different kinds of problems to provide a sufficiently good solution especially when there is limited computation capacity. These techniques sample a set of solutions which is too large to be completely sampled. Genetic algorithm is one such kind of a metaheuristic which tries to imitate the evolution of population by starting with a random set of candidate solutions that is evolved towards better solutions. The aim of the project is to implement this metaheuristic on the DNDP and to experiment with small to large size datasets(networks) widely mentioned in the literature to derive empirical results and to conclude on the effectiveness, solvability and quality of solutions obtained.
 
 \newpage
+\thispagestyle{empty}
 \tableofcontents
 \newpage
 
-
+\setcounter{page}{1}
 \section{Introduction}
 The network design problem(NDP) is concerned with the modification of a transport infrastructure by adding new links or improving existing ones. In most applications, one is interested in selecting from among a relatively small set of improvements to an existing network rather than designing an entirely new network from scratch. Network design problems arise in many transportation modes: urban mass transit, highway, rail etc. Most applications have been in highway improvement, however. The discrete network design problem(DNDP) deals with the selection of link additions to an existing road network, with given demand from each origin to destination. The objective is to make an optimal investment decision in order to minimize the total travel cost in the network, while accounting for the route choice behavior of network users. Another form of this problem is the continuous network design problem(CNDP) which deals with the optimal capacity expansion of existing links.\par
 \noindent
@@ -122,6 +125,12 @@ Bilevel problems are mathematical programming problems consisting of a special k
 \item Methods based on meta heuristics
 \end{itemize}
 
+%\begin{figure}[htbp]\centering
+%\includegraphics{./try.eps}
+%\caption{Trial}
+%\label{fig 1}
+%\end{figure}
+%\epsfbox{./try.eps}
 
 \subsection{InterDisciplinary Project}
 The implementation of this project required knowledge of C/C++ programming, Data Structures, linear programming concepts, usage of the C++ BCL(Builder component library) provided by a commercially well known optimization suite called FICO Xpress. The application of these technologies is for a well known real world problem like DNDP observed in transportation science resulted in this project to be of Inter-Disciplinary nature. As a part of the preparation for implementing this project, a good amount of knowledge on \textbf{metaheuristics} and \textbf{DNDP} was acquired from the course \textbf{"TRANSPORTATION LOGISTICS"} offered by the \textbf{CHAIR OF LOGISTICS AND SUPPLY CHAIN MANAGEMENT.}\par
@@ -155,10 +164,8 @@ A rough \textbf{timeline} from when the project started till its anticipated com
 \end{itemize}
 
 \subsection{Software Requirements}
-The project has been implemented in C with the help of an API(Linux version) provided by a commercial software suite for C++.
-\vspace{8mm}
-\textbf{\boldmath$FICO^{TM}$ Xpress Optimization Suite}\\~\\
-FICO Xpress Optimization Suite is a sophisticated mathematical modeling and optimization software. Its tools enable operational research and management professionals, analysts, and consultants to rapidly develop optimization applications that solve complex, real-world business and customer engagement challenges. It provides easy ways to create, deploy and utilize business optimization solutions based on scalable high-performance algorithms, a flexible modeling environment and rapid application and reporting capabilities.\\~\\
+The project has been implemented in C with the help of an API(Linux version) provided by a commercial software suite for C++.\\~\\
+\textbf{\boldmath$FICO^{TM}$ Xpress Optimization Suite:}   FICO Xpress Optimization Suite is a sophisticated mathematical modeling and optimization software. Its tools enable operational research and management professionals, analysts, and consultants to rapidly develop optimization applications that solve complex, real-world business and customer engagement challenges. It provides easy ways to create, deploy and utilize business optimization solutions based on scalable high-performance algorithms, a flexible modeling environment and rapid application and reporting capabilities.\\~\\
 Optimization problems have to be solved computationally to good approximation and require the usage of sophisticated optimization 
 softwares that can provide a library(API- Application programming interface) for the programmer to do the same. The programmer can use this to
  implement an application demonstrating the solving methods for DNDP. This is first done by modeling the DNDP in the form of a bilevel mixed 
@@ -172,8 +179,7 @@ problem of TAP.\par
 \label{fig:1}
 \end{figure}
 \noindent
-\textbf{Libraries for embedding:}\\~\\
-An option available from this software for embedding mathematical models into large applications is by developing a model directly in a programming language with the help of a model builder library \textit{Xpresss-BCL}. BCL(Builder Component Library) allows a user to formulate models with objects(decision variables, constraints, index sets) similar to those of a dedicated modeling language. All libraries are available for C, C++, Java, C\#, and Visual Basic(VB). For this project we will be using the library for C++.\\ \par
+\textbf{Libraries for embedding:}   An option available from this software for embedding mathematical models into large applications is by developing a model directly in a programming language with the help of a model builder library \textit{Xpresss-BCL}. BCL(Builder Component Library) allows a user to formulate models with objects(decision variables, constraints, index sets) similar to those of a dedicated modeling language. All libraries are available for C, C++, Java, C\#, and Visual Basic(VB). For this project we will be using the library for C++.\\ \par
 \noindent
 The Xpress-BCL Builder Component Library(BCL) provides an environment in which the Xpress user may readily formulate and solve linear, mixed integer and quadratic programming models. Using BCL’s extensive collection of functions, complicated models may be swiftly and simply constructed, preparing problems for optimization. Not merely limited to specific model construction, however, BCL’s flexibility makes it the ideal engine 
 for embedding in custom applications for the construction of generic modeling software. In combination with the Xpress-Optimizer, the two form 
@@ -184,9 +190,9 @@ linear or quadratic terms until the constraint is complete, or through use of ar
 scalar product of variable and coefficient arrays. The former method allows for easier modification of models once constructed, whilst the 
 latter enables swifter construction of new constraints. To complement the model construction routines, BCL supports a number of functions which allow a completed model to be passed directly to the Xpress-Optimizer, solved by the optimizer, and solution information reported back 
 directly from BCL.
-
+\newpage
 \section{Modeling}
-\subsection{Traffic Assignment Problem (TAP)}
+\subsection{Traffic Assignment Problem}
 \vspace{5mm}
 \begin{large}\textbf{Definitions:}\end{large}
 \begin{itemize}
@@ -247,7 +253,7 @@ Non negativity:
  f_{a}^{rs} \geq 0 \ \ \ \ \mathrm{\forall{r}\in{R},\forall{s}\in{S},\forall{a}\in{A}} 
 \end{equation*}
 \end{large}
-\subsection{DNDP model}
+\subsection{Discrete Network Design problem}
 Decision variables
 \begin{itemize}
 \item $x_{a}$ travelers on link a
@@ -305,7 +311,7 @@ Bilevel formulation:
 \ \ \ \ \ \ \ \ \ \ y_{a}\ \in\ {0,1}\ \mathrm{\forall{a}\in{A_{2}}}
 \end{equation*}
 \end{large} \\
-\textbf{Linearization of non-linear convex functions}\\~\\
+\textbf{Linearization of non-linear convex functions}\\
 Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $m+1$ approximation points $\left(\nu_{0},f_{0}\right)$, $\left(\nu_{1},f_{1}\right)$,...,$\left(\nu_{m},f_{m}\right)$ with $f_{i}:=f\left(\nu_{i}\right)$. Further, $f\left(x\right)$ is a function in the single flow variable $x_{a}$ and $v_{m}\geq\ \max_{a\in{A}}{x_{a}}$. The trivial upper bound is $\sum_{r\in{R},s\in{S}} q_{rs}$. However, as $x_{a}$ can be much smaller than $\sum_{r\in{R},s\in{S}} q_{rs}$, empirical upper bounds can further improve the quality of the approximation. Define $a_{i}=\frac{f_{i}-f_{i-1}}{\nu_{i}-\nu_{i-1}}$ and $b_{i}:=-v_{i-1}a_{i}+f_{i-1}$. Then $f\left(x\right)$ can be approximated by the following function:
 \begin{large}
 \[
@@ -317,7 +323,7 @@ Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $
 \]
 \end{large}
 It is clear that $a_{i}-a_{i-1}\geq0$ and Nemhauser and Wolsey(1988) stated that no binary variables are needed for the approximation.\\
-Instead $\overline{f}(x)$ can be minimzed by the following LP:\\~\\
+Instead $\overline{f}(x)$ can be minimzed by the following LP:
 \begin{large}
 \begin{equation*}
 \mathrm{min}\ f_{0}+a_{1}x_{1}+\sum_{i=2}^m\left(a_{i}-a_{i-1}\right)x_{i}
@@ -335,11 +341,12 @@ As in each $\left(\nu_{i},f_{i}\right)$ a new slope $a_i$ starts, we have to add
 Modern heuristic techniques, also called metaheuristics are a family of procedures which benefit from some sort of intelligence in their search for finding the solution to a problem. It is a higher level procedure designed to find, generate, or select a heuristic(partial search algorithm) that may provide a sufficiently good solution to an optimization problem, especially with incomplete or imperfect information or limited computation capacity. They may not provide optimal solution but they provide a sufficiently good solution rapidly and effectively. Simulated annealing, genetic algorithm, tabu search, neural network, ant system are some examples of such meta heuristics.\par
 \noindent
 \\This project implements the genetic algorithm on DNDP. Genetic algorithm (GA) is a search heuristic that mimics the process of natural selection. This heuristic (also sometimes called a metaheuristic) is routinely used to generate useful solutions to optimization and search problems.[1] Genetic algorithms belong to the larger class of evolutionary algorithms (EA), which generate solutions to optimization problems using techniques inspired by natural evolution, such as inheritance, mutation, selection, and crossover. Genetic algorithms find application in bioinformatics, phylogenetics, computational science, signal and image processing, Bayesian inference, machine learning, risk analysis and rare event sampling, Engineering and robotics, economics, manufacturing, mathematics, mathematical finance, molecular chemistry, computational physics, pharmacokinetic, pharmacometrics, and other fields.\par
-\noindent
-%\newpage
+%\noindent
+\newpage
 \section{Genetic Algorithm}
 Genetic algorithms are robust search and optimization techniques which are finding applications in a number of practical problems. The robustness of GAs is due to their capacity to locate the global optimum in a multimodal landscape. A plethora of such multimodal functions exist in engineering problems(optimization of neural network structure and learning neural network weights, solving optimal control problems, designing structures, and solving flow problems) are a few examples. It is for the above reason that considerable attention has been paid to the design of GAs for optimizing multimodal functions.\\ \par
 \noindent
+\subsection{Understanding the algorithm}
 In a genetic algorithm, a population of candidate solutions (called individuals, creatures, or phenotypes) to an optimization problem is evolved toward better solutions. Each candidate solution has a set of properties (its chromosomes or genotype) which can be mutated and altered; traditionally, solutions are represented in binary as strings of 0s and 1s, but other encodings are also possible.[6]\par
 \noindent
 \\The evolution usually starts from a population of randomly generated individuals, and is an iterative process, with the population in each iteration called a generation. In each generation, the fitness of every individual in the population is evaluated; the fitness is usually the value of the objective function in the optimization problem being solved. The more fit individuals are stochastically selected from the current population, and each individual's genome is modified (recombined and possibly randomly mutated) to form a new generation. The new generation of candidate solutions is then used in the next iteration of the algorithm. Commonly, the algorithm terminates when either a maximum number of generations has been produced, or a satisfactory fitness level has been reached for the population.
@@ -358,71 +365,6 @@ In a genetic algorithm, a population of candidate solutions (called individuals,
         end for
         P := $P'$
 \end{lstlisting}
-A typical genetic algorithm requires:
-\begin{itemize}
-\item a genetic representation of the solution domain,
-\item a fitness function to evaluate the solution domain.
-\end{itemize}
-A standard representation of each candidate solution is as an array of bits.[6] Arrays of other types and structures can be used in essentially the same way. The main property that makes these genetic representations convenient is that their parts are easily aligned due to their fixed size, which facilitates simple crossover operations. Variable length representations may also be used, but crossover implementation is more complex in this case. Tree-like representations are explored in genetic programming and graph-form representations are explored in evolutionary programming; a mix of both linear chromosomes and trees is explored in gene expression programming.
-
-Once the genetic representation and the fitness function are defined, a GA proceeds to initialize a population of solutions and then to improve it through repetitive application of the mutation, crossover, inversion and selection operators.\\~\\
-\begin{large}\textbf{Encoding:}\end{large}\\
-Fundamental to GA structure is the encoding mechanism for representing the optimization problem's variables. The encoding mechanism depends on
-the nature of the problem variables. For example, when solving for the optimal flows in a transportation problem, the variables(flows in 
-different channels) assume continuous values, while the variables in a traveling salesman problem are binary quantities representing the 
-inclusion or exclusion of an edge in the Hamiltonian circuit. In each case the encoding mechanism should map each solution to a unique binary
-string. A large number of optimization problems have real-valued continuous variables. A common method of encoding them uses their integer 
-representation. Each variable is first linearly mapped to an integer is encoded in a specified range and the integer is encoded using a fixed
-number of binary bits. The binary codes of all the variables are then concatenated to obtain a binary string. For example consider a continuous
-variable defined in a range from $-1.28$ to $1.28$. We could encode this continuous variable with an accuracy of two decimal places by 
-multiplying its real value by 100 and then discarding the decimal portion of the product. Thus the value that the variable attain is linearly 
-mapped to integers in the range [-128, 128]. The binary code corresponding to each integer can be easily computed.\\
-Encoding of chromosomes is one of the problems faced during the usage of genetic algorithm for solving a particular problem. Encoding depends very much of kind of problem. The convergence of the genetic algorithm has close relation with its encoding method. Encoding method is the prime
-attention in design of the algorithm. Holland's schema theorem advocates the binary encoding gives the encoding rule of the minimum signs. 
-Although binary encoding is simple and easy to do, it will add extra-calculated time for encoding and decoding to the algorithm. Also, when 
-encoding real numbers, the binary coding will generate the encoding error which will decrease the precision of the algorithm. While real 
-encoding can overcome the above problems and search a larger seach space.
-\textbf{Binary Encoding}\\~\\
-Binary encoding is the most common, mainly because the first works about GA used this type of encoding. In binary encoding every chromosome is
-a string of bits, 0 or 1.
-Diagram here
-Binary encoding gives many possible chromosomes even with a small number of alleles. On the other hand, this encoding is often not natural for 
-many problems and sometimes corrections must be made after crossover/or mutation.\\~\\
-Example of a problem:  Knapsack problem
-The problem:  There are things with given value and size. The knapsack has given capacity. Select things to maximize the value of things in 
-knapsack, but do not extend knapsack capacity.
-Encoding: Each bit says, if the corresponding thing is in knapsack.\\~\\
-\textbf{Permutation Encoding}\\~\\
-This type of encoding can be used in ordering problems, such as traveling salesman problem or task ordering problem. In permutation encoding,
-every chromosome is a string of numbers, which represents number in a sequence.
-Diagram here
-Examples of chromosomes with permutation encoding.
-Permutation encoding is only useful for ordering problems. Even for these problems, for some types of crossover and mutation corrections must
-be made to leave the chromosome consistent(i.e. have real sequence in it).
-
-Example problem: Traveling Salesman Problem(TSP)
-The problem: There are cities and given distances between them. Traveling salesman has to visit all of them, but he does wants to travel very
-much. Find a sequence of cities to minimize travelled distance.
-Encoding: Chromosome says order of cities, in which salesman will visit them.\\
-\textbf{Value Encoding}\\~\\
- Direct value encoding can be used in problems, where some complicated value, such as real numbers, are used. Use of binary encoding for this
- type of problems would be very difficult. In value encoding, every chromosome is a string of some values. Values can be anything connected to 
-problem, form numbers, real numbers or chars to some complicated objects. 
-Diagram here
-Example of chromosomes with value encoding:
-Value encoding is very good for some special problems. On the other hand, for this encoding is often necessary to develop some new crossover and mutation specific for the problem. 
-Example of Problem: Finding weights for neural network
-The problem: There is some neural network with given architecture. Find weights for inputs of neurons to train the network for wanted output.
-Encoding: Real values in chromosomes represent corresponding weights for inputs.\\~\\
-\textbf{Tree Encoding}\\~\\
-Tree encoding is used mainly for evolving programs or expressions, for genetic programming. In tree encoding every chromosome is a tree of some objects, such as functions or commands in programming language. \\
-Diagram here
- Example of chromosomes with tree encoding
-Tree encoding is good for evolving programs. Programing language LISP is often used to this, because programs in it are represented in this form and can be easily parsed as a tree, so the crossover and mutation can be done relatively easily.
-Example of Problem: Finding a function from given values
-The problem: Some input and output values are given. Task is to find a function, which will give the best (closest to wanted) output to all inputs.
-Encoding: Chromosome are functions represented in a tree.\\~\\
-
 \begin{large}\textbf{Initialization:}\end{large}\\
 The population size depends on the nature of the problem, but typically contains several hundreds or thousands of possible solutions. Often, the initial population is generated randomly, allowing the entire range of possible solutions (the search space). Occasionally, the solutions may be "seeded" in areas where optimal solutions are likely to be found.\\~\\
 \begin{large}\textbf{Selection:}\end{large}\\
@@ -453,7 +395,81 @@ This generational process is repeated until a termination condition has been rea
 \item Manual inspection
 \item Combinations of the above
 \end{itemize}
-\subsection{Selection Schemes}
+A typical genetic algorithm requires:
+\begin{itemize}
+\item a genetic representation of the solution domain,
+\item a fitness function to evaluate the solution domain.
+\end{itemize}
+A standard representation of each candidate solution is as an array of bits.[6] Arrays of other types and structures can be used in essentially the same way. The main property that makes these genetic representations convenient is that their parts are easily aligned due to their fixed size, which facilitates simple crossover operations. Variable length representations may also be used, but crossover implementation is more complex in this case. Tree-like representations are explored in genetic programming and graph-form representations are explored in evolutionary programming; a mix of both linear chromosomes and trees is explored in gene expression programming.
+
+Once the genetic representation and the fitness function are defined, a GA proceeds to initialize a population of solutions and then to improve it through repetitive application of the mutation, crossover, inversion and selection operators.
+\subsection{Encoding}
+%\begin{large}\textbf{Encoding:}\end{large}\\
+Fundamental to GA structure is the encoding mechanism for representing the optimization problem's variables. The encoding mechanism depends on
+the nature of the problem variables. For example, when solving for the optimal flows in a transportation problem, the variables(flows in 
+different channels) assume continuous values, while the variables in a traveling salesman problem are binary quantities representing the 
+inclusion or exclusion of an edge in the Hamiltonian circuit. In each case the encoding mechanism should map each solution to a unique binary
+string. A large number of optimization problems have real-valued continuous variables. A common method of encoding them uses their integer 
+representation. Each variable is first linearly mapped to an integer is encoded in a specified range and the integer is encoded using a fixed
+number of binary bits. The binary codes of all the variables are then concatenated to obtain a binary string. For example consider a continuous
+variable defined in a range from $-1.28$ to $1.28$. We could encode this continuous variable with an accuracy of two decimal places by 
+multiplying its real value by 100 and then discarding the decimal portion of the product. Thus the value that the variable attain is linearly 
+mapped to integers in the range [-128, 128]. The binary code corresponding to each integer can be easily computed.\\
+Encoding of chromosomes is one of the problems faced during the usage of genetic algorithm for solving a particular problem. Encoding depends very much of kind of problem. The convergence of the genetic algorithm has close relation with its encoding method. Encoding method is the prime
+attention in design of the algorithm. Holland's schema theorem advocates the binary encoding gives the encoding rule of the minimum signs. 
+Although binary encoding is simple and easy to do, it will add extra-calculated time for encoding and decoding to the algorithm. Also, when 
+encoding real numbers, the binary coding will generate the encoding error which will decrease the precision of the algorithm. While real 
+encoding can overcome the above problems and search a larger seach space.\\~\\
+\textbf{Binary Encoding}\\
+Binary encoding is the most common, mainly because the first works about GA used this type of encoding. In binary encoding every chromosome is
+a string of bits, 0 or 1.
+\begin{center}
+Chromosome A: 101100101100101011100101\\
+Chromosome B: 111111100000110000011111
+\end{center}
+Binary encoding gives many possible chromosomes even with a small number of alleles. On the other hand, this encoding is often not natural for 
+many problems and sometimes corrections must be made after crossover/or mutation.\\~\\
+Example of a problem:  \textbf{Knapsack problem}\\
+The problem:  There are things with given value and size. The knapsack has given capacity. Select things to maximize the value of things in 
+knapsack, but do not extend knapsack capacity.
+Encoding: Each bit says, if the corresponding thing is in knapsack.\\~\\
+\textbf{Permutation Encoding}\\
+This type of encoding can be used in ordering problems, such as traveling salesman problem or task ordering problem. In permutation encoding,
+every chromosome is a string of numbers, which represents number in a sequence.
+\begin{center}
+Chromosome A: 1 5 3 2 6 4 7 9 8\\
+Chromosome B: 8 5 6 7 2 3 1 4 9
+\end{center}
+Examples of chromosomes with permutation encoding.\\
+Permutation encoding is only useful for ordering problems. Even for these problems, for some types of crossover and mutation corrections must
+be made to leave the chromosome consistent(i.e. have real sequence in it).\\~\\
+Example problem: \textbf{Traveling Salesman Problem(TSP)}\\
+The problem: There are cities and given distances between them. Traveling salesman has to visit all of them, but he does wants to travel very
+much. Find a sequence of cities to minimize travelled distance.
+Encoding: Chromosome says order of cities, in which salesman will visit them.\\~\\
+\textbf{Value Encoding}\\
+Direct value encoding can be used in problems, where some complicated value, such as real numbers, are used. Use of binary encoding for this
+type of problems would be very difficult. In value encoding, every chromosome is a string of some values. Values can be anything connected to 
+problem, form numbers, real numbers or chars to some complicated objects.\\
+\begin{center}
+Chromosome A: 1.2324  5.3243  0.4556  2.3293  2.4545\\
+Chromosome B: ABDJEIFJDHDIERJFDLDFLFEGT\\
+Chromosome C: (back), (back), (right), (forward), (left)
+\end{center}
+Example of chromosomes with value encoding:\\
+Value encoding is very good for some special problems. On the other hand, for this encoding is often necessary to develop some new crossover and mutation specific for the problem.\\~\\
+Example of Problem: \textbf{Finding weights for neural network}\\
+The problem: There is some neural network with given architecture. Find weights for inputs of neurons to train the network for wanted output.
+Encoding: Real values in chromosomes represent corresponding weights for inputs.\\~\\
+\textbf{Tree Encoding}\\
+Tree encoding is used mainly for evolving programs or expressions, for genetic programming. In tree encoding every chromosome is a tree of some objects, such as functions or commands in programming language. \\
+Diagram here\\
+ Example of chromosomes with tree encoding\\
+Tree encoding is good for evolving programs. Programing language LISP is often used to this, because programs in it are represented in this form and can be easily parsed as a tree, so the crossover and mutation can be done relatively easily.\\~\\
+Example of Problem: \textbf{Finding a function from given values}\\
+The problem: Some input and output values are given. Task is to find a function, which will give the best (closest to wanted) output to all inputs.\\
+Encoding: Chromosome are functions represented in a tree.
+\subsection{Selection}
 Genetic algorithms(GA) use a selection mechanism to select individuals from the population to insert into the mating pool. Individuals from the mating pool are used to generate new offspring with the resulting offspring forming the basis of the next generation. As the individuals in themating pool are the ones whose genes are inherited by the next generation, it is desirable that the mating pool be comprised of "good" individuals. A selection mechanism in GAs is simply a process that favors the selection of better individuals in the population for the mating pool. 
 The selection pressure is the degree to which the better individuals are favored: the higher the selection pressure, the more the better
 individuals are favored. This selection pressure drives the GA to improve the population fitness over succeeding generations . The convergence
@@ -469,7 +485,7 @@ high, there is an increased chance of the GA prematurely converging to an incorr
 \item Local selection
 \end{itemize}
 %\begin{large}\textbf{Fitness Proportionate Selection:}\end{large}
-\subsection{Fitness Proportionate Selection:}
+\subsubsection{Fitness Proportionate Selection}
 This method is also known as Roulette wheel selection. It is a genetic operator used in genetic algorithms for selecting potentially useful 
 solutions for recombination. This selection principle is similar to that of a roulette wheel. The probability of selection of a sector in a 
 roulette wheel is proportional to the magnitude of the central angle of the sector. Similarly in Genetic Algorithm, whole population in
@@ -491,7 +507,7 @@ P\left(a_{i}\right) = \frac{f\left(a_{i}\right)}{\sum_{i=1}^{N}f\left(a_j\right)
 \end{equation*}
 \end{large}
 %\begin{large}\textbf{Tournament Selection:}\end{large}
-\subsection{Rank Selection:}
+\subsubsection{Rank Selection}
 Rank Selection in Genetic Algorithm was introduced by Baker to eliminate the disadvantages of fitness proportionate selection. In Linear 
 Ranking selection method, individuals are first sorted according to their fitness value and then the ranks are assigned to them. Best 
 individual gets rank ‘N’ and the worst one gets rank ‘1’. The selection probability is then assigned linearly to the individuals according to 
@@ -514,7 +530,7 @@ The probability of the $i^{th}$ individual(sorted oorder) to be selected is:
 P\left(a_i\right) = \frac{N-i+1}{\frac{\left(N*\left(N+1\right)\right)}{2}}\ \approx\ \frac{2\left(N-i+1\right)}{N^2}
 \end{equation*}
 \end{large}
-\subsection{Tournament Selection:}
+\subsubsection{Tournament Selection}
 Tournament selection is a useful and robust selection mechanism commonly used by genetic algorithms (GAs). The selection pressure of
 tournament selection directly varies with the tournament size-the more competitors , the higher the resulting selection pressure. Due to the 
 efficiency and ease of implementation, Tournament selection is the most popular selection technique of Genetic Algorithm. In Tournament 
@@ -530,12 +546,144 @@ because they lost some tournament.\\
 Find the individual with the maximum fitness value in the mating pool and preserve it in the offspring. So the individual with the maximum 
 fitness value in the previous generation can be kept. For this reason, the algorithm will be convergent to the global optimal solution with the
 probability of 1.
-\begin{large}\textbf{Crossover:}\end{large}\\
-Crossover is the process by which the chromosomes selected from a source population are combined to form offspring which are potential members
-of a successor population.\\
-\begin{large}\textbf{Mutation:}\end{large}\\
-The genetic algorithm will be used to solve the upper level problem whereas the nested problem is solved using BCL component of FICO Xpress software. For every candidate solution in the upper level problem the nested problem will be solved using BCL. This iterative process is continued to evolve towards stronger solutions for the leader by the use of genetic algorithm operations like crossover, mutation etc till the stopping criteria is satisfied.\\
-
+\subsection{Crossover}
+%\begin{large}\textbf{Crossover:}\end{large}\\
+The search of the solution space is done by creating new chromosomes from old ones. Crossover is the technique by which the chromosomes 
+selected from a source population according to a chosen selection scheme from those described earlier are combined to form offsprings which are potential members of a successor population. It is simply a matter of replacing some of the genes in one parent by the corresponding genes of the other. There are various ways to do a crossover. Few of them are described below. Examples demonstrating the various techniques use binary encoding as the underlying encoding scheme for the chromosomes.\\~\\
+For all the examples that follow the below 2 parents will be used as the selected chromosomes:
+\begin{center}
+Parent 1: 1010101010\\
+ Parent 2: \textbf{1000010000}
+\end{center}
+\textbf{Single Point Crossover}\\
+In this technique each pair of selected chromosomes undergoes crossover as follows: An integer position k along both the chromosomes is 
+selected uniformly at random between 1 and the chromosome length say l. Two new chromosomes are created swapping all the genes between k+1 and l. Suppose the randomly chosen crossover point is the fifth bit then each new child receives one half of the parent's bits:
+\begin{center}
+Child 1: 10101\textbf{10000}\\
+Child 2. \textbf{10000}01010
+\end{center}
+\textbf{Two Point Crossover}\\
+This technique is similar to the single-point crossover except for the fact that there are 2 crossover points chosen at random for both the
+chromosomes. And, the parents only swap the bits between the 2 crossover points. Suppose the randomly chosen crossover points are the third 
+and the sixth bit then the children are:
+\begin{center}
+Child 1: 101\textbf{001}1010\\
+Child 2: \textbf{100}010\textbf{0000}
+\end{center}
+\textbf{Uniform crossover}\\
+This technique does not select a set of crossover points. It simply considers each bit position of the 2 parents, and swaps the two bits with
+a probability of 50\%. Suppose the first, third, fourth and ninth bit positions(of the original parents) are swapped. Then the children are:
+\begin{center}
+Child 1: \textbf{1}0\textbf{00}1010\textbf{0}0\\
+Child 2: 1\textbf{0}10\textbf{0100}1\textbf{0}
+\end{center}
+Another slight variation of this technique is the half-uniform crossover where exactly half of the non-matching bits are swapped. First, the 
+hamming distance(The number of differing bits) is calculated. This number is divided by two. The resulting number is how many of the bits
+that do not match between the two parents that will be swapped.\\~\\
+\textbf{Three parent crossover}\\
+In this technique, The child is derived from three parents. They are chosen as per some selection scheme. Each bit of the first parent is
+checked with the bit of the second parent for equality. If they are equal then the bit is taken for the offspring otherwise the bit from the
+third parent is taken for the offspring. For example, the following three parents:
+\begin{center}
+Parent 1: 110100010\\
+Parent 2: 011001001\\
+Parent 3: 110110101\\~\\
+Child: 110100001
+\end{center}
+Depending on how the chromosome represents the solution, a direct swap may not be possible. One such case is when the chromosome is an ordered list, such as an ordered list of the cities to be travelled for the traveling salesman problem. There are many crossover methods for ordered chromosomes. The already mentioned N-point crossover can be applied for ordered chromosomes also, but this always need a corresponding repair process, actually, some ordered crossover methods are derived from the idea. However, sometimes a crossover of chromosomes produces recombinations which violate the constraint of ordering and thus need to be repaired. Some of the techniques are given below:
+\begin{itemize}
+\item  partially matched crossover (PMX): In this method, two crossover points are selected at random and PMX proceeds by position wise exchanges. The two crossover points give matching selection. It affects cross by position-by-position exchange operations. In this method parents are mapped to each other, hence we can also call it partially mapped crossover.[5]
+\item  cycle crossover (CX): Beginning at any gene i in parent 1, the i-th gene in parent 2 becomes replaced by it. The same is repeated for the displaced gene until the gene which is equal to the first inserted gene becomes replaced (cycle).
+\item  order crossover operator (OX1): A portion of one parent is mapped to a portion of the other parent. From the replaced portion on, the rest is filled up by the remaining genes, where already present genes are omitted and the order is preserved.
+\item order-based crossover operator (OX2)
+\item position-based crossover operator (POS)
+\item voting recombination crossover operator (VR)
+\item alternating-position crossover operator (AP)
+\item sequential constructive crossover operator (SCX)
+\end{itemize}
+\subsection{Mutation}
+The two individuals(children) resulting from each crossover operation will now be subjected to the mutation operator in the final step to form
+the new generation. This operator randomly flips or alters one or more bit values at randomly selected locations in chromosomes. The mutation
+operator enhances the ability of GA to find near optimal solution to a given problem by maintaining sufficient level of genetic variety in the 
+population, which is needed to make sure that the entire solution space is used in the search for the best solution. In a sense, it serves as 
+an insurance policy, it helps prevent the loss of genetic material.\\~\\
+The purpose of mutation in GAs is preserving and introducing diversity. Mutation should allow the algorithm to avoid local minima by preventing
+the population of chromosomes from becoming too similar to each other, thus slowing or even stopping evolution. This reasoning also explains 
+the fact that most GA systems avoid only taking the fittest of the population in generating the next but rather a random(or semi-random) 
+selection with a weighting toward those that are fitter. Some of the type of mutation techniques used are as follows:\\~\\
+\textbf{Random Mutation}\\
+This technique is applied to each offspring in the population with a predetermined probability. For a randomly chosen bit position of a 
+chromosome we flip the bit to value either $0$ or $1$ assuming a binary encoding scheme.\\~\\
+\textbf{Flip Bit}\\
+This mutation operator takes the genome and inverts the bits (i.e. if the genome bit is 1, it is changed to $0$ and vice versa).\\~\\
+\textbf{Boundary}\\
+This mutation operator replaces the genome with either lower or upper bound randomly. This can be used for integer and float genes.\\~\\
+\textbf{Non-Uniform}\\
+The probability that amount of mutation will go to 0 with the next generation is increased by using non-uniform mutation operator. It keeps the population from stagnating in the early stages of the evolution. It tunes solution in later stages of evolution. This mutation operator can only be used for integer and float genes.\\~\\
+\textbf{Uniform}\\
+This operator replaces the value of the chosen gene with a uniform random value selected between the user-specified upper and lower bounds for that gene. This mutation operator can only be used for integer and float genes.\\~\\
+\textbf{Gaussian}\\
+This operator adds a unit Gaussian distributed random value to the chosen gene. If it falls outside of the user-specified lower or upper bounds for that gene, the new gene value is clipped. This mutation operator can only be used for integer and float genes.\\~\\
+\textbf{Order Changing}\\
+In case of permutation encoding scheme, order changing is a technique where two numbers are selected an exchanged. Example as shown below:
+\begin{center}
+$\left(1 \mathbf{2}\ 3\ 4\ 5\ 6\ \mathbf{8}\ 9\ 7\right)\ =>\ \left(1 \mathbf{8}\ 3\ 4\ 5\ 6\ \mathbf{2}\ 9\ 7\right)$
+\end{center}
+\textbf{Others}\\
+In case of value encoding, mutation is achieve by adding a small number (for real value encoding) - to selected values is added(or subtracted)
+a small number.\\
+\begin{center}
+$(1.29\ 5.68\ 2.86\ 4.11\ 5.55)\ =>\ (1.29\ 5.68\ 2.73\ 4.22\ 5.55)$
+\end{center}
+In case of tree encoding schemes, selected nodes are mutated by changing the operator or number.\\~\\
+%\begin{large}\textbf{Mutation:}\end{large}\\
+The genetic algorithm will be used to solve the upper level problem whereas the nested problem is solved using BCL component of FICO Xpress software. For every candidate solution in the upper level problem the nested problem will be solved using BCL. This iterative process is continued to evolve towards stronger solutions for the leader by the use of genetic algorithm operations like crossover, mutation etc till the stopping criteria is satisfied.%\\
+\newpage
+\section{Implementation}
+%\begin{minipage}[t]
+%\vspace{0mm}
+%\afterpage{
+\begin{figure}[htbp]
+\floatpagestyle{empty}
+\hspace*{-0.3in}
+%\raisebox{12mm}{
+\includegraphics[scale=0.95]{./diagram.eps}%}
+\caption{\textbf{Flow chart of the software imlementation}}
+\label{fig 1}
+\end{figure}
+%}
+%\end{minipage}[t]
+%\afterpage{
+%\thispagestyle{empty}
+\begin{figure}[htbp]
+\floatpagestyle{empty}
+\hspace*{0.1in}
+\includegraphics[scale=0.9]{./diagram1.eps}
+\caption{\textbf{Pseudo code for algorithms}}
+\label{fig 2}
+\end{figure}
+%}
+%\afterpage{
+%\thispagestyle{empty}
+\begin{figure}[htbp]
+\floatpagestyle{empty}
+\hspace*{-0.10in}
+\includegraphics[scale=0.85]{./diagram2.eps}
+\caption{\textbf{Pseudo code for algorithms}}
+\label{fig 3}
+\end{figure}
+%}
+\subsection{Software Design}
+\subsection{Implementation Details}
+\newpage
+\section{Experiments and Visualization}
+\subsection{Setup}
+\subsection{Datasets}
+\subsection{Experiments and Results}
+\subsection{Visualization}
+\newpage
+\section{Conclusion}
+\subsection{Scope for future work}
 %\begin{figure}[h]
 %\centering
 %\includegraphics[width=0.65\textwidth, clip, trim=0mm 60mm 0mm 0mm]{data/architecture.pdf}
