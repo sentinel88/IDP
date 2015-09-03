@@ -14,10 +14,10 @@
 using namespace std;
 using namespace ::dashoptimization;
 
-extern int Budget;
+int Budget;
 
 typedef enum { DEFAULT_SELECTION, RANK_BASED_SELECTION, TOURNAMENT_SELECTION } scheme;
-extern scheme selection_scheme;
+scheme selection_scheme;
 
 #ifdef ROULETTE_WHEEL_SELECTION
 extern double total_fitness;
@@ -25,5 +25,7 @@ extern double total_fitness;
 
 #define _DEBUG 1
 //#define _PROTECT
+
+int cost_function;
 
 #endif

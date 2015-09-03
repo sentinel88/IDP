@@ -45,7 +45,7 @@ int parse (network_data *netinfo) {
    while (linecount < LC) {
     // while(fgets(str, 100, datafile)) {
       fgets(str, 200, datafile);
-      if (CHOICE == 2) {
+      if (cost_function_selector == 2) {
         /*if (sscanf(str, "%d %d %f %f %f", &i, &j, &ca, &ta, &ba) == 5) {
             netinfo->Ca[i][j] = ca; netinfo->Ba[i][j] = ba; netinfo->Ta[i][j] = ta;
             //printf("\n[%d %d]:%f %f %f\n", i, j, netinfo->Ca[i][j], netinfo->Ba[i][j], netinfo->Ta[i][j]);
@@ -119,7 +119,7 @@ int parse (network_data *netinfo) {
    count = 0;
 
    while (fgets(str, 100, datafile)) {
-      if (CHOICE == 1) {
+      if (cost_function_selector == 1) {
          if (sscanf(str, "%d %d %f %f", &i, &j, &ta, &ba) == 4) {
             printf("\n%d %d %f %f\n", i, j, ta, ba);
             netinfo->Ta[i][j] = ta;

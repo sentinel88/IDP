@@ -14,7 +14,6 @@
 #include <time.h>
 
 
-
 static int initialize(genetic_algo *ga, candidate gen_children, candidate *cache, char **argv) {
    int i = 0;
 
@@ -39,8 +38,14 @@ static int initialize(genetic_algo *ga, candidate gen_children, candidate *cache
    }
 
    selection_scheme = atoi(argv[2]);
-   if (selection_scheme < 0) {
+   if (selection_scheme < 0 || selection_scheme > 2) {
       printf("\nIncorrect value of the selection_scheme\n");
+      return -1;
+   }
+
+   cost_function_selector = atoi(argv[3]);
+   if (cost_function_selector < 1 || cost_function_selector > 2) {
+      printf("\nIncorrect value of the cost_function_selector\n");
       return -1;
    }
 
@@ -188,12 +193,15 @@ int main(int argc, char **argv)
  double cpu_time_used;
  int ret_val = 0;
 
- if (argc < 2) {
+ if (argc < 3) {
     printf("\nIncorrect number of command line arguments\n");
     exit(0);
  }
 
  printf("\nWARNING:  Please remember to change the settings for low budget problems to avoid getting stuck in an infinite loop. For low budget problems check_duplicate function is not a good idea as there are few feasible candidates in problems for low budget and one cannot avoid duplicates\n\n");
+
+ selection_scheme = DEFAULT_SELECTION;
+ cost_function = 1;
 
  ret_val = initialize(&ga, gen_children, cache, argv);
  if (ret_val < 0) {
