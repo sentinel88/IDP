@@ -2,7 +2,6 @@
 #include <data.h>
 #include <funcs.h>
 
-#ifdef RANK_BASED_SELECTION
 int assign_selection_rb_prob(candidate *ga_cand, int size) {
    int i;
    int fitness = size;
@@ -47,7 +46,6 @@ int rank_based_selection(candidate *ga_cand, candidate *gen_children, network_da
    memcpy(&ga_cand[1], gen_children, (size-1) * sizeof(candidate));
    return 0;
 }
-#endif
 
 int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_children, network_data netinfo, int size) {
  int i, j, k=0, l, i1, i2, m, rand_elem, bits;
@@ -284,4 +282,3 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
  printf("\nExiting crossover function\n");
  return 0;
 }
-

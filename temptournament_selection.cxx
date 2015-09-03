@@ -14,9 +14,7 @@ int get_random(int range, bool incl_zero) {
    return ( incl_zero == true ? r/x: r/x + 1 );
 }
 
-#ifdef TOURNAMENT_SELECTION
-
-// The below selection procedure for tournament selection is binary which means it selects 2 candidates at random and returns the fitter one.
+// The below selection procedure for tournament selection is binary/ternary which means it selects 2/3 candidates at random and returns the fittest one.
 int select_candidates_k(candidate *ga_cand, int size) {
    int index[3] = {-1, -1, -1};
    //int index[2] = {-1, -1};
@@ -72,5 +70,3 @@ int tournament_selection(candidate *ga_cand, candidate *gen_children, network_da
    memcpy(&ga_cand[1], gen_children, (size-1) * sizeof(candidate));
    return 0;
 }
-
-#endif

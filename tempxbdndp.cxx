@@ -13,9 +13,7 @@
 #include <funcs.h>
 #include <time.h>
 
-#ifdef ROULETTE_WHEEL_SELECTION
-double total_fitness;
-#endif
+
 
 static int initialize(genetic_algo *ga, candidate gen_children, candidate *cache, char **argv) {
    int i = 0;
@@ -35,7 +33,7 @@ static int initialize(genetic_algo *ga, candidate gen_children, candidate *cache
    memset(cache, 0, 2 * ga->population_size * sizeof(candidate));
 
    Budget = atoi(argv[1]);
-   if (Budget <= 10 || (Budget%10 != 0))
+   if (Budget <= 10 || (Budget % 10 != 0))
       printf("\nIncorrect budget specified\n");
       return -1;
    }
@@ -177,6 +175,8 @@ int main(int argc, char **argv)
  int last_best_iter = 0;
  int last_best_index = -1;
  int index = -1;
+
+ double total_fitness = 0;
  
  int i, j, k, l, m, n;           /* Iteration variables */
  float ta, xa, ba, ca, Constant;
@@ -210,9 +210,11 @@ int main(int argc, char **argv)
 //#endif
 
  for (i=0; i<ga.iterations; i++) {
-#ifdef ROULETTE_WHEEL_SELECTION
-    total_fitness = 0;
-#endif
+
+    #ifdef ROULETTE_WHEEL_SELECTION
+       total_fitness = 0;
+    #endif
+
     printf("\nGenetic algorithm: Iteration %d\n", i+1);
     printf("\n\n************************************************\n");
     printf("Generation %d\n", i+1);
@@ -246,17 +248,16 @@ int main(int argc, char **argv)
        printf("Fitness: %f\n", ga.population[j].fitness_value);
        printf("************************************************\n");
 
-#ifdef ROULETTE_WHEEL_SELECTION
+    #ifdef ROULETTE_WHEEL_SELECTION
        total_fitness += ga.population[j].fitness_value;
-#endif
+    #endif
 
-
-#ifdef TOURNAMENT_SELECTION
+    if (selection_scheme == TOURNAMENT_SELECTION) {
        if (last_best_fitness >= ga.population[j].fitness_value) {
           last_best_fitness = ga.population[j].fitness_value;
           last_best_index = j;
        }
-#endif
+    }
 
        delete dndp;
     }
@@ -267,66 +268,66 @@ int main(int argc, char **argv)
 
     //memcpy(&gen_children[0], &ga.population[last_best_index], sizeof(candidate));
 //#endif
-#ifdef TOURNAMENT_SELECTION
-    if (i < (ga.iterations - 1)) {
-       memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
-       tournament_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
-       memcpy(&ga.population[0], &cache[last_best_index], sizeof(candidate));
-       last_best_index = 0;
-    }
-#else
-    candidates_sort(ga.population, GA_POPULATION_SIZE);
-
-    memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
-/* One of the other termination criterias for genetic algorithm is objective function value */ 
-    if (i == 0) {
-       last_best_fitness = ga.population[0].fitness_value;
+    if (selection_scheme == TOURNAMENT_SELECTION) {
+        if (i < (ga.iterations - 1)) {
+           memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+           tournament_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
+           memcpy(&ga.population[0], &cache[last_best_index], sizeof(candidate));
+       	   last_best_index = 0;
+    	}
     } else {
-       if (last_best_fitness == ga.population[0].fitness_value) {
-          last_best_iter++;
-          if (last_best_iter == MAX_BEST_ITERATIONS) {
-             printf("\nGenetic algorithm terminates because the objective function value has remained the same for a long time\n");
-             printf("\nFinal objective value for DNDP is %f\n", ga.population[0].fitness_value);
-             return 0;
-          }
-       } else if (last_best_fitness > ga.population[0].fitness_value) {
-             last_best_fitness = ga.population[0].fitness_value;
-             last_best_iter = 0;
-       } else {
-       /* last_best_fitness < ga.population[0].fitness_value */
-       /* Do nothing currently because last_best_fitness cannot be less than the current best since while creating this generation the best
-          fitness will be on top and in such a case last_best_fitness should retain its top place */
-       }
-    }
-    printf("\n\n************************************************\n");
-    printf("Generation %d(After sorting)\n", i+1);
-    print_generation(ga.population, GA_POPULATION_SIZE, true);
-#ifdef RANK_BASED_SELECTION
-    if (i < (ga.iterations - 1)) {
-       assign_selection_rb_prob(ga.population, GA_POPULATION_SIZE);
-       memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
-       rank_based_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
-    }
-#else
-   ret_val = default_selection(&ga, gen_children, netinfo);
-   if (ret_val < 0) {
-      printf("\nError encountered in the execution of the default selection algorithm\n");
-      break;
-   }
-#endif
-#endif
+	candidates_sort(ga.population, GA_POPULATION_SIZE);
+
+	memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+    /* One of the other termination criterias for genetic algorithm is objective function value */ 
+	if (i == 0) {
+	   last_best_fitness = ga.population[0].fitness_value;
+	} else {
+	   if (last_best_fitness == ga.population[0].fitness_value) {
+	      last_best_iter++;
+	      if (last_best_iter == MAX_BEST_ITERATIONS) {
+		 printf("\nGenetic algorithm terminates because the objective function value has remained the same for a long time\n");
+		 printf("\nFinal objective value for DNDP is %f\n", ga.population[0].fitness_value);
+		 return 0;
+	      }
+	   } else if (last_best_fitness > ga.population[0].fitness_value) {
+		 last_best_fitness = ga.population[0].fitness_value;
+		 last_best_iter = 0;
+	   } else {
+	   /* last_best_fitness < ga.population[0].fitness_value */
+	   /* Do nothing currently because last_best_fitness cannot be less than the current best since while creating this generation the best
+	      fitness will be on top and in such a case last_best_fitness should retain its top place */
+	   }
+	}
+	printf("\n\n************************************************\n");
+	printf("Generation %d(After sorting)\n", i+1);
+	print_generation(ga.population, GA_POPULATION_SIZE, true);
+	if (selection_scheme == RANK_BASED_SELECTION) {
+	    if (i < (ga.iterations - 1)) {
+	       assign_selection_rb_prob(ga.population, GA_POPULATION_SIZE);
+	       memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+	       rank_based_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
+	    }
+	} else {
+	   ret_val = default_selection(&ga, gen_children, netinfo);
+	   if (ret_val < 0) {
+	      printf("\nError encountered in the execution of the default selection algorithm\n");
+	      break;
+	   }
+        }
+    }   
 
    printf("\nFinished creating the next generation\n");
 //#ifdef RANK_BASED_SELECTION
    /* Do nothing as the  next generation of population is already present in ga.population */
-#ifdef TOURNAMENT_SELECTION
+   if (selection_scheme == TOURNAMENT_SELECTION) {
    //ga.population = gen_children;*/
-#else
-   free(ga.population);
-   printf("\nFreed ga population\n");
-   ga.population = new_gen;
-   new_gen = NULL;
-#endif
+   } else {
+      free(ga.population);
+      printf("\nFreed ga population\n");
+      ga.population = new_gen;
+      new_gen = NULL;
+   }
 //#endif
  }
 
