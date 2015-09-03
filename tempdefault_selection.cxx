@@ -2,6 +2,48 @@
 #include <data.h>
 #include <funcs.h>
 
+int default_selection(genetic_algo *ga, candidate *gen_children, network_data netinfo) {
+    pool_size = genetic_sp_crossover(&ga, gen_children, netinfo);
+    //#endif
+    //#ifdef _USE
+    printf("\n\n************************************************\n");
+    printf("Children generated after crossover for Generation %d\n", i+1);
+    print_generation(gen_children, pool_size, false);
+
+    genetic_mutation(gen_children, netinfo, pool_size);
+    printf("\n\n************************************************\n");
+    printf("Children generated after mutation for Generation %d\n", i+1);
+    print_generation(gen_children, pool_size, false);
+
+    for (k=0; k<pool_size; k++) {
+       model_data dndp;
+       printf("Iteration(Generation): %d, Child no: %d\n", i+1, k+1);
+       model_problem(dndp, &netinfo, gen_children[k]);
+       dndp.p.lpOptimize("");
+       printf("\nObjective value: %f\n", dndp.p.getObjVal());
+       candidate_fitness(dndp, &netinfo, &gen_children[k]);
+       printf("\n\n************************************************\n");
+       printf("Iteration %d results:\n", i+1);
+       print_candidate(&gen_children[k]);
+       printf("Fitness: %f\n", gen_children[k].fitness_value);
+       printf("************************************************\n");
+    }
+
+    candidates_sort(gen_children, pool_size);
+    printf("\n\n************************************************\n");
+    printf("Children sorted after crossover and mutation for Generation %d\n", i+1);
+    print_generation(gen_children, pool_size, true);
+
+    memcpy((candidate *)cache + GA_POPULATION_SIZE, gen_children, sizeof(candidate) * pool_size);
+
+/***Select the candidates for the next generation from the pool of children and current population***/
+   candidate *new_gen = (candidate *)(malloc(GA_POPULATION_SIZE * sizeof(candidate)));
+   memset(new_gen, 0, GA_POPULATION_SIZE * sizeof(candidate));
+
+   merge_sort(new_gen, ga, gen_children);
+   return 0;
+}
+
 int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data netinfo) {
  int i, j=0, k=0, l, rand_elem, bits;
  int intervals, tempval, srand, value;
@@ -15,35 +57,20 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
 
  printf("\nEntering crossover function\n");
 
- //gen_children = (candidate *)(malloc(sizeof(candidate)));
- //memset(gen_children, 0, sizeof(gen_children));
  memset(&temp, 0, sizeof(candidate)); 
 
- //bits = ceil(log2((double)NL));
- //intervals = (round((log2((double)RAND_MAX)))) / bits;
- if (NL)
- intervals = (round((log2((double)RAND_MAX)))) / NL;
- tempval = pow(2, NL) - 1;
- //tempval = !(1<<(NL-1)) + 1;
+ if (NL) {
+    intervals = (round((log2((double)RAND_MAX)))) / NL;
+    tempval = pow(2, NL) - 1;
+ }
  //srand(time(NULL));
  i = rand_elem = rand();
- //i = rand_elem;
  l = intervals; 
  rand_val = (double)rand() / (double)RAND_MAX;
 
  while(1) {
-    //rand_elem = rand();
-    //i = rand_elem % NL;
-    /*if (i == 0) {
-       if ((rand_elem/NL) <= NL) { i = rand_elem/NL;  }
-       else continue;
-    }*/
-    
-   /* if (j > 1) {
-       gen_children = (candidate *)(realloc(gen_children, k * sizeof(candidate)));
-    }*/
-    crossover_point = (crossover_point + 1) % NL;
-    crossover_point = (crossover_point == 0) ? 1: crossover_point;
+    //crossover_point = (crossover_point + 1) % NL;
+    //crossover_point = (crossover_point == 0) ? 1: crossover_point;
     if (j >= (ga->population_size-1)) break;
     if (rand_val > cross_prob) {
        rand_val = (double)rand() / (double)RAND_MAX;
@@ -61,7 +88,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
     if (value == 0) continue;
 
     value = count_set_bits(value);
-    value = crossover_point;
+    //value = crossover_point;
     printf("\nCrossover point is %d\n", value);
 
 /* Following memory copy operations do not reference the binary_enc member inside structure candidate for every gen_children because it is 
@@ -161,14 +188,15 @@ int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_siz
    candidate temp, temp1;
    double rand_elem;
    int pos_mutate;
-   int range = RAND_MAX;
+   //int range = RAND_MAX;
    int k = 0;
    int retry = 0;
    int i,j,l;
    int tempval, intervals, value;
-   if (NL)
-   intervals = (round((log2((double)RAND_MAX)))) / NL;
-   tempval = pow(2, NL) - 1;
+   if (NL) {
+      intervals = (round((log2((double)RAND_MAX)))) / NL;
+      tempval = pow(2, NL) - 1;
+   }
    srand(time(NULL));
    i = rand();
    l = intervals;

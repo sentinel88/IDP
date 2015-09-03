@@ -39,8 +39,8 @@ static int initialize(genetic_algo *ga, candidate gen_children, candidate *cache
       printf("\nIncorrect budget specified\n");
       return -1;
    }
-   selection_scheme = atoi(argv[2]);
 
+   selection_scheme = atoi(argv[2]);
    if (selection_scheme < 0) {
       printf("\nIncorrect value of the selection_scheme\n");
       return -1;
@@ -308,49 +308,11 @@ int main(int argc, char **argv)
        rank_based_selection(ga.population, gen_children, netinfo, GA_POPULATION_SIZE);
     }
 #else
-/*#ifdef ROULETTE_WHEEL_SELECTION
-    assign_selection_prob(ga.population, GA_POPULATION_SIZE);
-    pool_size = genetic_rw_crossover(&ga, gen_children, netinfo);
-#else*/
-    pool_size = genetic_sp_crossover(&ga, gen_children, netinfo);
-//#endif
-//#ifdef _USE
-    printf("\n\n************************************************\n");
-    printf("Children generated after crossover for Generation %d\n", i+1);
-    print_generation(gen_children, pool_size, false);
-
-    genetic_mutation(gen_children, netinfo, pool_size);
-    printf("\n\n************************************************\n");
-    printf("Children generated after mutation for Generation %d\n", i+1);
-    print_generation(gen_children, pool_size, false);
-
-    for (k=0; k<pool_size; k++) {
-       model_data dndp; 
-       printf("Iteration(Generation): %d, Child no: %d\n", i+1, k+1);
-       model_problem(&dndp, &netinfo, gen_children[k]); 
-       dndp.p.lpOptimize("");
-       printf("\nObjective value: %f\n", dndp.p.getObjVal());
-       candidate_fitness(&dndp, &netinfo, &gen_children[k]);
-       printf("\n\n************************************************\n");
-       printf("Iteration %d results:\n", i+1);
-       print_candidate(&gen_children[k]);
-       printf("Fitness: %f\n", gen_children[k].fitness_value);
-       printf("************************************************\n");
-    } 
-
-    candidates_sort(gen_children, pool_size);
-    printf("\n\n************************************************\n");
-    printf("Children sorted after crossover and mutation for Generation %d\n", i+1);
-    print_generation(gen_children, pool_size, true);
-
-    memcpy((candidate *)cache + GA_POPULATION_SIZE, gen_children, sizeof(candidate) * pool_size); 
-
-/***Select the candidates for the next generation from the pool of children and current population***/
-   candidate *new_gen = (candidate *)(malloc(GA_POPULATION_SIZE * sizeof(candidate)));
-   memset(new_gen, 0, GA_POPULATION_SIZE * sizeof(candidate));
-
-   merge_sort(new_gen, ga, gen_children); 
-
+   ret_val = default_selection(&ga, gen_children, netinfo);
+   if (ret_val < 0) {
+      printf("\nError encountered in the execution of the default selection algorithm\n");
+      break;
+   }
 #endif
 #endif
 
