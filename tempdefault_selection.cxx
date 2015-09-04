@@ -99,12 +99,12 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
 //    memcpy((char *)(&gen_children[k]) + i, (char *)(&ga->population[j+1]) + i, sizeof(temp) - i);
     memcpy((char *)(&gen_children[k]) + value, (char *)(&ga->population[j+1]) + value, sizeof(temp) - value);
 
-    if (compare(gen_children[k])) {
+    if (check_if_zero(gen_children[k])) {
        memcpy(&gen_children[k], &(ga->population[j+1].binary_enc), value);
        memcpy((char *)(&gen_children[k]) + value, (char *)(&ga->population[j]) + value, sizeof(temp) - value);
     } 
    
-    if (compare(gen_children[k])) {
+    if (check_if_zero(gen_children[k])) {
        if (retry == 5) {
           printf("\nMade 5 attempts to avoid generating a zero child but now we will not perform any more crossover attempts for this pair \
                     of candidates and move forward with the next consecutive pair\n");
@@ -224,7 +224,7 @@ int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_siz
       pos_mutate = count_set_bits(value);
       memcpy(&temp, &gen_children[k], sizeof(candidate));
       gen_children[k].binary_enc[pos_mutate] = (gen_children[k].binary_enc[pos_mutate] + 1)%2; 
-      if (compare(gen_children[k])) {
+      if (check_if_zero(gen_children[k])) {
          memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
          k++;
          rand_elem = (double)rand() / (double)range;

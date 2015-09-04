@@ -2,18 +2,19 @@
 #include <data.h>
 #include <funcs.h>
 
-int feasibility(candidate gen_cand, network_data netinfo) {
+int feasibility(candidate gen_cand, network_data *netinfo) {
  float budget_sat = 0.0;
  int i = 0, orig, term;
  int bin_val;
  printf("\nEntering feasibility\n");
- while (i<NL) {
-    orig = netinfo.new_links[i].orig;
-    term = netinfo.new_links[i].term;
+ while (i < NL) {
+    orig = netinfo->new_links[i].orig;
+    term = netinfo->new_links[i].term;
     bin_val = gen_cand.binary_enc[i];
+#ifdef _DEBUG
     printf("%d, orig: %d, term: %d\n ", gen_cand.binary_enc[i], orig, term);
-    //budget_sat += ( (gen_cand.binary_enc[i] - 48) * netinfo.ba[orig][term]);
-    budget_sat += ( bin_val * netinfo.ba[orig][term]);
+#endif
+    budget_sat += ( bin_val * netinfo->ba[orig][term]);
     i++;
  }
  printf("\nBudget = %f\n", budget_sat);
@@ -28,13 +29,14 @@ int encode_ga_cand(candidate *ga_cand, int value) {
  while(i--) {
     ga_cand->binary_enc[k] = value & 1;
     value = value >> 1;
+#ifdef _DEBUG
     printf("%d ", ga_cand->binary_enc[k]);
+#endif
     k++;
  }
  printf("\nExisting encode_ga_cand\n");
  return 0;
 }
-
 
 
 int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_cand) {
@@ -144,7 +146,8 @@ int check_duplicate(candidate *ga_cand, candidate *population, int size) {
    printf("\nEntering check_duplicate function\n");
 
    for (i=0; i<size; i++) {
-      if (elem_compare(ga_cand, &population[i])) {
+      if (!memcmp(ga_cand->binary_enc, population[i].binary_enc, NL)) {
+      //if (elem_compare(ga_cand, &population[i])) {
          match_found = 1;
          break;
       }
@@ -176,7 +179,7 @@ int count_set_bits(int value) {
    return count;
 }
 
-int compare(candidate gen_child) {
+int check_if_zero(candidate gen_child) {
    int i=0, k=0;
    while (i < NL) {
       if (gen_child.binary_enc[k++] & 1) return 0;

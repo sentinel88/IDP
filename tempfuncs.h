@@ -5,23 +5,21 @@
 
 /***Function signatures ***/
 
-int model_problem(model_data *, network_data *, genetic_algo *);
-
-int remodel_problem(model_data *, network_data *, candidate);
+extern int model_problem(model_data *, network_data *, genetic_algo *);
 
 int parse(network_data *);
 
 int clean(network_data *);
 
-int feasibility(candidate, network_data);
+int feasibility(candidate, network_data *);
 
-int candidates_sort(candidate *, int);
+extern int candidates_sort(candidate *, int);
 
-int generate_rand(genetic_algo *, network_data);
+int generate_rand(genetic_algo *, network_data *);
 
-int genetic_sp_crossover(genetic_algo *, candidate *, network_data);
+extern int genetic_sp_crossover(genetic_algo *, candidate *, network_data);
 
-int genetic_mutation(candidate *, network_data, int);
+extern int genetic_mutation(candidate *, network_data, int);
 
 int candidate_fitness(model_data *, network_data *, candidate *);
 
@@ -33,7 +31,7 @@ int encode_ga_cand(candidate *, int);
 
 int count_set_bits(int value);
 
-int compare(candidate);
+int check_if_zero(candidate);
 
 int check_duplicate(candidate *, candidate *, int);
 
@@ -58,12 +56,6 @@ int get_random(int, bool);
 int select_candidates_k(candidate *, int);
 
 int tournament_selection(candidate *, candidate *, network_data, int);
-
-int genetic_ts_crossover(candidate *, candidate *, network_data, int);
-
-int assign_selection_rb_prob(candidate *, int);
-
-int select_candidate_rb(candidate *, int);
 
 int rank_based_selection(candidate *, candidate *, network_data, int);
 

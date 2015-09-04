@@ -214,7 +214,7 @@ int main(int argc, char **argv)
  parse(&netinfo);
 
 //#ifdef DONT_EXECUTE_NOW
- ret = generate_rand(&ga, netinfo);   
+ ret = generate_rand(&ga, &netinfo);   
 //#endif
 
  for (i=0; i<ga.iterations; i++) {
@@ -224,10 +224,11 @@ int main(int argc, char **argv)
     #endif
 
     printf("\nGenetic algorithm: Iteration %d\n", i+1);
+#ifdef _DEBUG
     printf("\n\n************************************************\n");
     printf("Generation %d\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, false);
-
+#endif
     for (j=0; j<ga.population_size; j++) {
     //for (j=0; j<1; j++) {
        index = -1;
@@ -250,12 +251,13 @@ int main(int argc, char **argv)
 	       //printf("\nActual time: %lf\n", cpu_time_used);
        printf("\nObjective value: %f\n", dndp->p.getObjVal());
        candidate_fitness(dndp, &netinfo, &(ga.population[j]));
+#ifdef _DEBUG
        printf("\n\n************************************************\n");
        printf("Iteration %d results:\n", i+1);
        print_candidate(&ga.population[j]);
        printf("Fitness: %f\n", ga.population[j].fitness_value);
        printf("************************************************\n");
-
+#endif
     #ifdef ROULETTE_WHEEL_SELECTION
        total_fitness += ga.population[j].fitness_value;
     #endif
@@ -269,11 +271,11 @@ int main(int argc, char **argv)
 
        delete dndp;
     }
-
+#ifdef _DEBUG
     printf("\n\n************************************************\n");
     printf("Generation %d(Before sorting)\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, true);
-
+#endif
     //memcpy(&gen_children[0], &ga.population[last_best_index], sizeof(candidate));
 //#endif
     if (selection_scheme == TOURNAMENT_SELECTION) {
@@ -307,9 +309,11 @@ int main(int argc, char **argv)
 	      fitness will be on top and in such a case last_best_fitness should retain its top place */
 	   }
 	}
+#ifdef _DEBUG
 	printf("\n\n************************************************\n");
 	printf("Generation %d(After sorting)\n", i+1);
 	print_generation(ga.population, GA_POPULATION_SIZE, true);
+#endif
 	if (selection_scheme == RANK_BASED_SELECTION) {
 	    if (i < (ga.iterations - 1)) {
 	       assign_selection_rb_prob(ga.population, GA_POPULATION_SIZE);

@@ -53,7 +53,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
 
 /***Flow on link a***/
  for (i=1; i<=OD; i++) {
-#if ZONES 
+#ifdef ZONES 
     r = (i/ZONES);
     s = (i%ZONES);
     r = (r==0)?1 : (s==0?r : (r+1));
@@ -130,7 +130,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
     //j = netinfo->existing_links[l].term;
     summation = 0;
     for (k=1; k<=OD; k++) {
-#if ZONES 
+#ifdef ZONES 
        r = (k/ZONES);
        s = (k%ZONES);
        r = (r==0)?1 : (s==0?r : (r+1));
@@ -153,7 +153,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
        //j = netinfo->new_links[l].term;
        summation = 0;
        for (k=1; k<=OD; k++) {
-#if ZONES 
+#ifdef ZONES 
           r = (k/ZONES);
           s = (k%ZONES);
           r = (r==0)?1 : (s==0?r : (r+1));
@@ -317,7 +317,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
 
 /***Flow conservation constraints***/
  for (i=1; i<=OD; i++) {
-#if ZONES 
+#ifdef ZONES 
     r = (i/ZONES);
     s = (i%ZONES);
     r = (r==0)?1 : (s==0?r : (r+1));

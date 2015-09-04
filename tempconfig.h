@@ -33,7 +33,6 @@
 //#define _PROTECT 1
 //#define CHOICE 1
 #define MAX_CROSSOVER_ATTEMPTS 5
-#define CHOICE 2
 //#define ZONES 1
 #define ZONES 36
 //#define B  10      /* Project budget */
@@ -45,8 +44,6 @@
 #define TWO_POINT_CROSSOVER 1
 //#define GA_ITERATIONS 3
 //#define ROULETTE_WHEEL_SELECTION 1
-#define TOURNAMENT_SELECTION 1
-//#define RANK_BASED_SELECTION 1
 
 //#define FILENAME_NET "IDP_Datasets/example_net.txt"    /* File with abosule path which has the information of the network for which you want */
 

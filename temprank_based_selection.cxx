@@ -186,7 +186,7 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
          // memcpy((char *)&gen_children[k+1].binary_enc, (char *)&pool[i2].binary_enc, value);
          // memcpy((char *)&gen_children[k+1].binary_enc + value, (char *)&pool[i1].binary_enc + value, sizeof(temp) - value);
 // Still need to handle the scenarios where we need to decide what to do after retry attempts are equal to 5. Need to do this for all conditions below
-    if (compare(gen_children[k])) {
+    if (check_if_zero(gen_children[k])) {
        //switch_order = false;
        if (retry == 5) {
           printf("\nMade 5 attempts to avoid generating a zero child but now we will not perform any more crossover attempts for this pair \
