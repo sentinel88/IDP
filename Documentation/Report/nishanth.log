@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.17)  22 AUG 2015 00:58
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.17)  6 SEP 2015 00:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -714,318 +714,343 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 122.
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--124
+
+ []
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.136 ...GISTICS AND SUPPLY CHAIN MANAGEMENT.}\par
-                                                   [1]pdfTeX warning (ext4): de
-stination with the same identifier (name{page.2}) has been already used, duplic
+l.124 \begin{center}
+                     [1]pdfTeX warning (ext4): destination with the same identi
+fier (name{page.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.143 ...as Metaheuristics used to solve them.\par
+                                                   [2]pdfTeX warning (ext4): de
+stination with the same identifier (name{page.3}) has been already used, duplic
 ate ignored
 <to be read again> 
                    \relax 
-l.150 \item \textbf
-                   {Container Shipping and Terminals}: Working of container ...
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 167--173
+l.157 ... solve them exactly or approximately.\par
+                                                   [3]
+Underfull \hbox (badness 10000) in paragraph at lines 171--177
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 167--173
+Underfull \hbox (badness 10000) in paragraph at lines 171--177
 
  []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.173 problem of TAP.\par
-                          [3] <./Xpress.jpg, id=177, 500.87125pt x 216.81pt>
+<./Xpress.jpg, id=177, 500.87125pt x 216.81pt>
 File: ./Xpress.jpg Graphic file (type jpg)
-
-<use ./Xpress.jpg>
-Package pdftex.def Info: ./Xpress.jpg used on input line 176.
+ <use ./Xpress.jpg>
+Package pdftex.def Info: ./Xpress.jpg used on input line 180.
 (pdftex.def)             Requested size: 294.42636pt x 127.45363pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 181--182
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
 
  []
 
+[4]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
 
-Underfull \hbox (badness 10000) in paragraph at lines 183--186
+Underfull \hbox (badness 10000) in paragraph at lines 187--188
 
  []
 
-[4 <./Xpress.jpg>] [5] [6] [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 347--347
+[5 <./Xpress.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 198--198
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 368--372
-
- []
-
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 375--378
+Underfull \hbox (badness 10000) in paragraph at lines 199--200
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 387--390
+Underfull \hbox (badness 10000) in paragraph at lines 201--202
 
  []
 
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 408--426
+
+Underfull \hbox (badness 10000) in paragraph at lines 203--207
+
+ []
+
+[6] [7] [8] [9] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 360--360
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 381--385
 
  []
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 430--439
+Underfull \hbox (badness 10000) in paragraph at lines 388--391
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--439
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 443--454
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 443--454
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 443--454
+Underfull \hbox (badness 10000) in paragraph at lines 400--403
 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 459--472
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 459--472
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 459--472
+Underfull \hbox (badness 10000) in paragraph at lines 421--439
 
  []
 
 [13]
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ˜ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
- [14]
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ˜ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ˜ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ˜ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
-Missing character: There is no â in font cmr12!
-Missing character: There is no € in font cmr12!
-Missing character: There is no ™ in font cmr12!
+Underfull \hbox (badness 10000) in paragraph at lines 443--452
 
-Underfull \hbox (badness 10000) in paragraph at lines 534--549
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 443--452
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 456--467
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 456--467
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 456--467
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 472--485
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 472--485
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 472--485
 
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 551--554
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ˜ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+ [16]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ˜ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ˜ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ˜ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
 
- []
-
-[16]
-Underfull \hbox (badness 10000) in paragraph at lines 580--587
+Underfull \hbox (badness 10000) in paragraph at lines 547--562
 
  []
 
 [17]
-Underfull \hbox (badness 10000) in paragraph at lines 605--629
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 605--629
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 605--629
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 605--629
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 605--629
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 605--629
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 605--629
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 605--629
+Underfull \hbox (badness 10000) in paragraph at lines 564--567
 
  []
 
 [18]
-Underfull \hbox (badness 10000) in paragraph at lines 632--635
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 638--641
+Underfull \hbox (badness 10000) in paragraph at lines 593--600
 
  []
 
 [19]
+Underfull \hbox (badness 10000) in paragraph at lines 618--642
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--642
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--642
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--642
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--642
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--642
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--642
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 618--642
+
+ []
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 645--648
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 651--654
+
+ []
+
+[21]
 Package epstopdf Info: Source file: <./diagram.eps>
-(epstopdf)                    date: 2015-08-21 18:41:49
+(epstopdf)                    date: 2015-08-21 22:11:49
 (epstopdf)                    size: 87017 bytes
 (epstopdf)             Output file: <./diagram-eps-converted-to.pdf>
-(epstopdf)                    date: 2015-08-21 18:42:02
+(epstopdf)                    date: 2015-08-21 22:12:02
 (epstopdf)                    size: 31684 bytes
 (epstopdf)             Command: <repstopdf --outfile=./diagram-eps-converted-to
 .pdf ./diagram.eps>
-(epstopdf)             \includegraphics on input line 650.
+(epstopdf)             \includegraphics on input line 663.
 Package epstopdf Info: Output file is already uptodate.
- <./diagram-eps-converted-to.pdf, id=272, 522.95375pt x 716.6775pt>
+ <./diagram-eps-converted-to.pdf, id=283, 522.95375pt x 716.6775pt>
 File: ./diagram-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./diagram-eps-converted-to.pdf>
-Package pdftex.def Info: ./diagram-eps-converted-to.pdf used on input line 650.
+Package pdftex.def Info: ./diagram-eps-converted-to.pdf used on input line 663.
 
 (pdftex.def)             Requested size: 496.80324pt x 680.83978pt.
 
-Overfull \hbox (24.76521pt too wide) in paragraph at lines 648--651
+Overfull \hbox (24.76521pt too wide) in paragraph at lines 661--664
 []|  [] 
  []
 
 
-LaTeX Warning: Float too large for page by 37.16623pt on input line 653.
+LaTeX Warning: Float too large for page by 37.16623pt on input line 666.
 
 Package epstopdf Info: Source file: <./diagram1.eps>
-(epstopdf)                    date: 2015-08-21 18:41:54
+(epstopdf)                    date: 2015-08-21 22:11:54
 (epstopdf)                    size: 83135 bytes
 (epstopdf)             Output file: <./diagram1-eps-converted-to.pdf>
-(epstopdf)                    date: 2015-08-21 18:42:02
+(epstopdf)                    date: 2015-08-21 22:12:02
 (epstopdf)                    size: 27296 bytes
 (epstopdf)             Command: <repstopdf --outfile=./diagram1-eps-converted-t
 o.pdf ./diagram1.eps>
-(epstopdf)             \includegraphics on input line 661.
+(epstopdf)             \includegraphics on input line 674.
 Package epstopdf Info: Output file is already uptodate.
-<./diagram1-eps-converted-to.pdf, id=273, 484.81125pt x 746.79pt>
+<./diagram1-eps-converted-to.pdf, id=284, 484.81125pt x 746.79pt>
 File: ./diagram1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./diagram1-eps-converted-to.pdf>
-Package pdftex.def Info: ./diagram1-eps-converted-to.pdf used on input line 661
+Package pdftex.def Info: ./diagram1-eps-converted-to.pdf used on input line 674
 .
 (pdftex.def)             Requested size: 436.32608pt x 672.10478pt.
 
 
-LaTeX Warning: Float too large for page by 28.43123pt on input line 664.
+LaTeX Warning: Float too large for page by 28.43123pt on input line 677.
 
 Package epstopdf Info: Source file: <./diagram2.eps>
-(epstopdf)                    date: 2015-08-21 18:41:58
+(epstopdf)                    date: 2015-08-21 22:11:58
 (epstopdf)                    size: 92204 bytes
 (epstopdf)             Output file: <./diagram2-eps-converted-to.pdf>
-(epstopdf)                    date: 2015-08-21 18:42:02
+(epstopdf)                    date: 2015-08-21 22:12:02
 (epstopdf)                    size: 31149 bytes
 (epstopdf)             Command: <repstopdf --outfile=./diagram2-eps-converted-t
 o.pdf ./diagram2.eps>
-(epstopdf)             \includegraphics on input line 671.
+(epstopdf)             \includegraphics on input line 684.
 Package epstopdf Info: Output file is already uptodate.
-<./diagram2-eps-converted-to.pdf, id=274, 546.04pt x 786.94pt>
+<./diagram2-eps-converted-to.pdf, id=285, 546.04pt x 786.94pt>
 File: ./diagram2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./diagram2-eps-converted-to.pdf>
-Package pdftex.def Info: ./diagram2-eps-converted-to.pdf used on input line 671
+Package pdftex.def Info: ./diagram2-eps-converted-to.pdf used on input line 684
 .
 (pdftex.def)             Requested size: 464.13618pt x 668.90216pt.
 
-Overfull \hbox (6.55194pt too wide) in paragraph at lines 670--672
+Overfull \hbox (6.55194pt too wide) in paragraph at lines 683--685
 []|  [] 
  []
 
 
-LaTeX Warning: Float too large for page by 25.2286pt on input line 674.
+LaTeX Warning: Float too large for page by 25.2286pt on input line 687.
 
-[20] [21 <./diagram-eps-converted-to.pdf>] [22 <./diagram1-eps-converted-to.pdf
->] [23 <./diagram2-eps-converted-to.pdf>] [24] (./nishanth.bbl
+[22] [23 <./diagram-eps-converted-to.pdf>] [24 <./diagram1-eps-converted-to.pdf
+>] [25 <./diagram2-eps-converted-to.pdf>] [26] (./nishanth.bbl
 Underfull \hbox (badness 1259) in paragraph at lines 17--21
 \OT1/cmr/m/n/12 pro-gram-ming so-lu-tion by ge-netic al-go-rithm.  \OT1/cmr/m/i
 t/12 Com-put-ers and Op-er-a-tions Re-
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 700.
- [25]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 700.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 713.
+ [27]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 713.
  (./nishanth.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 700.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 700.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 713.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 713.
 Package rerunfilecheck Info: File `nishanth.out' has not changed.
 (rerunfilecheck)             Checksum: 7E8FD8BFA0E0F1D6E3AE3A653E09C7CC;1747.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 700.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 713.
  ) 
 Here is how much of TeX's memory you used:
- 17246 strings out of 493304
- 302584 string characters out of 6139871
- 394755 words of memory out of 5000000
- 20274 multiletter control sequences out of 15000+600000
- 18608 words of font info for 68 fonts, out of 8000000 for 9000
+ 17250 strings out of 493304
+ 302622 string characters out of 6139871
+ 394754 words of memory out of 5000000
+ 20275 multiletter control sequences out of 15000+600000
+ 18967 words of font info for 69 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 56i,9n,55p,1926b,925s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,10n,55p,1926b,925s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy6.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy8.pfb></usr
@@ -1034,20 +1059,22 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy8.pfb></usr
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/
-cmmib6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/c
-mmib7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cm
-mib8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on nishanth.pdf (29 pages, 378656 bytes).
+ype1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+b10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmi
+b6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib
+7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on nishanth.pdf (31 pages, 401524 bytes).
 PDF statistics:
- 418 PDF objects out of 1000 (max. 8388607)
- 353 compressed objects within 4 object streams
- 80 named destinations out of 1000 (max. 500000)
+ 435 PDF objects out of 1000 (max. 8388607)
+ 366 compressed objects within 4 object streams
+ 82 named destinations out of 1000 (max. 500000)
  255 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -119,10 +119,14 @@ The network design problem(NDP) is concerned with the modification of a transpor
 \subsection{Problem Formulation}
 Bilevel problems are mathematical programming problems consisting of a special kind of optimization where one problem is embedded within another. The outer optimization task is commonly referred to as the upper level(or the leader) optimization task with a nested optimization problem(the lower one - also called follower) in the constraints. First, the leader has to decide over a subset of the decision variables which effects the objective value of the follower. Afterwards, the follower has to decide over the other subset of decision variables, which affects the objective value of the leader. The problem we are considering to solve here is a bilevel linear program with binary leader variables and continuous follower variables. An application of bilevel programming is network design problems where the objective of the network designer is to reduce congestion in the network and the objective of the follower is to find the fastest way from origin to destination. Existing methods for solving this problem can be roughly divided into the following categories:\par
 \begin{itemize}
-\item Methods based on vertex enumeration
-\item Methods based on kuhn tucker conditions
-\item Fuzzy approach
-\item Methods based on meta heuristics
+\item \textbf{Methods based on vertex enumeration:} In these methods, the basic idea is that vertex points of accessible region for BLP are vertex points for feasible space of the problem, and, the optimal solution is one of these vertices.
+\item \textbf{Methods based on kuhn tucker conditions:} In these methods, the second level problem is replaced by the Kuhn-Tucker optimiality conditions, yielding a one-level optimization problem with complimentarity constraints. Hence, the problem transfers into a single objective with complimentarity constraints. Several algorithms exist that try to solve these problems. One approach uses branch and bound to solve this. Another approach introduces a penalty function to satisfy the complimentarity constraints. Another approach converts the complimentarity constraints to linear one by adding some binary variables. One more approach develops parametric complimentary pivot(PCP) algorithm by transferring the problem into a single objective in which the objective function of the first level is augmented into the set of constraints as follows:\\
+\begin{center}
+$c_{1}x\ +\ d_{1}y\ \geq\ \alpha$
+\end{center}
+and thereby the problem becomes linear complimentary problem (LCP).
+\item \textbf{Fuzzy approach:} This approach utilizes the concept of membership functions to develop a fuzzy approach for solving the above problems. The upper level decision maker defines his or her objective function and decisions with possible tolerances which are described by membership functions of fuzzy set theory and fuzzy decision. This information constrains the lower-level decision maker's feasible space. A solution search relies on changes of membership functions expressing satisfactory degrees of potential solutions for both upper and lower decision making, instead of vertex enumeration and no higher constraints are generated. No pre-assumption is made that the optimal solution exists at corner points. Potential satisfactory solutions are those in the non-dominated region when considering a multi-level decision making process rather than restricting to potential solutions at corners.
+\item \textbf{Methods based on meta heuristics:} In this category, Mathieu et al. [19] developed a genetic algorithm based bilevel programming algorithm(GABBA). In this method, the leader's decision vector is generated and the follower's reaction is obtained from the solution of a linear programming problem. It is different from the usual genetic algorithms because they only use mutations. Also, in this method the search space is expanded considerably. The reason is that, each feasible chromosome represents an accessible solution, but not necessarily an extreme point. Methods have been proposed based on Simulated Annealing and Hybrid Tabu descent technique. Genetic algorithm based approaches have also been developed where each feasible chromosome represesnts a vertex point of the accessible region and thereby reduce the search space significantly.
 \end{itemize}
 
 %\begin{figure}[htbp]\centering
@@ -133,7 +137,7 @@ Bilevel problems are mathematical programming problems consisting of a special k
 %\epsfbox{./try.eps}
 
 \subsection{InterDisciplinary Project}
-The implementation of this project required knowledge of C/C++ programming, Data Structures, linear programming concepts, usage of the C++ BCL(Builder component library) provided by a commercially well known optimization suite called FICO Xpress. The application of these technologies is for a well known real world problem like DNDP observed in transportation science resulted in this project to be of Inter-Disciplinary nature. As a part of the preparation for implementing this project, a good amount of knowledge on \textbf{metaheuristics} and \textbf{DNDP} was acquired from the course \textbf{"TRANSPORTATION LOGISTICS"} offered by the \textbf{CHAIR OF LOGISTICS AND SUPPLY CHAIN MANAGEMENT.}\par
+The implementation of this project required knowledge of C/C++ programming, Data Structures, linear programming concepts, usage of the C++ BCL(Builder component library) provided by a commercially well known optimization suite called FICO Xpress. The application of these technologies is for a well known real world problem like DNDP observed in transportation science resulting in this project to be of Inter-Disciplinary nature. As a part of the preparation for implementing this project, a good amount of knowledge on \textbf{metaheuristics} and \textbf{DNDP} was acquired from the course \textbf{"TRANSPORTATION LOGISTICS"} offered by the \textbf{CHAIR OF LOGISTICS AND SUPPLY CHAIN MANAGEMENT.}\par
 \noindent
 \\
 The objective of this course was to get an overview of the modeling techniques, exact as well as heuristic search methods tailored to the different transportation problems studied. The course consisted of a sequence of lectures, exercise classes and case studies. It also deals on how to model and analyze transportation problems using quantitative methods. It covers many of the real world problems observed in Transportation Planning such as Traveling Salesman Problem(TSP), Vehicle Routing Problems(VRP), Network Flow Problems, Inventory Routing etc. and techniques such as Metaheuristics used to solve them.\par
@@ -153,7 +157,7 @@ The objective of this course was to get an overview of the modeling techniques, 
 The course gave an introduction to many of the important problems observed in transportation science one of which is DNDP that the IDP deals with specifically. In relevance to the project, the course dealt with the necessary topics such as different kinds of metaheuristics, their algorithms followed by case studies and numerical problems to better understand these techniques. The bilevel formulation of DNDP was also introduced with TAP as its nested optimization problem and some of the techniques to solve them exactly or approximately.\par
 \noindent
 \\
-A rough \textbf{timeline} from when the project started till its anticipated completion time is given below.
+A rough \textbf{timeline} from when the project started till its completion time is given below.
 \begin{itemize}
 \item Dec 2014 - Start of IDP with initial literature survey but main focus on the course.
 \item Feb 4, 2015 - Completion of the exam on the course \textbf{"TRANSPORTATION LOGISTICS"}.
@@ -181,9 +185,7 @@ problem of TAP.\par
 \noindent
 \textbf{Libraries for embedding:}   An option available from this software for embedding mathematical models into large applications is by developing a model directly in a programming language with the help of a model builder library \textit{Xpresss-BCL}. BCL(Builder Component Library) allows a user to formulate models with objects(decision variables, constraints, index sets) similar to those of a dedicated modeling language. All libraries are available for C, C++, Java, C\#, and Visual Basic(VB). For this project we will be using the library for C++.\\ \par
 \noindent
-The Xpress-BCL Builder Component Library(BCL) provides an environment in which the Xpress user may readily formulate and solve linear, mixed integer and quadratic programming models. Using BCL’s extensive collection of functions, complicated models may be swiftly and simply constructed, preparing problems for optimization. Not merely limited to specific model construction, however, BCL’s flexibility makes it the ideal engine 
-for embedding in custom applications for the construction of generic modeling software. In combination with the Xpress-Optimizer, the two form 
-a powerful combination.\\ \par
+The Xpress-BCL Builder Component Library(BCL) provides an environment in which the Xpress user may readily formulate and solve linear, mixed integer and quadratic programming models. Using BCL’s extensive collection of functions, complicated models may be swiftly and simply constructed, preparing problems for optimization.\\ \par
 \noindent
 Model formulation using Xpress-BCL is constraint-oriented. Such constraints may be built up either coefficient-wise, incrementally adding 
 linear or quadratic terms until the constraint is complete, or through use of arrays of variables, constructing the constraint through a 
@@ -193,6 +195,13 @@ directly from BCL.
 \newpage
 \section{Modeling}
 \subsection{Traffic Assignment Problem}
+Many economic systems can be visualized as networks where nodes stand for commodities, and links and paths stand for simple and complex production processes. The type of system which can be thus described in the most natural way is probably a transportation network. In this case the node stand for "cities", the link stand for roads directly connecting two cities, and the paths stand for roads connecting two cities directly or indirectly. A certain demand is associated with every pair of connected nodes of the network. This demand will be distributed among paths which join the pair of nodes. This gives rise to a traffic pattern, the determination of which is known as the \textbf{\textit{traffic assignment problem}}. Every link of the network is associated with a "traveling" cost which is assumed to be a function of the "traffic volume" on the link.\\ \par
+\noindent
+In some cases the traffic pattern can be regulated by some central authority, as for example, a network used for the transportation of military supplies or for a railroad network. It is obvious that in this case, the problem which the central authority faces is to determine the traffic pattern which minimizes the total cost over the whole network.\\ \par
+\noindent
+On, the other hand a broad class of transportation networks can be described as user optimized. Here travel patterns are set up by individual users each choosing the cheapest way(in the light of other user's decisions) to arrive at his/her respective destination, rather than having their travel pattern dictated by a choice consistent with some aggregate system optimum.\\ \par
+\noindent
+Out of the above 2 criterias, we can observe that the second criteria of user optimization problem can be reformulated as a total cost minimization problem for an appropriately chosen objective function. When viewed like this the problem then falls into the "multicommodity network flow" class. Literature says that for the case of linear cost(congestion) function, the problem reduces to a linear programming problem that can be solved fairly efficiently by the Dantzig-Wolfe decomposition algorithm. In case of non-linear objective function, its linear approximation is computed and Frank-Wolfe algorithm is used to solve the same. The following content presents the linear programming formulation of the traffic assignment problem.\\~\\
 \vspace{5mm}
 \begin{large}\textbf{Definitions:}\end{large}
 \begin{itemize}
@@ -302,14 +311,18 @@ Bilevel formulation:
 \end{equation*}
 \end{large}
 \begin{large}
-\boldmath\begin{equation*}
-\ \ \ \ \ \ \ \ \ \ \ \ \ \ x_{a}\ \leq\ M_{a}\ \ \mathrm{\forall{a}\in{A_{2}}}
-\end{equation*}
-\end{large}
-\begin{large}
-\boldmath\begin{equation*}
-\ \ \ \ \ \ \ \ \ \ y_{a}\ \in\ {0,1}\ \mathrm{\forall{a}\in{A_{2}}}
-\end{equation*}
+\begin{align*}
+%\boldmath\begin{equation*}
+%\ \ \ \ \ \ \ \ \ \ \ \ \ \ x_{a}\ \leq\ M_{a}\ \ \mathrm{\forall{a}\in{A_{2}}}
+& x_{a}\ \leq\ M_{a}\ \ \mathrm{\forall{a}\in{A_{2}}} \\
+%\end{equation*}
+%\end{large}
+%\begin{large}
+%\boldmath\begin{equation*}
+%\ \ \ \ \ \ \ \ \ \ y_{a}\ \in\ {0,1}\ \mathrm{\forall{a}\in{A_{2}}}
+& y_{a}\ \in\ {0,1}\ \mathrm{\forall{a}\in{A_{2}}}
+%\end{equation*}
+\end{align*} %\\
 \end{large} \\
 \textbf{Linearization of non-linear convex functions}\\
 Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $m+1$ approximation points $\left(\nu_{0},f_{0}\right)$, $\left(\nu_{1},f_{1}\right)$,...,$\left(\nu_{m},f_{m}\right)$ with $f_{i}:=f\left(\nu_{i}\right)$. Further, $f\left(x\right)$ is a function in the single flow variable $x_{a}$ and $v_{m}\geq\ \max_{a\in{A}}{x_{a}}$. The trivial upper bound is $\sum_{r\in{R},s\in{S}} q_{rs}$. However, as $x_{a}$ can be much smaller than $\sum_{r\in{R},s\in{S}} q_{rs}$, empirical upper bounds can further improve the quality of the approximation. Define $a_{i}=\frac{f_{i}-f_{i-1}}{\nu_{i}-\nu_{i-1}}$ and $b_{i}:=-v_{i-1}a_{i}+f_{i-1}$. Then $f\left(x\right)$ can be approximated by the following function:

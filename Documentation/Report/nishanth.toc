@@ -1,27 +1,27 @@
 \contentsline {section}{\numberline {1}Introduction}{1}{section.1}
 \contentsline {subsection}{\numberline {1.1}Problem Formulation}{1}{subsection.1.1}
 \contentsline {subsection}{\numberline {1.2}InterDisciplinary Project}{2}{subsection.1.2}
-\contentsline {subsection}{\numberline {1.3}Software Requirements}{3}{subsection.1.3}
-\contentsline {section}{\numberline {2}Modeling}{5}{section.2}
-\contentsline {subsection}{\numberline {2.1}Traffic Assignment Problem}{5}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Discrete Network Design problem}{6}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Meta Heuristics}{7}{subsection.2.3}
-\contentsline {section}{\numberline {3}Genetic Algorithm}{9}{section.3}
-\contentsline {subsection}{\numberline {3.1}Understanding the algorithm}{9}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Encoding}{11}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Selection}{13}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Fitness Proportionate Selection}{14}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}Rank Selection}{15}{subsubsection.3.3.2}
-\contentsline {subsubsection}{\numberline {3.3.3}Tournament Selection}{15}{subsubsection.3.3.3}
-\contentsline {subsection}{\numberline {3.4}Crossover}{16}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Mutation}{18}{subsection.3.5}
-\contentsline {section}{\numberline {4}Implementation}{20}{section.4}
-\contentsline {subsection}{\numberline {4.1}Software Design}{20}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Implementation Details}{20}{subsection.4.2}
-\contentsline {section}{\numberline {5}Experiments and Visualization}{24}{section.5}
-\contentsline {subsection}{\numberline {5.1}Setup}{24}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Datasets}{24}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Experiments and Results}{24}{subsection.5.3}
-\contentsline {subsection}{\numberline {5.4}Visualization}{24}{subsection.5.4}
-\contentsline {section}{\numberline {6}Conclusion}{25}{section.6}
-\contentsline {subsection}{\numberline {6.1}Scope for future work}{25}{subsection.6.1}
+\contentsline {subsection}{\numberline {1.3}Software Requirements}{4}{subsection.1.3}
+\contentsline {section}{\numberline {2}Modeling}{6}{section.2}
+\contentsline {subsection}{\numberline {2.1}Traffic Assignment Problem}{6}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Discrete Network Design problem}{8}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Meta Heuristics}{9}{subsection.2.3}
+\contentsline {section}{\numberline {3}Genetic Algorithm}{11}{section.3}
+\contentsline {subsection}{\numberline {3.1}Understanding the algorithm}{11}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Encoding}{13}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Selection}{15}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Fitness Proportionate Selection}{16}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Rank Selection}{17}{subsubsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.3}Tournament Selection}{17}{subsubsection.3.3.3}
+\contentsline {subsection}{\numberline {3.4}Crossover}{18}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Mutation}{20}{subsection.3.5}
+\contentsline {section}{\numberline {4}Implementation}{22}{section.4}
+\contentsline {subsection}{\numberline {4.1}Software Design}{22}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Implementation Details}{22}{subsection.4.2}
+\contentsline {section}{\numberline {5}Experiments and Visualization}{26}{section.5}
+\contentsline {subsection}{\numberline {5.1}Setup}{26}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Datasets}{26}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Experiments and Results}{26}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Visualization}{26}{subsection.5.4}
+\contentsline {section}{\numberline {6}Conclusion}{27}{section.6}
+\contentsline {subsection}{\numberline {6.1}Scope for future work}{27}{subsection.6.1}
