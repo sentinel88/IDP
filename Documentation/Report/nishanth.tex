@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{afterpage}
 \usepackage{floatpag}
+\usepackage{setspace}
 \floatpagestyle{empty}
 %\usepackage[a4paper, total={4in, 6in},margin=4in]{geometry}
 \usepackage[export]{adjustbox}
@@ -117,9 +118,25 @@ The network design problem(NDP) is concerned with the modification of a transpor
 \\These combinatorial problems are recognized as NP Hard due to the considerable amount of computational difficulties faced in trying to solve them because of their non-convex nature and due to the form of a bi-level mixed integer program with a large number of 0-1 variables. This Inter disciplinary project deals with only the discrete form of the NDP and considers the following kind of problem which often arises in transportation planning: minimize total travel expenditure subject to a budget constraint on the total construction cost of new links.
  
 \subsection{Problem Formulation}
-Bilevel problems are mathematical programming problems consisting of a special kind of optimization where one problem is embedded within another. The outer optimization task is commonly referred to as the upper level(or the leader) optimization task with a nested optimization problem(the lower one - also called follower) in the constraints. First, the leader has to decide over a subset of the decision variables which effects the objective value of the follower. Afterwards, the follower has to decide over the other subset of decision variables, which affects the objective value of the leader. The problem we are considering to solve here is a bilevel linear program with binary leader variables and continuous follower variables. An application of bilevel programming is network design problems where the objective of the network designer is to reduce congestion in the network and the objective of the follower is to find the fastest way from origin to destination. Existing methods for solving this problem can be roughly divided into the following categories:\par
+Bilevel problems are mathematical programming problems consisting of a special kind of optimization where one problem is embedded within another. The outer optimization task is commonly referred to as the upper level(or the leader) optimization task with a nested optimization problem(the lower one - also called follower) in the constraints. First, the leader has to decide over a subset of the decision variables which effects the objective value of the follower. Afterwards, the follower has to decide over the other subset of decision variables, which affects the objective value of the leader. The problem we are considering to solve here is a bilevel linear program with binary leader variables and continuous follower variables. An application of bilevel programming is network design problems where the objective of the network designer is to reduce congestion in the network and the objective of the follower is to find the fastest way from origin to destination.\\~\\
+\noindent
+Bilevel programming problems are mathematical optimization problems where the set of all variables is partitioned between two vectors say $x$ and $y$. $x$ is to be chosen as an optimal solution of the lower level problem parameterized in y. Let the lower problem be introduced first as follows:
+\newpage
+\begin{large}
+\boldmath\begin{equation*}
+\min_{x}\{f(x,y):g(x,y)\leq0,\ h(x,y)=0\},
+\end{equation*}
+\end{large}
+where $f:\Re^{n}\times\Re^{m}\rightarrow\Re,\ g:\Re^{n}\times\Re^{m}\rightarrow\Re^{p},\ h:\Re^{n}\times\Re^{m}\rightarrow\Re^{q}, g(x,y)=(g_{1}(x,y),...,$\\
+$g_{p}(x,y))^{T}, h(x,y)=(h_{1}(x,y),...,h_{q}(x,y))^{T}$ This is the \textit{lower level or the follower's problem}. Let $\Psi\left(y\right)$ denote the solution set of problem $\left(1\right)$ for a fixed $y\in\Re^{m}$. Then $\Psi$ is so called \textit{point-to-set mapping} from $\Re^{m}$ into the power set of $\Re^{n}$ denoted by $\Psi:\Re^{m}\rightarrow2^{\Re^{n}}$. Denote some element of $\Psi(y)$ by $x\left(y\right)$ and assume for the moment that this choice is unique for all possible $y$. Then, the aim of the bilevel programming problem is to select the parameter vector $y$ parameterizing the lower level problem which is the optimal one in a certain sense. To be more precise, this selection of $y$ is conducted so that certain (nonlinear) equality and/or inequality constraints.\\
+\begin{large}
+\boldmath\begin{center}
+$G\left(x\left(y\right),y\right)\leq0,\ H\left(x\left(y\right),y\right)=0$
+\end{center}
+\end{large}
+Existing methods for solving this problem can be roughly divided into the following categories:
 \begin{itemize}
-\item \textbf{Methods based on vertex enumeration:} In these methods, the basic idea is that vertex points of accessible region for BLP are vertex points for feasible space of the problem, and, the optimal solution is one of these vertices.
+\item \textbf{Methods based on vertex enumeration:} In these methods, the basic idea is that vertex points of the accessible region for BLP are vertex points for feasible space of the problem, and, the optimal solution is one of these vertices.
 \item \textbf{Methods based on kuhn tucker conditions:} In these methods, the second level problem is replaced by the Kuhn-Tucker optimiality conditions, yielding a one-level optimization problem with complimentarity constraints. Hence, the problem transfers into a single objective with complimentarity constraints. Several algorithms exist that try to solve these problems. One approach uses branch and bound to solve this. Another approach introduces a penalty function to satisfy the complimentarity constraints. Another approach converts the complimentarity constraints to linear one by adding some binary variables. One more approach develops parametric complimentary pivot(PCP) algorithm by transferring the problem into a single objective in which the objective function of the first level is augmented into the set of constraints as follows:\\
 \begin{center}
 $c_{1}x\ +\ d_{1}y\ \geq\ \alpha$
@@ -263,6 +280,7 @@ Non negativity:
 \end{equation*}
 \end{large}
 \subsection{Discrete Network Design problem}
+As described in section 1. the following content demonstrates the linear programming formulation of the \textit{bilevel discrete-continuous network design problem} subsuming the \textit{traffic assignment problem}.\\~\\
 Decision variables
 \begin{itemize}
 \item $x_{a}$ travelers on link a
