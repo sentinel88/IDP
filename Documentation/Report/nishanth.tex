@@ -128,11 +128,57 @@ Bilevel programming problems are mathematical optimization problems where the se
 \end{equation*}
 \end{large}
 where $f:\Re^{n}\times\Re^{m}\rightarrow\Re,\ g:\Re^{n}\times\Re^{m}\rightarrow\Re^{p},\ h:\Re^{n}\times\Re^{m}\rightarrow\Re^{q}, g(x,y)=(g_{1}(x,y),...,$\\
-$g_{p}(x,y))^{T}, h(x,y)=(h_{1}(x,y),...,h_{q}(x,y))^{T}$ This is the \textit{lower level or the follower's problem}. Let $\Psi\left(y\right)$ denote the solution set of problem $\left(1\right)$ for a fixed $y\in\Re^{m}$. Then $\Psi$ is so called \textit{point-to-set mapping} from $\Re^{m}$ into the power set of $\Re^{n}$ denoted by $\Psi:\Re^{m}\rightarrow2^{\Re^{n}}$. Denote some element of $\Psi(y)$ by $x\left(y\right)$ and assume for the moment that this choice is unique for all possible $y$. Then, the aim of the bilevel programming problem is to select the parameter vector $y$ parameterizing the lower level problem which is the optimal one in a certain sense. To be more precise, this selection of $y$ is conducted so that certain (nonlinear) equality and/or inequality constraints.\\
+$g_{p}(x,y))^{T}, h(x,y)=(h_{1}(x,y),...,h_{q}(x,y))^{T}$ This is the \textit{lower level or the follower's problem}. Let $\Psi\left(y\right)$ denote the solution set of this problem for a fixed $y\in\Re^{m}$. Then $\Psi$ is so called \textit{point-to-set mapping} from $\Re^{m}$ into the power set of $\Re^{n}$ denoted by $\Psi:\Re^{m}\rightarrow2^{\Re^{n}}$. Denote some element of $\Psi(y)$ by $x\left(y\right)$ and assume for the moment that this choice is unique for all possible $y$. Then, the aim of the bilevel programming problem is to select the parameter vector $y$ parameterizing the lower level problem which is the optimal one in a certain sense. To be more precise, this selection of $y$ is conducted so that certain (nonlinear) equality and/or inequality constraints are satisfied
 \begin{large}
-\boldmath\begin{center}
-$G\left(x\left(y\right),y\right)\leq0,\ H\left(x\left(y\right),y\right)=0$
+\boldmath\begin{equation*}
+G\left(x\left(y\right)\,y\right)\leq0,\ H\left(x\left(y\right)\,y\right)=0
+\end{equation*}
+\end{large}
+\noindent
+and an objective function $F\left(x\left(y\right),y\right)$ is minimized, where $F:\Re^{n}\times\Re^{m}\rightarrow\Re,G:\Re^{n}\times\Re^{m}\rightarrow\Re^{k},H:\Re^{n}\times\Re^{m}\rightarrow\Re^{l}$. The problem of determining a best solution $y^{*}$ of parameters for the parametric optimization problem which together with the response $x\left(y\right)\in\Psi\left(y\right)$ proves to satisfy the constraints and to give the best possible function value for $F\left(x\left(y\right),y\right)$. That is\\
+\boldmath\begin{equation*}
+"\min_{y}"\{F\left(x\left(y\right),y\right):G\left(x\left(y\right),y\right)\leq0,\ H\left(x\left(y\right),y\right)=0, x\left(y\right)\in\Psi\left(y\right)\}
+\end{equation*}
+This problem is the \textit{bilevel programming problem} or the \textit{leader's problem}.\\~\\
+\textbf{Example:}  Consider the problem of minimizing the upper level objective function
+\begin{center}
+\begin{large}
+\boldmath\begin{equation*}
+3x+y\rightarrow\min
+\end{equation*}
+\end{large}
 \end{center}
+subject to $1\leq{y}\leq6$ and $x$ solving the lower level problem.\\
+\begin{equation*}
+\min_{x}\{-x:x+y\leq8,4x+y\geq8,2x+y\leq13\}
+\end{equation*}
+The set of pairs $\left(x,y\right)$ satisying the constraints of both the lower and upper levels, denoted by M, as well as the minimization problem of the objective functions of both the lower and the upper level problems marked by the arrows are depicted below in the figure.\\
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.65\textwidth, clip]{./blp.jpg}
+\vspace{-0.15in}
+\caption{BLP}
+\label{fig:2}
+\end{figure}
+The feasible set of the lower level problem for a fixed value of y is just the intersection of the set M with the set of all points above the point $\left(0,y\right)$ on the $y$-axis. Now, if the function $f \left(x,y\right) = -x$ is minimized on this set, we arrive at a point on the thick line which thus is the optimal solution of of the lower level problem:\\
+\begin{large}
+\[
+ x(y) := 
+  \begin{cases} 
+   6.5-0.5y\ \ \ \ &\text{for}\ 1\leq{y}\leq3,\\
+   8-y\ \ \ \ &\text{for}\ 3\leq{y}\leq6,
+  \end{cases}
+\]
+\end{large}
+In doing all this for all values of $y$ between $1$ and $6$, all points on the thick lines are obtained. Hence, the thick lines give the set of feasible solutions to the upper-level problem. On this set, the upper level objective function $F\left(x,y\right)$ is to be minimized.
+\begin{large}
+\[
+ F(x(y),y) = 
+  \begin{cases}
+   19.5-0.5y\ \ \ \ &\text{for}\ 1\leq{y}\leq3,\\
+   24-2y\ \ \ \ &\text{for}\ 3\leq{y}\leq{6}.
+  \end{cases}
+\]
 \end{large}
 Existing methods for solving this problem can be roughly divided into the following categories:
 \begin{itemize}
