@@ -94,7 +94,7 @@ Dipl.-Math. Pirmin Fontaine % Advisor's Name
 \end{center}
 \thispagestyle{empty}
 \vspace{35mm}
-I would like to thank Mr. Fontaine for his constant support and guidance throughout the project especially when I faced some challenges in understanding certain topics. I would also like to thank Prof. Dr. Stefan Minner for providing me with this opportunity to work on such an Inter-Disciplinary project.
+I would like to thank Mr. Pirmin Fontaine for his constant support and guidance throughout the project especially when I faced some challenges in understanding certain topics. I would also like to thank Prof. Dr. Stefan Minner for providing me with this opportunity to work on such an Inter-Disciplinary project.
 
 \newpage
 
@@ -118,10 +118,9 @@ The network design problem(NDP) is concerned with the modification of a transpor
 \\These combinatorial problems are recognized as NP Hard due to the considerable amount of computational difficulties faced in trying to solve them because of their non-convex nature and due to the form of a bi-level mixed integer program with a large number of 0-1 variables. This Inter disciplinary project deals with only the discrete form of the NDP and considers the following kind of problem which often arises in transportation planning: minimize total travel expenditure subject to a budget constraint on the total construction cost of new links.
  
 \subsection{Problem Formulation}
-Bilevel problems are mathematical programming problems consisting of a special kind of optimization where one problem is embedded within another. The outer optimization task is commonly referred to as the upper level(or the leader) optimization task with a nested optimization problem(the lower one - also called follower) in the constraints. First, the leader has to decide over a subset of the decision variables which effects the objective value of the follower. Afterwards, the follower has to decide over the other subset of decision variables, which affects the objective value of the leader. The problem we are considering to solve here is a bilevel linear program with binary leader variables and continuous follower variables. An application of bilevel programming is network design problems where the objective of the network designer is to reduce congestion in the network and the objective of the follower is to find the fastest way from origin to destination.\\~\\
+Bilevel problems are mathematical programming problems consisting of a special kind of optimization where one problem is embedded within another. The outer optimization task is commonly referred to as the upper level(or the leader) optimization task with a nested optimization problem(the lower one - also called follower) in the constraints. First, the leader has to decide over a subset of the decision variables which effects the objective value of the follower. Afterwards, the follower has to decide over the other subset of decision variables, which affects the objective value of the leader. The problem we are considering to solve here is a bilevel linear program with binary leader variables and continuous follower variables. An application of bilevel programming is network design problem where the objective of the network designer is to reduce congestion in the network and the objective of the follower is to find the fastest way from origin to destination.\\~\\
 \noindent
-Bilevel programming problems are mathematical optimization problems where the set of all variables is partitioned between two vectors say $x$ and $y$. $x$ is to be chosen as an optimal solution of the lower level problem parameterized in y. Let the lower problem be introduced first as follows:
-\newpage
+Bilevel programming problems are mathematical optimization problems where the set of all decision variables is partitioned between two vectors say $x$ and $y$. $x$ is to be chosen as an optimal solution of the lower level problem parameterized in $y$. Let the lower problem be introduced first as follows:
 \begin{large}
 \boldmath\begin{equation*}
 \min_{x}\{f(x,y):g(x,y)\leq0,\ h(x,y)=0\},
@@ -135,11 +134,11 @@ G\left(x\left(y\right)\,y\right)\leq0,\ H\left(x\left(y\right)\,y\right)=0
 \end{equation*}
 \end{large}
 \noindent
-and an objective function $F\left(x\left(y\right),y\right)$ is minimized, where $F:\Re^{n}\times\Re^{m}\rightarrow\Re,G:\Re^{n}\times\Re^{m}\rightarrow\Re^{k},H:\Re^{n}\times\Re^{m}\rightarrow\Re^{l}$. The problem of determining a best solution $y^{*}$ of parameters for the parametric optimization problem which together with the response $x\left(y\right)\in\Psi\left(y\right)$ proves to satisfy the constraints and to give the best possible function value for $F\left(x\left(y\right),y\right)$. That is\\
+and an objective function $F\left(x\left(y\right),y\right)$ is minimized, where $F:\Re^{n}\times\Re^{m}\rightarrow\Re, G:\Re^{n}\times\Re^{m}\rightarrow\Re^{k}, H:\Re^{n}\times\Re^{m}\rightarrow\Re^{l}$. The problem of determining a best solution $y^{*}$ of parameters for the parametric optimization problem which together with the response $x\left(y\right)\in\Psi\left(y\right)$ proves to satisfy the constraints and to give the best possible function value for $F\left(x\left(y\right),y\right)$. That is\\
 \boldmath\begin{equation*}
 "\min_{y}"\{F\left(x\left(y\right),y\right):G\left(x\left(y\right),y\right)\leq0,\ H\left(x\left(y\right),y\right)=0, x\left(y\right)\in\Psi\left(y\right)\}
 \end{equation*}
-This problem is the \textit{bilevel programming problem} or the \textit{leader's problem}.\\~\\
+This problem is the \textit{bilevel programming problem} or the \textit{leader's problem}. Strongly speaking, this definition of the bilevel programming problem is valid only in the case when the lower level solution is uniquely determined for each possible $y$. The quotation marks have been used to express this uncertainity in the definition of the bilevel programming problem in case of non-uniquely determined lower level optimal solutions. If the lower level problem has atmost one(global) optimal solution for all the values of the parameter, the quotation marks can be dropped and the familiar notation of an optimization problem arises.\\~\\
 \textbf{Example:}  Consider the problem of minimizing the upper level objective function
 \begin{center}
 \begin{large}
@@ -152,7 +151,7 @@ subject to $1\leq{y}\leq6$ and $x$ solving the lower level problem.\\
 \begin{equation*}
 \min_{x}\{-x:x+y\leq8,4x+y\geq8,2x+y\leq13\}
 \end{equation*}
-The set of pairs $\left(x,y\right)$ satisying the constraints of both the lower and upper levels, denoted by M, as well as the minimization problem of the objective functions of both the lower and the upper level problems marked by the arrows are depicted below in the figure.\\
+The set of pairs $\left(x,y\right)$ satisying the constraints of both the lower and upper levels, denoted by M, as well as the minimization problem of the objective functions of both the lower and the upper level problems marked by the arrows are depicted in the figure[ref to figure].\\
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.65\textwidth, clip]{./blp.jpg}
@@ -160,7 +159,8 @@ The set of pairs $\left(x,y\right)$ satisying the constraints of both the lower 
 \caption{BLP}
 \label{fig:2}
 \end{figure}
-The feasible set of the lower level problem for a fixed value of y is just the intersection of the set M with the set of all points above the point $\left(0,y\right)$ on the $y$-axis. Now, if the function $f \left(x,y\right) = -x$ is minimized on this set, we arrive at a point on the thick line which thus is the optimal solution of of the lower level problem:\\
+\noindent
+The feasible set of the lower level problem for a fixed value of y is just the intersection of the set M with the set of all points above the point $\left(0,y\right)$ on the $y$-axis. Now, if the function $f \left(x,y\right) = -x$ is minimized on this set, we arrive at a point on the thick line which thus is the optimal solution of the lower level problem:\\
 \begin{large}
 \[
  x(y) := 
@@ -170,6 +170,7 @@ The feasible set of the lower level problem for a fixed value of y is just the i
   \end{cases}
 \]
 \end{large}
+\noindent
 In doing all this for all values of $y$ between $1$ and $6$, all points on the thick lines are obtained. Hence, the thick lines give the set of feasible solutions to the upper-level problem. On this set, the upper level objective function $F\left(x,y\right)$ is to be minimized.
 \begin{large}
 \[
@@ -180,12 +181,15 @@ In doing all this for all values of $y$ between $1$ and $6$, all points on the t
   \end{cases}
 \]
 \end{large}
+\noindent
 Existing methods for solving this problem can be roughly divided into the following categories:
 \begin{itemize}
-\item \textbf{Methods based on vertex enumeration:} In these methods, the basic idea is that vertex points of the accessible region for BLP are vertex points for feasible space of the problem, and, the optimal solution is one of these vertices.
+\item \textbf{Methods based on vertex enumeration:} In these methods, the basic idea is that the vertex points of the accessible region for BLP are vertex points for feasible space of the problem, and, the optimal solution is one of these vertices.
 \item \textbf{Methods based on kuhn tucker conditions:} In these methods, the second level problem is replaced by the Kuhn-Tucker optimiality conditions, yielding a one-level optimization problem with complimentarity constraints. Hence, the problem transfers into a single objective with complimentarity constraints. Several algorithms exist that try to solve these problems. One approach uses branch and bound to solve this. Another approach introduces a penalty function to satisfy the complimentarity constraints. Another approach converts the complimentarity constraints to linear one by adding some binary variables. One more approach develops parametric complimentary pivot(PCP) algorithm by transferring the problem into a single objective in which the objective function of the first level is augmented into the set of constraints as follows:\\
 \begin{center}
+\begin{large}
 $c_{1}x\ +\ d_{1}y\ \geq\ \alpha$
+\end{large}
 \end{center}
 and thereby the problem becomes linear complimentary problem (LCP).
 \item \textbf{Fuzzy approach:} This approach utilizes the concept of membership functions to develop a fuzzy approach for solving the above problems. The upper level decision maker defines his or her objective function and decisions with possible tolerances which are described by membership functions of fuzzy set theory and fuzzy decision. This information constrains the lower-level decision maker's feasible space. A solution search relies on changes of membership functions expressing satisfactory degrees of potential solutions for both upper and lower decision making, instead of vertex enumeration and no higher constraints are generated. No pre-assumption is made that the optimal solution exists at corner points. Potential satisfactory solutions are those in the non-dominated region when considering a multi-level decision making process rather than restricting to potential solutions at corners.
@@ -200,7 +204,7 @@ and thereby the problem becomes linear complimentary problem (LCP).
 %\epsfbox{./try.eps}
 
 \subsection{InterDisciplinary Project}
-The implementation of this project required knowledge of C/C++ programming, Data Structures, linear programming concepts, usage of the C++ BCL(Builder component library) provided by a commercially well known optimization suite called FICO Xpress. The application of these technologies is for a well known real world problem like DNDP observed in transportation science resulting in this project to be of Inter-Disciplinary nature. As a part of the preparation for implementing this project, a good amount of knowledge on \textbf{metaheuristics} and \textbf{DNDP} was acquired from the course \textbf{"TRANSPORTATION LOGISTICS"} offered by the \textbf{CHAIR OF LOGISTICS AND SUPPLY CHAIN MANAGEMENT.}\par
+The implementation of this project required knowledge of C/C++ programming, data structures, linear programming concepts, usage of the C++ BCL(builder component library) provided by a commercially well known optimization suite called FICO Xpress. The application of these technologies is for a well known real world problem like DNDP observed in transportation science resulting in this project to be of Inter-Disciplinary nature. As a part of the preparation for implementing this project, a good amount of knowledge on \textbf{metaheuristics} and \textbf{DNDP} was acquired from the course \textbf{"TRANSPORTATION LOGISTICS"} offered by the \textbf{CHAIR OF LOGISTICS AND SUPPLY CHAIN MANAGEMENT.}\par
 \noindent
 \\
 The objective of this course was to get an overview of the modeling techniques, exact as well as heuristic search methods tailored to the different transportation problems studied. The course consisted of a sequence of lectures, exercise classes and case studies. It also deals on how to model and analyze transportation problems using quantitative methods. It covers many of the real world problems observed in Transportation Planning such as Traveling Salesman Problem(TSP), Vehicle Routing Problems(VRP), Network Flow Problems, Inventory Routing etc. and techniques such as Metaheuristics used to solve them.\par
@@ -399,6 +403,7 @@ Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $
   \end{cases}
 \]
 \end{large}
+\noindent
 It is clear that $a_{i}-a_{i-1}\geq0$ and Nemhauser and Wolsey(1988) stated that no binary variables are needed for the approximation.\\
 Instead $\overline{f}(x)$ can be minimzed by the following LP:
 \begin{large}
@@ -412,16 +417,17 @@ Instead $\overline{f}(x)$ can be minimzed by the following LP:
 &x_{1}\geq0\ \ i=1,...,m
 \end{align*}
 \end{large}
+\noindent
 As in each $\left(\nu_{i},f_{i}\right)$ a new slope $a_i$ starts, we have to add $\left(a_i-a_{i-1}\right)x_{i}$ from that point on with $x_{i}=x_{1}-\nu_{i-1}$, but do not subtract anything if $x_{1} \le \nu_{i-1}$. Because of the minimization problem and the definition of the objective function constraints, (51) and (52) (52) ensure that $x_{i}$ takes the value of $\min\{0,x_{1}-\nu_{i-1}\}$ and the defined optimization problem minimizes $f(x)$. In the example of Fig. 2, $x_1 \ge v_1$ and we have to add $\left(a_2 - a_1\right)x_2$ with $x_2=\left(x_1-\nu_1\right)$ (gray area), but $x_3=0$.
 
-\subsection{Meta Heuristics}
+\subsection{Solution Technique: Meta Heuristics}
 Modern heuristic techniques, also called metaheuristics are a family of procedures which benefit from some sort of intelligence in their search for finding the solution to a problem. It is a higher level procedure designed to find, generate, or select a heuristic(partial search algorithm) that may provide a sufficiently good solution to an optimization problem, especially with incomplete or imperfect information or limited computation capacity. They may not provide optimal solution but they provide a sufficiently good solution rapidly and effectively. Simulated annealing, genetic algorithm, tabu search, neural network, ant system are some examples of such meta heuristics.\par
 \noindent
 \\This project implements the genetic algorithm on DNDP. Genetic algorithm (GA) is a search heuristic that mimics the process of natural selection. This heuristic (also sometimes called a metaheuristic) is routinely used to generate useful solutions to optimization and search problems.[1] Genetic algorithms belong to the larger class of evolutionary algorithms (EA), which generate solutions to optimization problems using techniques inspired by natural evolution, such as inheritance, mutation, selection, and crossover. Genetic algorithms find application in bioinformatics, phylogenetics, computational science, signal and image processing, Bayesian inference, machine learning, risk analysis and rare event sampling, Engineering and robotics, economics, manufacturing, mathematics, mathematical finance, molecular chemistry, computational physics, pharmacokinetic, pharmacometrics, and other fields.\par
 %\noindent
 \newpage
 \section{Genetic Algorithm}
-Genetic algorithms are robust search and optimization techniques which are finding applications in a number of practical problems. The robustness of GAs is due to their capacity to locate the global optimum in a multimodal landscape. A plethora of such multimodal functions exist in engineering problems(optimization of neural network structure and learning neural network weights, solving optimal control problems, designing structures, and solving flow problems) are a few examples. It is for the above reason that considerable attention has been paid to the design of GAs for optimizing multimodal functions.\\ \par
+Genetic algorithms are robust search and optimization techniques which are finding applications in a number of practical problems. The robustness of GAs is due to their capacity to locate the global optimum in a multimodal landscape. A plethora of such multimodal functions exist in engineering problems(optimization of neural network structure and learning neural network weights, solving optimal control problems, designing structures, and solving flow problems) are a few examples. It is for the above reason that considerable attention has been paid to the design of GAs for optimizing multimodal functions.\par
 \noindent
 \subsection{Understanding the algorithm}
 In a genetic algorithm, a population of candidate solutions (called individuals, creatures, or phenotypes) to an optimization problem is evolved toward better solutions. Each candidate solution has a set of properties (its chromosomes or genotype) which can be mutated and altered; traditionally, solutions are represented in binary as strings of 0s and 1s, but other encodings are also possible.[6]\par
@@ -442,26 +448,23 @@ In a genetic algorithm, a population of candidate solutions (called individuals,
         end for
         P := $P'$
 \end{lstlisting}
+The following 4 paragraphs explain the basic parts of a genetic algorithm.\\
 \begin{large}\textbf{Initialization:}\end{large}\\
 The population size depends on the nature of the problem, but typically contains several hundreds or thousands of possible solutions. Often, the initial population is generated randomly, allowing the entire range of possible solutions (the search space). Occasionally, the solutions may be "seeded" in areas where optimal solutions are likely to be found.\\~\\
 \begin{large}\textbf{Selection:}\end{large}\\
-During each successive generation, a proportion of the existing population is selected to breed a new generation. Individual solutions are selected through a fitness-based process, where fitter solutions (as measured by a fitness function) are typically more likely to be selected. Certain selection methods rate the fitness of each solution and preferentially select the best solutions. Other methods rate only a random sample of the population, as the former process may be very time-consuming.
-
-The fitness function is defined over the genetic representation and measures the quality of the represented solution. The fitness function is always problem dependent. For instance, in the knapsack problem one wants to maximize the total value of objects that can be put in a knapsack of some fixed capacity. A representation of a solution might be an array of bits, where each bit represents a different object, and the value of the bit (0 or 1) represents whether or not the object is in the knapsack. Not every such representation is valid, as the size of objects may exceed the capacity of the knapsack. The fitness of the solution is the sum of values of all objects in the knapsack if the representation is valid, or 0 otherwise.
-
-In some problems, it is hard or even impossible to define the fitness expression; in these cases, a simulation may be used to determine the fitness function value of a phenotype (e.g. computational fluid dynamics is used to determine the air resistance of a vehicle whose shape is encoded as the phenotype), or even interactive genetic algorithms are used.\\~\\
+During each successive generation, a proportion of the existing population is selected to breed a new generation. Individual solutions are selected through a fitness-based process, where fitter solutions (as measured by a fitness function) are typically more likely to be selected. Certain selection methods rate the fitness of each solution and preferentially select the best solutions. Other methods rate only a random sample of the population, as the former process may be very time-consuming.\\~\\
+\noindent
+The fitness function is defined over the genetic representation and measures the quality of the represented solution. The fitness function is always problem dependent. For instance, in the knapsack problem one wants to maximize the total value of objects that can be put in a knapsack of some fixed capacity. A representation of a solution might be an array of bits, where each bit represents a different object, and the value of the bit (0 or 1) represents whether or not the object is in the knapsack. Not every such representation is valid, as the size of objects may exceed the capacity of the knapsack. The fitness of the solution is the sum of values of all objects in the knapsack if the representation is valid, or 0 otherwise.\\~\\
+\noindent
+In some problems, it is hard or even impossible to define the fitness expression; in these cases, a simulation may be used to determine the fitness function value of a candidate (e.g. computational fluid dynamics is used to determine the air resistance of a vehicle whose shape is encoded as the phenotype), or even interactive genetic algorithms are used.\\~\\
 \begin{large}\textbf{Genetic operators:}\end{large}\\
-The next step is to generate a second generation population of solutions from those selected through a combination of genetic operators: crossover (also called recombination), and mutation.
-
-For each new solution to be produced, a pair of "parent" solutions is selected for breeding from the pool selected previously. By producing a "child" solution using the above methods of crossover and mutation, a new solution is created which typically shares many of the characteristics of its "parents". New parents are selected for each new child, and the process continues until a new population of solutions of appropriate size is generated. Although reproduction methods that are based on the use of two parents are more "biology inspired", some research[7][8] suggests that more than two "parents" generate higher quality chromosomes.
-
-These processes ultimately result in the next generation population of chromosomes that is different from the initial generation. Generally the average fitness will have increased by this procedure for the population, since only the best organisms from the first generation are selected for breeding, along with a small proportion of less fit solutions. These less fit solutions ensure genetic diversity within the genetic pool of the parents and therefore ensure the genetic diversity of the subsequent generation of children.
-
-Opinion is divided over the importance of crossover versus mutation. There are many references in Fogel (2006) that support the importance of mutation-based search.
-
-Although crossover and mutation are known as the main genetic operators, it is possible to use other operators such as regrouping, colonization-extinction, or migration in genetic algorithms.[9]
-
-It is worth tuning parameters such as the mutation probability, crossover probability and population size to find reasonable settings for the problem class being worked on. A very small mutation rate may lead to genetic drift (which is non-ergodic in nature). A recombination rate that is too high may lead to premature convergence of the genetic algorithm. A mutation rate that is too high may lead to loss of good solutions, unless elitist selection is employed.\\~\\
+The next step is to generate a second generation population of solutions from those selected through a combination of genetic operators: crossover (also called recombination), and mutation.\\~\\
+\noindent
+For each new solution to be produced, a pair of "parent" solutions is selected for breeding from the pool selected previously. By producing a "child" solution using the above methods of crossover and mutation, a new solution is created which typically shares many of the characteristics of its "parents". New parents are selected for each new child, and the process continues until a new population of solutions of appropriate size is generated. Although reproduction methods that are based on the use of two parents are more "biology inspired", some research[7][8] suggests that more than two "parents" generate higher quality chromosomes.\\~\\
+\noindent
+These processes ultimately result in the next generation population of chromosomes that is different from the initial generation. Generally the average fitness will have increased by this procedure for the population, since only the best organisms from the first generation are selected for breeding, along with a small proportion of less fit solutions. These less fit solutions ensure genetic diversity within the genetic pool of the parents and therefore ensure the genetic diversity of the subsequent generation of children.\\~\\
+\noindent
+Opinion is divided over the importance of crossover versus mutation. There are many references in Fogel (2006) that support the importance of mutation-based search. Although crossover and mutation are known as the main genetic operators, it is possible to use other operators such as regrouping, colonization-extinction, or migration in genetic algorithms.[9] It is worth tuning parameters such as the mutation probability, crossover probability and population size to find reasonable settings for the problem class being worked on. A very small mutation rate may lead to genetic drift (which is non-ergodic in nature). A recombination rate that is too high may lead to premature convergence of the genetic algorithm. A mutation rate that is too high may lead to loss of good solutions, unless elitist selection is employed.\\~\\
 \begin{large}\textbf{Termination:}\end{large}\\
 This generational process is repeated until a termination condition has been reached. Common terminating conditions are:
 \begin{itemize}
@@ -477,8 +480,9 @@ A typical genetic algorithm requires:
 \item a genetic representation of the solution domain,
 \item a fitness function to evaluate the solution domain.
 \end{itemize}
-A standard representation of each candidate solution is as an array of bits.[6] Arrays of other types and structures can be used in essentially the same way. The main property that makes these genetic representations convenient is that their parts are easily aligned due to their fixed size, which facilitates simple crossover operations. Variable length representations may also be used, but crossover implementation is more complex in this case. Tree-like representations are explored in genetic programming and graph-form representations are explored in evolutionary programming; a mix of both linear chromosomes and trees is explored in gene expression programming.
-
+The above paragraphs showed us the basic parts of a GA. Another important concern while using the approach of GA is about deciding how to represent the candidate.\\~\\
+\noindent A standard representation of each candidate solution is an array of bits.[6] Arrays of other types and structures can be used in essentially the same way. The main property that makes these genetic representations convenient is that their parts are easily aligned due to their fixed size, which facilitates simple crossover operations. Variable length representations may also be used, but crossover implementation is more complex in this case. Tree-like representations are explored in genetic programming and graph-form representations are explored in evolutionary programming; a mix of both linear chromosomes and trees is explored in gene expression programming.\\~\\
+\noindent
 Once the genetic representation and the fitness function are defined, a GA proceeds to initialize a population of solutions and then to improve it through repetitive application of the mutation, crossover, inversion and selection operators.
 \subsection{Encoding}
 %\begin{large}\textbf{Encoding:}\end{large}\\
@@ -490,8 +494,9 @@ string. A large number of optimization problems have real-valued continuous vari
 representation. Each variable is first linearly mapped to an integer is encoded in a specified range and the integer is encoded using a fixed
 number of binary bits. The binary codes of all the variables are then concatenated to obtain a binary string. For example consider a continuous
 variable defined in a range from $-1.28$ to $1.28$. We could encode this continuous variable with an accuracy of two decimal places by 
-multiplying its real value by 100 and then discarding the decimal portion of the product. Thus the value that the variable attain is linearly 
-mapped to integers in the range [-128, 128]. The binary code corresponding to each integer can be easily computed.\\
+multiplying its real value by 100 and then discarding the decimal portion of the product. Thus the value that the variable attained is linearly
+mapped to integers in the range [-128, 128]. The binary code corresponding to each integer can be easily computed.\\~\\
+\noindent
 Encoding of chromosomes is one of the problems faced during the usage of genetic algorithm for solving a particular problem. Encoding depends very much of kind of problem. The convergence of the genetic algorithm has close relation with its encoding method. Encoding method is the prime
 attention in design of the algorithm. Holland's schema theorem advocates the binary encoding gives the encoding rule of the minimum signs. 
 Although binary encoding is simple and easy to do, it will add extra-calculated time for encoding and decoding to the algorithm. Also, when 
@@ -507,9 +512,9 @@ Chromosome B: 111111100000110000011111
 Binary encoding gives many possible chromosomes even with a small number of alleles. On the other hand, this encoding is often not natural for 
 many problems and sometimes corrections must be made after crossover/or mutation.\\~\\
 Example of a problem:  \textbf{Knapsack problem}\\
-The problem:  There are things with given value and size. The knapsack has given capacity. Select things to maximize the value of things in 
-knapsack, but do not extend knapsack capacity.
-Encoding: Each bit says, if the corresponding thing is in knapsack.\\~\\
+The problem:  There are items with given value and size. The knapsack has given capacity. Select items to maximize the value of items in 
+knapsack, but do not extend knapsack capacity.\\
+Encoding: Each bit says, if the corresponding item is in knapsack.\\~\\
 \textbf{Permutation Encoding}\\
 This type of encoding can be used in ordering problems, such as traveling salesman problem or task ordering problem. In permutation encoding,
 every chromosome is a string of numbers, which represents number in a sequence.
@@ -517,26 +522,27 @@ every chromosome is a string of numbers, which represents number in a sequence.
 Chromosome A: 1 5 3 2 6 4 7 9 8\\
 Chromosome B: 8 5 6 7 2 3 1 4 9
 \end{center}
-Examples of chromosomes with permutation encoding.\\
+Examples of chromosomes with \textbf{permutation encoding:}\\
 Permutation encoding is only useful for ordering problems. Even for these problems, for some types of crossover and mutation corrections must
 be made to leave the chromosome consistent(i.e. have real sequence in it).\\~\\
 Example problem: \textbf{Traveling Salesman Problem(TSP)}\\
-The problem: There are cities and given distances between them. Traveling salesman has to visit all of them, but he does wants to travel very
-much. Find a sequence of cities to minimize travelled distance.
+The problem: There are cities and given distances between them. Traveling salesman has to visit all of them, but he doesn't wants to travel very much. Find a sequence of cities to minimize travelled distance.\\
 Encoding: Chromosome says order of cities, in which salesman will visit them.\\~\\
 \textbf{Value Encoding}\\
 Direct value encoding can be used in problems, where some complicated value, such as real numbers, are used. Use of binary encoding for this
 type of problems would be very difficult. In value encoding, every chromosome is a string of some values. Values can be anything connected to 
 problem, form numbers, real numbers or chars to some complicated objects.\\
 \begin{center}
-Chromosome A: 1.2324  5.3243  0.4556  2.3293  2.4545\\
-Chromosome B: ABDJEIFJDHDIERJFDLDFLFEGT\\
-Chromosome C: (back), (back), (right), (forward), (left)
+\begin{align*}
+&Chromosome A: 1.2324  5.3243  0.4556  2.3293  2.4545\\
+&Chromosome B: ABDJEIFJDHDIERJFDLDFLFEGT\\
+&Chromosome C: (back), (back), (right), (forward), (left)
+\end{align*}
 \end{center}
 Example of chromosomes with value encoding:\\
-Value encoding is very good for some special problems. On the other hand, for this encoding is often necessary to develop some new crossover and mutation specific for the problem.\\~\\
+Value encoding is very good for some special problems. On the other hand, for this encoding it is often necessary to develop some new crossover and mutation operations specific to the problem.\\~\\
 Example of Problem: \textbf{Finding weights for neural network}\\
-The problem: There is some neural network with given architecture. Find weights for inputs of neurons to train the network for wanted output.
+The problem: There is some neural network with given architecture. Find weights for inputs of neurons to train the network for wanted output.\\
 Encoding: Real values in chromosomes represent corresponding weights for inputs.\\~\\
 \textbf{Tree Encoding}\\
 Tree encoding is used mainly for evolving programs or expressions, for genetic programming. In tree encoding every chromosome is a tree of some objects, such as functions or commands in programming language. \\
@@ -547,13 +553,14 @@ Example of Problem: \textbf{Finding a function from given values}\\
 The problem: Some input and output values are given. Task is to find a function, which will give the best (closest to wanted) output to all inputs.\\
 Encoding: Chromosome are functions represented in a tree.
 \subsection{Selection}
-Genetic algorithms(GA) use a selection mechanism to select individuals from the population to insert into the mating pool. Individuals from the mating pool are used to generate new offspring with the resulting offspring forming the basis of the next generation. As the individuals in themating pool are the ones whose genes are inherited by the next generation, it is desirable that the mating pool be comprised of "good" individuals. A selection mechanism in GAs is simply a process that favors the selection of better individuals in the population for the mating pool. 
+Genetic algorithms(GA) use a selection mechanism to select individuals from the population to insert into the mating pool. Individuals from the mating pool are used to generate new offspring with the resulting offspring forming the basis of the next generation. As the individuals in the mating pool are the ones whose genes are inherited by the next generation, it is desirable that the mating pool be comprised of "good" individuals. A selection mechanism in GAs is simply a process that favors the selection of better individuals in the population for the mating pool. 
 The selection pressure is the degree to which the better individuals are favored: the higher the selection pressure, the more the better
 individuals are favored. This selection pressure drives the GA to improve the population fitness over succeeding generations . The convergence
-rate of a GA is largely determined by the selection pressure, wit higher selection pressures resulting in higher convergence rates. GAs are 
+rate of a GA is largely determined by the selection pressure, with higher selection pressures resulting in higher convergence rates. GAs are 
 able to identify optimal or near-optimal solutions under a wide range of selection pressure[5]. However , if the selection pressure is too low, the convergence rate will be slow, and the GA will unnecessarily take longer to find the optimal solution. If the selection pressure is too 
 high, there is an increased chance of the GA prematurely converging to an incorrect (suboptimal) solution.
 \begin{itemize}
+\item Default selection
 \item Fitness proportionate selection
 \item Rank selection
 \item Tournament selection
@@ -562,10 +569,11 @@ high, there is an increased chance of the GA prematurely converging to an incorr
 \item Local selection
 \end{itemize}
 %\begin{large}\textbf{Fitness Proportionate Selection:}\end{large}
+\subsubsection{Default Selection}
 \subsubsection{Fitness Proportionate Selection}
-This method is also known as Roulette wheel selection. It is a genetic operator used in genetic algorithms for selecting potentially useful 
+This method is also known as \textbf{\textit{Roulette wheel selection}}. It is a genetic operator used in genetic algorithms for selecting potentially useful 
 solutions for recombination. This selection principle is similar to that of a roulette wheel. The probability of selection of a sector in a 
-roulette wheel is proportional to the magnitude of the central angle of the sector. Similarly in Genetic Algorithm, whole population in
+roulette wheel is proportional to the magnitude of the central angle of the sector. Similarly in Genetic Algorithm, the whole population in
 partitioned on the wheel and each sector represents an individual. The proportion of individual’s fitness to the total fitness values of the 
  whole population decides the probability of selection of that individual in the next generation. This consequently decides the area occupied 
 by that individual on the wheel. Following are the steps for Roulette Wheel Selection:
@@ -574,21 +582,22 @@ by that individual on the wheel. Following are the steps for Roulette Wheel Sele
 \item Calculate the fitness value of each individual and their probability of selection by dividing individual chromosome’s fitness by the sum 
 of fitness values of whole population.
 \item Partition the roulette wheel into sectors according to the probabilities calculated in the second step.
-\item Spin the wheel ‘n’ number of times. When the roulette stops, the sector on which the pointer points corresponds to the individual being 
+\item Spin the wheel ‘$n$’ number of times. When the roulette stops, the sector on which the pointer points corresponds to the individual being 
 selected.
 \end{itemize}
-The probability of selection of an individual $a_j$ is:
+The probability of selection of an individual $a_i$ is:
 \begin{large}
 \boldmath\begin{equation*}
 P\left(a_{i}\right) = \frac{f\left(a_{i}\right)}{\sum_{i=1}^{N}f\left(a_j\right)}; j=1,2,...,n 
 \end{equation*}
 \end{large}
+where \boldmath$f\left(a\right)$ refers to the function which gives us the fitness of this individual.
 %\begin{large}\textbf{Tournament Selection:}\end{large}
 \subsubsection{Rank Selection}
-Rank Selection in Genetic Algorithm was introduced by Baker to eliminate the disadvantages of fitness proportionate selection. In Linear 
+Rank Selection in Genetic Algorithm was introduced by \textit{Baker} to eliminate the disadvantages of fitness proportionate selection. In Linear 
 Ranking selection method, individuals are first sorted according to their fitness value and then the ranks are assigned to them. Best 
-individual gets rank ‘N’ and the worst one gets rank ‘1’. The selection probability is then assigned linearly to the individuals according to 
-their ranks.\\
+individual gets rank ‘$N$’ and the worst one gets rank ‘$1$’. The selection probability is then assigned linearly to the individuals according to 
+their ranks.\\~\\
 The probability of the best individual to be selected is:
 \begin{large}
 \boldmath\begin{equation*}
@@ -601,7 +610,7 @@ The probability of the worst individual to be selected is:
 P\left(a_{best}\right) = \frac{1}{\frac{\left(N*\left(N+1\right)\right)}{2}}\ \approx\ \frac{2}{N^2}
 \end{equation*}
 \end{large}
-The probability of the $i^{th}$ individual(sorted oorder) to be selected is:
+The probability of the $i^{th}$ individual(sorted order) to be selected is:
 \begin{large}
 \boldmath\begin{equation*}
 P\left(a_i\right) = \frac{N-i+1}{\frac{\left(N*\left(N+1\right)\right)}{2}}\ \approx\ \frac{2\left(N-i+1\right)}{N^2}
@@ -611,9 +620,9 @@ P\left(a_i\right) = \frac{N-i+1}{\frac{\left(N*\left(N+1\right)\right)}{2}}\ \ap
 Tournament selection is a useful and robust selection mechanism commonly used by genetic algorithms (GAs). The selection pressure of
 tournament selection directly varies with the tournament size-the more competitors , the higher the resulting selection pressure. Due to the 
 efficiency and ease of implementation, Tournament selection is the most popular selection technique of Genetic Algorithm. In Tournament 
-Selection, ‘n’ individuals are chosen at random from the entire population. These individuals compete against each other. The individual with 
+Selection, ‘$n$’ individuals are chosen at random from the entire population. These individuals compete against each other. The individual with 
 the highest fitness value wins and gets selected for further processing in Genetic Algorithm. The number of individual taking part in every 
-tournament is referred as tournament size. Most commonly used tournament size is 2 i.e. in Binary Tournament Selection. There are several advantages of Tournament selection strategy that makes it more efficient than other techniques. These include less time complexity i.e. O(n) , easy 
+tournament is referred as tournament size. Most commonly used tournament size is $2$ i.e. in Binary Tournament Selection. There are several advantages of Tournament selection strategy that makes it more efficient than other techniques. These include less time complexity i.e. $O\left(n\right)$ , easy 
 parallel implementation, low vulnerability to takeover by dominant individuals, and no requirement for fitness scaling or sorting.\\
 In the above figure, Tournament size is three, which means three individuals compete against each other in one tournament. The larger the 
 tournament size, the greater is the probability of loss of diversity. There are two reasons for loss of diversity. Either the individual did 
@@ -622,34 +631,36 @@ because they lost some tournament.\\
 \\\textbf{Elitist Strategy:}
 Find the individual with the maximum fitness value in the mating pool and preserve it in the offspring. So the individual with the maximum 
 fitness value in the previous generation can be kept. For this reason, the algorithm will be convergent to the global optimal solution with the
-probability of 1.
+probability of $1$.
 \subsection{Crossover}
 %\begin{large}\textbf{Crossover:}\end{large}\\
 The search of the solution space is done by creating new chromosomes from old ones. Crossover is the technique by which the chromosomes 
 selected from a source population according to a chosen selection scheme from those described earlier are combined to form offsprings which are potential members of a successor population. It is simply a matter of replacing some of the genes in one parent by the corresponding genes of the other. There are various ways to do a crossover. Few of them are described below. Examples demonstrating the various techniques use binary encoding as the underlying encoding scheme for the chromosomes.\\~\\
 For all the examples that follow the below 2 parents will be used as the selected chromosomes:
 \begin{center}
+\begin{align*}
 Parent 1: 1010101010\\
- Parent 2: \textbf{1000010000}
+Parent 2: \textbf{1000010000}
+\end{align*}
 \end{center}
 \textbf{Single Point Crossover}\\
-In this technique each pair of selected chromosomes undergoes crossover as follows: An integer position k along both the chromosomes is 
-selected uniformly at random between 1 and the chromosome length say l. Two new chromosomes are created swapping all the genes between k+1 and l. Suppose the randomly chosen crossover point is the fifth bit then each new child receives one half of the parent's bits:
+In this technique each pair of selected chromosomes undergoes crossover as follows: An integer position $k$ along both the chromosomes is 
+selected uniformly at random between $1$ and the chromosome length say $l$. Two new chromosomes are created swapping all the genes between $k+1$ and $l$. Suppose the randomly chosen crossover point is the fifth bit then each new child receives one half of the parent's bits:
 \begin{center}
 Child 1: 10101\textbf{10000}\\
 Child 2. \textbf{10000}01010
 \end{center}
 \textbf{Two Point Crossover}\\
-This technique is similar to the single-point crossover except for the fact that there are 2 crossover points chosen at random for both the
-chromosomes. And, the parents only swap the bits between the 2 crossover points. Suppose the randomly chosen crossover points are the third 
+This technique is similar to the single-point crossover except for the fact that there are $2$ crossover points chosen at random for both the
+chromosomes. And, the parents only swap the bits between the $2$ crossover points. Suppose the randomly chosen crossover points are the third 
 and the sixth bit then the children are:
 \begin{center}
 Child 1: 101\textbf{001}1010\\
 Child 2: \textbf{100}010\textbf{0000}
 \end{center}
 \textbf{Uniform crossover}\\
-This technique does not select a set of crossover points. It simply considers each bit position of the 2 parents, and swaps the two bits with
-a probability of 50\%. Suppose the first, third, fourth and ninth bit positions(of the original parents) are swapped. Then the children are:
+This technique does not select a set of crossover points. It simply considers each bit position of the $2$ parents, and swaps the two bits with
+a probability of $50\%$. Suppose the first, third, fourth and ninth bit positions(of the original parents) are swapped. Then the children are:
 \begin{center}
 Child 1: \textbf{1}0\textbf{00}1010\textbf{0}0\\
 Child 2: 1\textbf{0}10\textbf{0100}1\textbf{0}
@@ -670,7 +681,7 @@ Child: 110100001
 Depending on how the chromosome represents the solution, a direct swap may not be possible. One such case is when the chromosome is an ordered list, such as an ordered list of the cities to be travelled for the traveling salesman problem. There are many crossover methods for ordered chromosomes. The already mentioned N-point crossover can be applied for ordered chromosomes also, but this always need a corresponding repair process, actually, some ordered crossover methods are derived from the idea. However, sometimes a crossover of chromosomes produces recombinations which violate the constraint of ordering and thus need to be repaired. Some of the techniques are given below:
 \begin{itemize}
 \item  partially matched crossover (PMX): In this method, two crossover points are selected at random and PMX proceeds by position wise exchanges. The two crossover points give matching selection. It affects cross by position-by-position exchange operations. In this method parents are mapped to each other, hence we can also call it partially mapped crossover.[5]
-\item  cycle crossover (CX): Beginning at any gene i in parent 1, the i-th gene in parent 2 becomes replaced by it. The same is repeated for the displaced gene until the gene which is equal to the first inserted gene becomes replaced (cycle).
+\item  cycle crossover (CX): Beginning at any gene $i$ in parent $1$, the $i$-th gene in parent $2$ becomes replaced by it. The same is repeated for the displaced gene until the gene which is equal to the first inserted gene becomes replaced (cycle).
 \item  order crossover operator (OX1): A portion of one parent is mapped to a portion of the other parent. From the replaced portion on, the rest is filled up by the remaining genes, where already present genes are omitted and the order is preserved.
 \item order-based crossover operator (OX2)
 \item position-based crossover operator (POS)

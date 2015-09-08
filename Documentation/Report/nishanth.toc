@@ -5,14 +5,15 @@
 \contentsline {section}{\numberline {2}Modeling}{8}{section.2}
 \contentsline {subsection}{\numberline {2.1}Traffic Assignment Problem}{8}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Discrete Network Design problem}{10}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Meta Heuristics}{11}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.3}Solution Technique: Meta Heuristics}{11}{subsection.2.3}
 \contentsline {section}{\numberline {3}Genetic Algorithm}{13}{section.3}
 \contentsline {subsection}{\numberline {3.1}Understanding the algorithm}{13}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Encoding}{15}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Selection}{17}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Fitness Proportionate Selection}{18}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}Rank Selection}{19}{subsubsection.3.3.2}
-\contentsline {subsubsection}{\numberline {3.3.3}Tournament Selection}{19}{subsubsection.3.3.3}
+\contentsline {subsection}{\numberline {3.2}Encoding}{16}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Selection}{18}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Default Selection}{18}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Fitness Proportionate Selection}{18}{subsubsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.3}Rank Selection}{19}{subsubsection.3.3.3}
+\contentsline {subsubsection}{\numberline {3.3.4}Tournament Selection}{20}{subsubsection.3.3.4}
 \contentsline {subsection}{\numberline {3.4}Crossover}{20}{subsection.3.4}
 \contentsline {subsection}{\numberline {3.5}Mutation}{22}{subsection.3.5}
 \contentsline {section}{\numberline {4}Implementation}{24}{section.4}
