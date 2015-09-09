@@ -449,15 +449,15 @@ This is based on \textbf{"Genetic Algorithms"} by \textit{David Goldberg, Addiso
         P := $P'$
 \end{lstlisting}
 The following 4 paragraphs explain the basic parts of a genetic algorithm.\\~\\
-\begin{large}\textbf{Initialization:}\end{large}\\
+\textbf{\textit{Initialization:}}
 The population size depends on the nature of the problem, but typically contains several hundreds or thousands of possible solutions. Often, the initial population is generated randomly, allowing the entire range of possible solutions (the search space). Occasionally, the solutions may be "seeded" in areas where optimal solutions are likely to be found.\\~\\
-\begin{large}\textbf{Selection:}\end{large}\\
+\textbf{\textit{Selection:}}
 During each successive generation, a proportion of the existing population is selected to breed a new generation. Individual solutions are selected through a fitness-based process, where fitter solutions (as measured by a fitness function) are typically more likely to be selected. Certain selection methods rate the fitness of each solution and preferentially select the best solutions. Other methods rate only a random sample of the population, as the former process may be very time-consuming.\\~\\
 \noindent
 The fitness function is defined over the genetic representation and measures the quality of the represented solution. The fitness function is always problem dependent. For instance, in the knapsack problem one wants to maximize the total value of objects that can be put in a knapsack of some fixed capacity. A representation of a solution might be an array of bits, where each bit represents a different object, and the value of the bit (0 or 1) represents whether or not the object is in the knapsack. Not every such representation is valid, as the size of objects may exceed the capacity of the knapsack. The fitness of the solution is the sum of values of all objects in the knapsack if the representation is valid, or 0 otherwise.\\~\\
 \noindent
 In some problems, it is hard or even impossible to define the fitness expression; in these cases, a simulation may be used to determine the fitness function value of a candidate (e.g. computational fluid dynamics is used to determine the air resistance of a vehicle whose shape is encoded as the phenotype), or even interactive genetic algorithms are used.\\~\\
-\begin{large}\textbf{Genetic operators:}\end{large}\\
+\textbf{\textit{Genetic operators:}}
 The next step is to generate a second generation population of solutions from those selected through a combination of genetic operators: crossover (also called recombination), and mutation.\\~\\
 \noindent
 For each new solution to be produced, a pair of "parent" solutions is selected for breeding from the pool selected previously. By producing a "child" solution using the above methods of crossover and mutation, a new solution is created which typically shares many of the characteristics of its "parents". New parents are selected for each new child, and the process continues until a new population of solutions of appropriate size is generated. Although reproduction methods that are based on the use of two parents are more "biology inspired", some research[7][8] suggests that more than two "parents" generate higher quality chromosomes.\\~\\
@@ -465,7 +465,7 @@ For each new solution to be produced, a pair of "parent" solutions is selected f
 These processes ultimately result in the next generation population of chromosomes that is different from the initial generation. Generally the average fitness will have increased by this procedure for the population, since only the best organisms from the first generation are selected for breeding, along with a small proportion of less fit solutions. These less fit solutions ensure genetic diversity within the genetic pool of the parents and therefore ensure the genetic diversity of the subsequent generation of children.\\~\\
 \noindent
 Opinion is divided over the importance of crossover versus mutation. There are many references in Fogel (2006) that support the importance of mutation-based search. Although crossover and mutation are known as the main genetic operators, it is possible to use other operators such as regrouping, colonization-extinction, or migration in genetic algorithms.[9] It is worth tuning parameters such as the mutation probability, crossover probability and population size to find reasonable settings for the problem class being worked on. A very small mutation rate may lead to genetic drift (which is non-ergodic in nature). A recombination rate that is too high may lead to premature convergence of the genetic algorithm. A mutation rate that is too high may lead to loss of good solutions, unless elitist selection is employed.\\~\\
-\begin{large}\textbf{Termination:}\end{large}\\
+\textbf{\textit{Termination:}}
 This generational process is repeated until a termination condition has been reached. Common terminating conditions are:
 \begin{itemize}
 \item A solution is found that satisfies minimum criteria
@@ -502,7 +502,7 @@ attention in design of the algorithm. Holland's schema theorem advocates the bin
 Although binary encoding is simple and easy to do, it will add extra-calculated time for encoding and decoding to the algorithm. Also, when 
 encoding real numbers, the binary coding will generate the encoding error which will decrease the precision of the algorithm. While real 
 encoding can overcome the above problems and search a larger seach space.\\~\\
-\textbf{Binary Encoding}\\
+\textbf{\textit{Binary Encoding: }}
 Binary encoding is the most common, mainly because the first works about GA used this type of encoding. In binary encoding every chromosome is
 a string of bits, 0 or 1.
 \begin{center}
@@ -515,7 +515,7 @@ Example of a problem:  \textbf{Knapsack problem}\\
 The problem:  There are items with given value and size. The knapsack has given capacity. Select items to maximize the value of items in 
 knapsack, but do not extend knapsack capacity.\\
 Encoding: Each bit says, if the corresponding item is in knapsack.\\~\\
-\textbf{Permutation Encoding}\\
+\textbf{\textit{Permutation Encoding: }}
 This type of encoding can be used in ordering problems, such as traveling salesman problem or task ordering problem. In permutation encoding,
 every chromosome is a string of numbers, which represents number in a sequence.
 \begin{center}
@@ -528,7 +528,7 @@ be made to leave the chromosome consistent(i.e. have real sequence in it).\\~\\
 Example problem: \textbf{Traveling Salesman Problem(TSP)}\\
 The problem: There are cities and given distances between them. Traveling salesman has to visit all of them, but he doesn't wants to travel very much. Find a sequence of cities to minimize travelled distance.\\
 Encoding: Chromosome says order of cities, in which salesman will visit them.\\~\\
-\textbf{Value Encoding}\\
+\textbf{\textit{Value Encoding: }}
 Direct value encoding can be used in problems, where some complicated value, such as real numbers, are used. Use of binary encoding for this
 type of problems would be very difficult. In value encoding, every chromosome is a string of some values. Values can be anything connected to 
 problem, form numbers, real numbers or chars to some complicated objects.
@@ -544,7 +544,7 @@ Value encoding is very good for some special problems. On the other hand, for th
 Example of Problem: \textbf{Finding weights for neural network}\\
 The problem: There is some neural network with given architecture. Find weights for inputs of neurons to train the network for wanted output.\\
 Encoding: Real values in chromosomes represent corresponding weights for inputs.\\~\\
-\textbf{Tree Encoding}\\
+\textbf{\textit{Tree Encoding: }}
 Tree encoding is used mainly for evolving programs or expressions, for genetic programming. In tree encoding every chromosome is a tree of some objects, such as functions or commands in programming language. \\
 Diagram here\\
  Example of chromosomes with tree encoding\\
@@ -568,6 +568,7 @@ high, there is an increased chance of the GA prematurely converging to an incorr
 \item Truncation selection
 \item Local selection
 \end{itemize}
+Following content explains the first four of the above techniques in more detail.
 %\begin{large}\textbf{Fitness Proportionate Selection:}\end{large}
 \newpage
 \subsubsection{Default Selection}
@@ -681,14 +682,14 @@ Parent 1: 1010101010\\
 Parent 2: \textbf{1000010000}
 \end{align*}
 \end{center}
-\textbf{Single Point Crossover}\\
+\textbf{\textit{Single Point Crossover: }}
 In this technique each pair of selected chromosomes undergoes crossover as follows: An integer position $k$ along both the chromosomes is 
 selected uniformly at random between $1$ and the chromosome length say $l$. Two new chromosomes are created swapping all the genes between $k+1$ and $l$. Suppose the randomly chosen crossover point is the fifth bit then each new child receives one half of the parent's bits:
 \begin{center}
 Child 1: 10101\textbf{10000}\\
 Child 2. \textbf{10000}01010
 \end{center}
-\textbf{Two Point Crossover}\\
+\textbf{\textit{Two Point Crossover: }}
 This technique is similar to the single-point crossover except for the fact that there are $2$ crossover points chosen at random for both the
 chromosomes. And, the parents only swap the bits between the $2$ crossover points. Suppose the randomly chosen crossover points are the third 
 and the sixth bit then the children are:
@@ -696,7 +697,7 @@ and the sixth bit then the children are:
 Child 1: 101\textbf{001}1010\\
 Child 2: \textbf{100}010\textbf{0000}
 \end{center}
-\textbf{Uniform crossover}\\
+\textbf{\textit{Uniform crossover: }}
 This technique does not select a set of crossover points. It simply considers each bit position of the $2$ parents, and swaps the two bits with
 a probability of $50\%$. Suppose the first, third, fourth and ninth bit positions(of the original parents) are swapped. Then the children are:
 \begin{center}
@@ -706,7 +707,7 @@ Child 2: 1\textbf{0}10\textbf{0100}1\textbf{0}
 Another slight variation of this technique is the half-uniform crossover where exactly half of the non-matching bits are swapped. First, the 
 hamming distance(The number of differing bits) is calculated. This number is divided by two. The resulting number is how many of the bits
 that do not match between the two parents that will be swapped.\\~\\
-\textbf{Three parent crossover}\\
+\textbf{\textit{Three parent crossover: }}
 In this technique, The child is derived from three parents. They are chosen as per some selection scheme. Each bit of the first parent is
 checked with the bit of the second parent for equality. If they are equal then the bit is taken for the offspring otherwise the bit from the
 third parent is taken for the offspring. For example, the following three parents:
@@ -737,25 +738,25 @@ The purpose of mutation in GAs is preserving and introducing diversity. Mutation
 the population of chromosomes from becoming too similar to each other, thus slowing or even stopping evolution. This reasoning also explains 
 the fact that most GA systems avoid only taking the fittest of the population in generating the next but rather a random(or semi-random) 
 selection with a weighting toward those that are fitter. Some of the type of mutation techniques used are as follows:\\~\\
-\textbf{Random Mutation}\\
+\textbf{\textit{Random Mutation: }}
 This technique is applied to each offspring in the population with a predetermined probability. For a randomly chosen bit position of a 
 chromosome we flip the bit to value either $0$ or $1$ assuming a binary encoding scheme.\\~\\
-\textbf{Flip Bit}\\
+\textbf{\textit{Flip Bit: }}
 This mutation operator takes the genome and inverts the bits (i.e. if the genome bit is 1, it is changed to $0$ and vice versa).\\~\\
-\textbf{Boundary}\\
+\textbf{\textit{Boundary: }}
 This mutation operator replaces the genome with either lower or upper bound randomly. This can be used for integer and float genes.\\~\\
-\textbf{Non-Uniform}\\
+\textbf{\textit{Non-Uniform: }}
 The probability that amount of mutation will go to 0 with the next generation is increased by using non-uniform mutation operator. It keeps the population from stagnating in the early stages of the evolution. It tunes solution in later stages of evolution. This mutation operator can only be used for integer and float genes.\\~\\
-\textbf{Uniform}\\
+\textbf{\textit{Uniform: }}
 This operator replaces the value of the chosen gene with a uniform random value selected between the user-specified upper and lower bounds for that gene. This mutation operator can only be used for integer and float genes.\\~\\
-\textbf{Gaussian}\\
+\textbf{\textit{Gaussian: }}
 This operator adds a unit Gaussian distributed random value to the chosen gene. If it falls outside of the user-specified lower or upper bounds for that gene, the new gene value is clipped. This mutation operator can only be used for integer and float genes.\\~\\
-\textbf{Order Changing}\\
+\textbf{\textit{Order Changing: }}
 In case of permutation encoding scheme, order changing is a technique where two numbers are selected an exchanged. Example as shown below:
 \begin{center}
 $\left(1 \mathbf{2}\ 3\ 4\ 5\ 6\ \mathbf{8}\ 9\ 7\right)\ =>\ \left(1 \mathbf{8}\ 3\ 4\ 5\ 6\ \mathbf{2}\ 9\ 7\right)$
 \end{center}
-\textbf{Others}\\
+\textbf{\textit{Others: }}
 In case of value encoding, mutation is achieve by adding a small number (for real value encoding) - to selected values is added(or subtracted)
 a small number.\\
 \begin{center}
