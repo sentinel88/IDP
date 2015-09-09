@@ -430,7 +430,7 @@ Modern heuristic techniques, also called metaheuristics are a family of procedur
 Genetic algorithms are robust search and optimization techniques which are finding applications in a number of practical problems. The robustness of GAs is due to their capacity to locate the global optimum in a multimodal landscape. A plethora of such multimodal functions exist in engineering problems(optimization of neural network structure and learning neural network weights, solving optimal control problems, designing structures, and solving flow problems) are a few examples. It is for the above reason that considerable attention has been paid to the design of GAs for optimizing multimodal functions.\par
 \noindent
 \subsection{Understanding the algorithm}
-In a genetic algorithm, a population of candidate solutions (called individuals, creatures, or phenotypes) to an optimization problem is evolved toward better solutions. Each candidate solution has a set of properties (its chromosomes or genotype) which can be mutated and altered; traditionally, solutions are represented in binary as strings of 0s and 1s, but other encodings are also possible.[6]\par
+This is based on \textbf{"Genetic Algorithms"} by \textit{David Goldberg, Addison Wesley, 1989}. In a genetic algorithm, a population of candidate solutions (called individuals, creatures, or phenotypes) to an optimization problem is evolved toward better solutions. Each candidate solution has a set of properties (its chromosomes or genotype) which can be mutated and altered; traditionally, solutions are represented in binary as strings of 0s and 1s, but other encodings are also possible.[6]\par
 \noindent
 \\The evolution usually starts from a population of randomly generated individuals, and is an iterative process, with the population in each iteration called a generation. In each generation, the fitness of every individual in the population is evaluated; the fitness is usually the value of the objective function in the optimization problem being solved. The more fit individuals are stochastically selected from the current population, and each individual's genome is modified (recombined and possibly randomly mutated) to form a new generation. The new generation of candidate solutions is then used in the next iteration of the algorithm. Commonly, the algorithm terminates when either a maximum number of generations has been produced, or a satisfactory fitness level has been reached for the population.
  A generic pseudo code of GA is given below:
@@ -448,7 +448,7 @@ In a genetic algorithm, a population of candidate solutions (called individuals,
         end for
         P := $P'$
 \end{lstlisting}
-The following 4 paragraphs explain the basic parts of a genetic algorithm.\\
+The following 4 paragraphs explain the basic parts of a genetic algorithm.\\~\\
 \begin{large}\textbf{Initialization:}\end{large}\\
 The population size depends on the nature of the problem, but typically contains several hundreds or thousands of possible solutions. Often, the initial population is generated randomly, allowing the entire range of possible solutions (the search space). Occasionally, the solutions may be "seeded" in areas where optimal solutions are likely to be found.\\~\\
 \begin{large}\textbf{Selection:}\end{large}\\
@@ -531,7 +531,7 @@ Encoding: Chromosome says order of cities, in which salesman will visit them.\\~
 \textbf{Value Encoding}\\
 Direct value encoding can be used in problems, where some complicated value, such as real numbers, are used. Use of binary encoding for this
 type of problems would be very difficult. In value encoding, every chromosome is a string of some values. Values can be anything connected to 
-problem, form numbers, real numbers or chars to some complicated objects.\\
+problem, form numbers, real numbers or chars to some complicated objects.
 \begin{center}
 \begin{align*}
 &Chromosome A: 1.2324  5.3243  0.4556  2.3293  2.4545\\
@@ -553,7 +553,7 @@ Example of Problem: \textbf{Finding a function from given values}\\
 The problem: Some input and output values are given. Task is to find a function, which will give the best (closest to wanted) output to all inputs.\\
 Encoding: Chromosome are functions represented in a tree.
 \subsection{Selection}
-Genetic algorithms(GA) use a selection mechanism to select individuals from the population to insert into the mating pool. Individuals from the mating pool are used to generate new offspring with the resulting offspring forming the basis of the next generation. As the individuals in the mating pool are the ones whose genes are inherited by the next generation, it is desirable that the mating pool be comprised of "good" individuals. A selection mechanism in GAs is simply a process that favors the selection of better individuals in the population for the mating pool. 
+Genetic algorithms(GA) use a selection mechanism to select individuals from the population to insert into the mating pool. Worthy candidates are usually selected into the mating pool and the ones which are unworthy get eliminated. The hope is that this will lead to generate future generations with desirable and better features/genes from these fitter candidates. Individuals from the mating pool are used to generate new offsprings with the resulting offsprings forming the basis of the next generation. As the individuals in the mating pool are the ones whose genes are inherited by the next generation, it is desirable that the mating pool be comprised of "good" individuals. A selection mechanism in GAs is simply a process that favors the selection of better individuals in the population for the mating pool. 
 The selection pressure is the degree to which the better individuals are favored: the higher the selection pressure, the more the better
 individuals are favored. This selection pressure drives the GA to improve the population fitness over succeeding generations . The convergence
 rate of a GA is largely determined by the selection pressure, with higher selection pressures resulting in higher convergence rates. GAs are 
@@ -569,21 +569,37 @@ high, there is an increased chance of the GA prematurely converging to an incorr
 \item Local selection
 \end{itemize}
 %\begin{large}\textbf{Fitness Proportionate Selection:}\end{large}
+\newpage
 \subsubsection{Default Selection}
+This method does not follow any specific selection scheme. It selects parent chromosomes at random from the existing pool of candidate solutions. In this project, the implementation selects at random 2 candidates from the existing pool to follow up with crossover and mutation operations. This selection scheme is mainly intended for comparison purposes with other selection schemes such as the rank based selection and the tournament selection method. It allows us to observe the positive impact that the other selection schemes may have on the evolution of the population by using methods that influence the selection of candidates based on some criteria of fitness(weighted or absolute).
+The probability of selection of an individual $a_i$ is:
+\begin{large}
+\boldmath\begin{equation*}
+P\left(a_{i}\right) = \frac{1}{N};\ \ \ \text{where}\ N\ \text{is the size of the population}
+\end{equation*}
+\end{large}
+Each candidate is equally likely to be selected in this kind of a random selection scheme.
 \subsubsection{Fitness Proportionate Selection}
 This method is also known as \textbf{\textit{Roulette wheel selection}}. It is a genetic operator used in genetic algorithms for selecting potentially useful 
 solutions for recombination. This selection principle is similar to that of a roulette wheel. The probability of selection of a sector in a 
 roulette wheel is proportional to the magnitude of the central angle of the sector. Similarly in Genetic Algorithm, the whole population in
 partitioned on the wheel and each sector represents an individual. The proportion of individual’s fitness to the total fitness values of the 
  whole population decides the probability of selection of that individual in the next generation. This consequently decides the area occupied 
-by that individual on the wheel. Following are the steps for Roulette Wheel Selection:
+by that individual on the wheel.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.65\textwidth, clip]{./roulette.jpg}
+\vspace{-0.15in}
+\caption{Roulette wheel selection}
+\label{fig:3}
+\end{figure}
+Following are the steps for Roulette Wheel Selection:
 \begin{itemize}
 \item Calculate the sum of the fitness values of every individual in the population.
 \item Calculate the fitness value of each individual and their probability of selection by dividing individual chromosome’s fitness by the sum 
 of fitness values of whole population.
 \item Partition the roulette wheel into sectors according to the probabilities calculated in the second step.
-\item Spin the wheel ‘$n$’ number of times. When the roulette stops, the sector on which the pointer points corresponds to the individual being 
-selected.
+\item Spin the wheel ‘$n$’ number of times. When the roulette stops, the sector on which the pointer points corresponds to the individual being selected.
 \end{itemize}
 The probability of selection of an individual $a_i$ is:
 \begin{large}
@@ -597,7 +613,21 @@ where \boldmath$f\left(a\right)$ refers to the function which gives us the fitne
 Rank Selection in Genetic Algorithm was introduced by \textit{Baker} to eliminate the disadvantages of fitness proportionate selection. In Linear 
 Ranking selection method, individuals are first sorted according to their fitness value and then the ranks are assigned to them. Best 
 individual gets rank ‘$N$’ and the worst one gets rank ‘$1$’. The selection probability is then assigned linearly to the individuals according to 
-their ranks.\\~\\
+their ranks.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.65\textwidth, clip]{./rank.jpg}
+\vspace{-0.15in}
+\caption{Situation before ranking}
+\label{fig:4}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.65\textwidth, clip]{./rank2.jpg}
+\vspace{-0.15in}
+\caption{Situation after ranking}
+\label{fig:4}
+\end{figure}
 The probability of the best individual to be selected is:
 \begin{large}
 \boldmath\begin{equation*}
@@ -624,6 +654,14 @@ Selection, ‘$n$’ individuals are chosen at random from the entire population
 the highest fitness value wins and gets selected for further processing in Genetic Algorithm. The number of individual taking part in every 
 tournament is referred as tournament size. Most commonly used tournament size is $2$ i.e. in Binary Tournament Selection. There are several advantages of Tournament selection strategy that makes it more efficient than other techniques. These include less time complexity i.e. $O\left(n\right)$ , easy 
 parallel implementation, low vulnerability to takeover by dominant individuals, and no requirement for fitness scaling or sorting.\\
+\noindent
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.65\textwidth, clip]{./tournament.jpg}
+\vspace{-0.15in}
+\caption{Tournament Selection}
+\label{fig:5}
+\end{figure}
 In the above figure, Tournament size is three, which means three individuals compete against each other in one tournament. The larger the 
 tournament size, the greater is the probability of loss of diversity. There are two reasons for loss of diversity. Either the individual did 
 not get the opportunity to be selected (because of random selection), or the individual didn’t get selected in the intermediate population 
@@ -635,7 +673,7 @@ probability of $1$.
 \subsection{Crossover}
 %\begin{large}\textbf{Crossover:}\end{large}\\
 The search of the solution space is done by creating new chromosomes from old ones. Crossover is the technique by which the chromosomes 
-selected from a source population according to a chosen selection scheme from those described earlier are combined to form offsprings which are potential members of a successor population. It is simply a matter of replacing some of the genes in one parent by the corresponding genes of the other. There are various ways to do a crossover. Few of them are described below. Examples demonstrating the various techniques use binary encoding as the underlying encoding scheme for the chromosomes.\\~\\
+selected from a source population according to a chosen selection scheme from those described earlier are combined to form offsprings which are potential members of a successor population. It is simply a matter of replacing some of the genes in one parent by the corresponding genes of the other. Pairs of chromosomes are randomly selected from the mating pool created using any one of the selection scheme. There are various ways to do a crossover. Few of them are described below. Examples demonstrating the various techniques use binary encoding as the underlying encoding scheme for the chromosomes.\\~\\
 For all the examples that follow the below 2 parents will be used as the selected chromosomes:
 \begin{center}
 \begin{align*}
@@ -728,6 +766,14 @@ In case of tree encoding schemes, selected nodes are mutated by changing the ope
 The genetic algorithm will be used to solve the upper level problem whereas the nested problem is solved using BCL component of FICO Xpress software. For every candidate solution in the upper level problem the nested problem will be solved using BCL. This iterative process is continued to evolve towards stronger solutions for the leader by the use of genetic algorithm operations like crossover, mutation etc till the stopping criteria is satisfied.%\\
 \newpage
 \section{Implementation}
+This section describes a high level design of the software implemented with the help of flow charts and pseudo code. Follwed by this is a small snapshot of certain low level details of the software that will help the reader to understand as to what functionalities this software offers in a summary.
+\subsection{Software Design}
+The following 3 pages give a high level design of this implementation.
+\begin{itemize}
+\item Figure 1 shows a flow chart explaining the complete flow of the software implementation at a very high level. This flow chart does not expand in full detail the internals of the different selection schemes implemented or of the crossover or mutation implementation. This have been covered in the figures that follow this in the form of a pseudo code.
+\item Figure 2 shows the pseudo code explaining the implementation details of the different selection schemes: Tournament selection, Default selection, and rank selection(including how to assign selection probailities to the candidates).
+\item Figure 3 shows the pseudo code explaining the implementation details of the crossover and mutation operations.
+\end{itemize}
 %\begin{minipage}[t]
 %\vspace{0mm}
 %\afterpage{
@@ -761,8 +807,22 @@ The genetic algorithm will be used to solve the upper level problem whereas the 
 \label{fig 3}
 \end{figure}
 %}
-\subsection{Software Design}
+\clearpage
+\clearpage
 \subsection{Implementation Details}
+\vspace{15mm}
+Optimization problem :     \textbf{\textit{Discrete Network Design Problem}}\\~\\
+Algorithm implemented :    \textbf{\textit{Genetic Algorithm}}\\~\\
+Optimization Suite(Software) : \textbf{\textit{FICO Xpress}}\\~\\
+Library for modeling/solving : \textbf{\textit{Xpress BCL(Builder component library for C++)}}\\~\\
+Programming Language : \textbf{\textit{C}}\\~\\
+Operating System : \textbf{\textit{Linux}}\\~\\
+Selection Schemes : \textbf{\textit{Default, Rank based and Tournament}}\\~\\
+Crossover operators : \textbf{\textit{Single point , Two point}}\\~\\
+Mutation operators : \textbf{\textit{Random mutation}}\\~\\
+Datasets for testing : \textbf{\textit{Braess network, Sioux falls network, Berlin mitte center}}\\~\\
+Visualization of traffic network simulation : \textbf{\textit{NexTA}}\\~\\
+Range of budget for DNDP : \textbf{\textit{10 - 180}}\\
 \newpage
 \section{Experiments and Visualization}
 \subsection{Setup}
