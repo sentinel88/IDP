@@ -14,28 +14,7 @@ int parse (network_data *netinfo) {
 
    printf("\nInside parse function\n");
 
-   /*memset(netinfo->Ca, 0, sizeof(netinfo->Ca));
-   memset(netinfo->Ba, 0, sizeof(netinfo->Ba));
-   memset(netinfo->ba, 0, sizeof(netinfo->ba));
-
-   netinfo->Demand = (float **)(malloc( (N+1) * sizeof(float *) ));
-   netinfo->Ta = (float **)(malloc( (N+1) * sizeof(float *) ));
-
-   for (i=0; i<=N; i++) {
-      netinfo->Demand[i] = (float *)malloc( (N+1) * sizeof(float));
-      netinfo->Ta[i] = (float *)malloc( (N+1) * sizeof(float));
-   } */
-
-/*#ifdef ZONES
-   memset(netinfo->Demand, 0, sizeof(float *) * (ZONES+1));
-#else
-   memset(netinfo->Demand, 0, sizeof(float *) * (N+1));
-#endif*/
-
-   //memset(netinfo->Ta, 0, sizeof(netinfo->Ta));
-
    datafile = fopen(FILENAME_NET, "r");   /*Open datafile for read access*/
-
 
    /***Reading from the data file***/
    cout<<"\nReading from data file started\n";

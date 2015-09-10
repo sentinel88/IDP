@@ -34,17 +34,6 @@ int init_net_data(network_data *netinfo) {
       netinfo->EdgeMatrix[i] = (int *)malloc( (N+1) * sizeof(int));
    }
 
-/* Set all the memory locations to zero */
-/*
-   memset(netinfo->Ca, 0, (N+1) * (N+1) * sizeof(float));
-   memset(netinfo->Ba, 0, (N+1) * (N+1) * sizeof(float));
-   memset(netinfo->Ta, 0, (N+1) * (N+1) * sizeof(float));
-   memset(netinfo->Demand, 0, (N+1) * (N+1) * sizeof(float));
-   memset(netinfo->ba, 0, (N+1) * (N+1) * sizeof(float));
-   memset(netinfo->EdgeMatrix, 0, (N+1) * (N+1) * sizeof(int));
-   memset(netinfo->existing_links, 0, EL * sizeof(link_set));
-   memset(netinfo->new_links, 0, NL * sizeof(link_set));
-*/
    printf("\nExiting init_net_data function\n");
 
    return 0;

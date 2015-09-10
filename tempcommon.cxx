@@ -2,6 +2,19 @@
 #include <data.h>
 #include <funcs.h>
 
+// Get random number in a specific range using the library function rand() which generates pseudo random numbers in the interval [0, RANGE_MAX]
+int get_random(int range, bool incl_zero) {
+   unsigned int x = (RAND_MAX + 1u) / range;
+   unsigned int y = x * range;
+   unsigned int r;
+   do {
+      r = rand();
+   } while(r >= y);
+   incl_zero == true ? printf("%d\t", r / x) : printf("%d\t", r/x + 1);
+   return ( incl_zero == true ? r/x: r/x + 1 );
+}
+
+
 int feasibility(candidate gen_cand, network_data *netinfo) {
  float budget_sat = 0.0;
  int i = 0, orig, term;

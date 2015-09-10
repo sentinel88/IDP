@@ -3,80 +3,63 @@
 #include <funcs.h>
 
 int generate_rand(genetic_algo *ga, network_data *netinfo) {
- int i, j, count, k, rand_elem, intervals;
- int value, temp;
- int retry_attempts = 0;
- printf("\nEntering generate_rand\n");
- count = 0;
- k = 0;
- if (NL)
- intervals = (round((log2((double)RAND_MAX))))/NL;
- temp = round((pow(2, NL) - 1));
- srand(time(NULL));
-
- while(1) {
+    int i, j, count, k, rand_elem, intervals;
+    int value, temp;
+    int retry_attempts = 0;
+    printf("\nEntering generate_rand\n");
+    count = 0;
     k = 0;
-    //if (rand_elem == 0) { rand_elem = rand(); }
-    /*rand_elem = rand();
-    i = (rand_elem % NL);
-    printf("\n%d\t", i);
-    //i = ga.population[count].binary_enc = (rand() % NL);
-    if (i == 0) {
-       if ( ((rand_elem/NL) <= NL) ) { i = rand_elem/NL;  }
-       else continue;
-    }
-    printf("%d\t", i);
-    while(i) {*/
-    j = intervals;
-    rand_elem = rand();
-    while(j--) {
-       //ga->population[count].binary_enc[k++] = i&1;
-       //ga->population[count].binary_enc[k++] = rand_elem & 1;
-       //i = i>>1;
-       //rand_elem = rand_elem >> 1;
-       if (count == GA_POPULATION_SIZE) break;
-       value = rand_elem & temp;
-       if (value == 0) continue;
-       encode_ga_cand(&(ga->population[count]), value);
-       rand_elem = rand_elem >> NL;
-       //printf("%d ", ga->population[count].binary_enc[k-1]);
-   
-       /* Keeping feasibility check and elem_compare checks separate so that going forward if needed we can surround the code for elem_compare
-          checks by macros in case of problems with low budgets where having duplicate candidates cannot be avoided as there are only very few 
-          feasible candidates */
+    if (NL)
+    intervals = (round((log2((double)RAND_MAX))))/NL;
+    temp = round((pow(2, NL) - 1));
+    srand(time(NULL));
 
-       if (feasibility(ga->population[count], netinfo)) {
-          memset(&(ga->population[count].binary_enc), 0, NL);
-          printf("\nNot feasible\n");
-          continue;
-       } else {
-          if (count && check_duplicate(&(ga->population[count]), ga->population, count)) {
-             if (retry_attempts == MAX_RETRY) {
-                printf("\n5 retry attempts have been made to regenerate a random candidate so now we will consider the duplicate itself and proceed forward\n");
-                retry_attempts = 0;
-                count++;
-                continue;
-             } else {
-                retry_attempts++;
-                printf("\nDuplicate random candidate generated. Ignoring it and continuing with further attempts.\n");
-                memset(&(ga->population[count].binary_enc), 0, NL);
-                continue;
-             }
-          } 
-          count++; 
-          retry_attempts = 0;
-       }
-       //printf("\n%d\n", ga.population[count].binary_enc);
-       //count++;
-       if (count == GA_POPULATION_SIZE) break;
-    }
-    if (count == GA_POPULATION_SIZE) break;
- }
- printf("\nExiting generate_rand\n");
- return 0;
+    while(1) {
+	k = 0;
+	j = intervals;
+	rand_elem = rand();
+	while(j--) {
+	   value = rand_elem & temp;
+	   if (value == 0) continue;
+	   encode_ga_cand(&(ga->population[count]), value);
+	   rand_elem = rand_elem >> NL;
+       
+	   /* Keeping feasibility check and elem_compare checks separate so that going forward if needed we can surround the code for elem_compare
+	      checks by macros in case of problems with low budgets where having duplicate candidates cannot be avoided as there are only very few 
+	      feasible candidates */
+
+	   if (feasibility(ga->population[count], netinfo)) {
+	      memset(&(ga->population[count].binary_enc), 0, NL);
+	      printf("\nNot feasible\n");
+	      continue;
+	   } else {
+	      if (count && check_duplicate(&(ga->population[count]), ga->population, count)) {
+		 if (retry_attempts == MAX_RETRY) {
+		    printf("\n5 retry attempts have been made to regenerate a random candidate so now we will consider the duplicate itself and proceed forward\n");
+		    retry_attempts = 0;
+		    count++;
+		    continue;
+		 } else {
+		    retry_attempts++;
+		    printf("\nDuplicate random candidate generated. Ignoring it and continuing with further attempts.\n");
+		    memset(&(ga->population[count].binary_enc), 0, NL);
+		    continue;
+		 }
+	      } 
+	      count++; 
+	      retry_attempts = 0;
+	   }
+	   //printf("\n%d\n", ga.population[count].binary_enc);
+	   //count++;
+	   if (count == GA_POPULATION_SIZE) break;
+	}
+	if (count == GA_POPULATION_SIZE) break;
+    }    
+    printf("\nExiting generate_rand\n");
+    return 0;
 }
 
-int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data netinfo) {
+int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data *netinfo) {
  int i, j=0, k=0, l, rand_elem, bits;
  int intervals, tempval, srand, value;
  int retry=0; 
@@ -230,7 +213,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
  return k;
 }
 
-int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_size) {
+int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_size) {
    printf("\nEntering mutation routine\n");
    candidate temp, temp1;
    double rand_elem;

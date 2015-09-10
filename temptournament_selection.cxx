@@ -2,18 +2,6 @@
 #include <data.h>
 #include <funcs.h>
 
-// Get random number in a specific range using the library function rand() which generates pseudo random numbers in the interval [0, RANGE_MAX]
-int get_random(int range, bool incl_zero) {
-   unsigned int x = (RAND_MAX + 1u) / range;
-   unsigned int y = x * range;
-   unsigned int r;
-   do {
-      r = rand();
-   } while(r >= y);
-   incl_zero == true ? printf("%d\t", r / x) : printf("%d\t", r/x + 1);
-   return ( incl_zero == true ? r/x: r/x + 1 );
-}
-
 // The below selection procedure for tournament selection is binary/ternary which means it selects 2/3 candidates at random and returns the fittest one.
 int select_candidates_k(candidate *ga_cand, int size) {
    int index[3] = {-1, -1, -1};
@@ -47,7 +35,7 @@ int select_candidates_k(candidate *ga_cand, int size) {
 }   
 
 
-int tournament_selection(candidate *ga_cand, candidate *gen_children, network_data netinfo, int size) {
+int tournament_selection(candidate *ga_cand, candidate *gen_children, network_data *netinfo, int size) {
    unsigned int i = 0;
    int index = -1;
    candidate *pool = (candidate *)malloc((size) * sizeof(candidate));

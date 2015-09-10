@@ -26,7 +26,7 @@ int select_candidate_rb(candidate *ga_cand, int size) {
    return -1;         
 }   
 
-int rank_based_selection(candidate *ga_cand, candidate *gen_children, network_data netinfo, int size) {
+int rank_based_selection(candidate *ga_cand, candidate *gen_children, network_data *netinfo, int size) {
    unsigned int i = 0;
    int index = -1;
    candidate *pool = (candidate *)malloc((size) * sizeof(candidate));
@@ -47,7 +47,7 @@ int rank_based_selection(candidate *ga_cand, candidate *gen_children, network_da
    return 0;
 }
 
-int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_children, network_data netinfo, int size) {
+int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_children, network_data *netinfo, int size) {
  int i, j, k=0, l, i1, i2, m, rand_elem, bits;
  int intervals, tempval, srand, value;
 #ifdef TWO_POINT_CROSSOVER

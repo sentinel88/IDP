@@ -17,9 +17,9 @@ extern int candidates_sort(candidate *, int);
 
 int generate_rand(genetic_algo *, network_data *);
 
-extern int genetic_sp_crossover(genetic_algo *, candidate *, network_data);
+extern int genetic_sp_crossover(genetic_algo *, candidate *, network_data *);
 
-extern int genetic_mutation(candidate *, network_data, int);
+extern int genetic_mutation(candidate *, network_data *, int);
 
 int candidate_fitness(model_data *, network_data *, candidate *);
 
@@ -55,8 +55,8 @@ int get_random(int, bool);
 
 int select_candidates_k(candidate *, int);
 
-int tournament_selection(candidate *, candidate *, network_data, int);
+int tournament_selection(candidate *, candidate *, network_data *, int);
 
-int rank_based_selection(candidate *, candidate *, network_data, int);
+int rank_based_selection(candidate *, candidate *, network_data *, int);
 
-int genetic_rb_crossover(candidate *, candidate *, candidate *, network_data, int);
+int genetic_rb_crossover(candidate *, candidate *, candidate *, network_data *, int);

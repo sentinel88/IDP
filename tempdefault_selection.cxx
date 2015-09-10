@@ -2,38 +2,41 @@
 #include <data.h>
 #include <funcs.h>
 
-int default_selection(genetic_algo *ga, candidate *gen_children, network_data netinfo) {
+int default_selection(genetic_algo *ga, candidate *gen_children, network_data *netinfo) {
     pool_size = genetic_sp_crossover(&ga, gen_children, netinfo);
-    //#endif
-    //#ifdef _USE
+#ifdef _DEBUG
     printf("\n\n************************************************\n");
     printf("Children generated after crossover for Generation %d\n", i+1);
     print_generation(gen_children, pool_size, false);
-
+#endif
     genetic_mutation(gen_children, netinfo, pool_size);
+#ifdef _DEBUG
     printf("\n\n************************************************\n");
     printf("Children generated after mutation for Generation %d\n", i+1);
     print_generation(gen_children, pool_size, false);
-
+#endif
     for (k=0; k<pool_size; k++) {
        model_data dndp;
        printf("Iteration(Generation): %d, Child no: %d\n", i+1, k+1);
-       model_problem(dndp, &netinfo, gen_children[k]);
+       model_problem(dndp, netinfo, gen_children[k]);
        dndp.p.lpOptimize("");
        printf("\nObjective value: %f\n", dndp.p.getObjVal());
-       candidate_fitness(dndp, &netinfo, &gen_children[k]);
+       candidate_fitness(dndp, netinfo, &gen_children[k]);
+#ifdef _DEBUG
        printf("\n\n************************************************\n");
        printf("Iteration %d results:\n", i+1);
        print_candidate(&gen_children[k]);
+#endif
        printf("Fitness: %f\n", gen_children[k].fitness_value);
        printf("************************************************\n");
     }
 
     candidates_sort(gen_children, pool_size);
+#ifdef _DEBUG
     printf("\n\n************************************************\n");
     printf("Children sorted after crossover and mutation for Generation %d\n", i+1);
     print_generation(gen_children, pool_size, true);
-
+#endif
     memcpy((candidate *)cache + GA_POPULATION_SIZE, gen_children, sizeof(candidate) * pool_size);
 
 /***Select the candidates for the next generation from the pool of children and current population***/
@@ -44,7 +47,7 @@ int default_selection(genetic_algo *ga, candidate *gen_children, network_data ne
    return 0;
 }
 
-int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data netinfo) {
+int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data *netinfo) {
  int i, j=0, k=0, l, rand_elem, bits;
  int intervals, tempval, srand, value;
  int retry=0; 
@@ -105,7 +108,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
     } 
    
     if (check_if_zero(gen_children[k])) {
-       if (retry == 5) {
+       if (retry == MAX_RETRY) {
           printf("\nMade 5 attempts to avoid generating a zero child but now we will not perform any more crossover attempts for this pair \
                     of candidates and move forward with the next consecutive pair\n");
           retry = 0;
@@ -122,6 +125,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
        printf("\nChild from crossover not feasible\n");
        memset(&gen_children[k], 0, sizeof(candidate));
        if (retry_attempts == MAX_CROSSOVER_ATTEMPTS) {
+
           printf("\nEnough attempts have been made to do a crossover operation for this pair but all crossovers have resulted in infeasible \
                     children\n");
           rand_val = (double)rand() / (double)RAND_MAX;
@@ -183,12 +187,12 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
  return k;
 }
 
-int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_size) {
+int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_size) {
    printf("\nEntering mutation routine\n");
    candidate temp, temp1;
    double rand_elem;
    int pos_mutate;
-   //int range = RAND_MAX;
+   int range = RAND_MAX;
    int k = 0;
    int retry = 0;
    int i,j,l;
@@ -217,7 +221,7 @@ int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_siz
       l--;
       i = i >> NL;
       if (value == 0) {
-         if (retry == 5) { retry = 0; k++; continue; }
+         if (retry == MAX_RETRY) { retry = 0; k++; continue; }
          retry++;
          continue;
       }
@@ -233,7 +237,7 @@ int genetic_mutation(candidate *gen_children, network_data netinfo, int pool_siz
       }
       if (feasibility(gen_children[k], netinfo) != 0) {
          memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
-         if (retry == 5) { retry = 0; k++; continue; }
+         if (retry == MAX_RETRY) { retry = 0; k++; continue; }
          retry++;
          continue;
       }
