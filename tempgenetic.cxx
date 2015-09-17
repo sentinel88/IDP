@@ -59,10 +59,11 @@ int generate_rand(genetic_algo *ga, network_data *netinfo) {
     return 0;
 }
 
+
 int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data *netinfo) {
  int i, j=0, k=0, l, rand_elem, bits;
  int intervals, tempval, srand, value;
- int retry=0; 
+ int retry=0;
  double rand_val;
  candidate temp, temp1;
  int dup_parent_gen = 0;
@@ -72,39 +73,24 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
 
  printf("\nEntering crossover function\n");
 
- //gen_children = (candidate *)(malloc(sizeof(candidate)));
- //memset(gen_children, 0, sizeof(gen_children));
- memset(&temp, 0, sizeof(candidate)); 
+ memset(&temp, 0, sizeof(candidate));
 
- //bits = ceil(log2((double)NL));
- //intervals = (round((log2((double)RAND_MAX)))) / bits;
- if (NL)
- intervals = (round((log2((double)RAND_MAX)))) / NL;
- tempval = pow(2, NL) - 1;
- //tempval = !(1<<(NL-1)) + 1;
+ if (NL) {
+    intervals = (round((log2((double)RAND_MAX)))) / NL;
+    tempval = pow(2, NL) - 1;
+ }
  //srand(time(NULL));
  i = rand_elem = rand();
- //i = rand_elem;
- l = intervals; 
+ l = intervals;
  rand_val = (double)rand() / (double)RAND_MAX;
 
  while(1) {
-    //rand_elem = rand();
-    //i = rand_elem % NL;
-    /*if (i == 0) {
-       if ((rand_elem/NL) <= NL) { i = rand_elem/NL;  }
-       else continue;
-    }*/
-    
-   /* if (j > 1) {
-       gen_children = (candidate *)(realloc(gen_children, k * sizeof(candidate)));
-    }*/
-    crossover_point = (crossover_point + 1) % NL;
-    crossover_point = (crossover_point == 0) ? 1: crossover_point;
+    //crossover_point = (crossover_point + 1) % NL;
+    //crossover_point = (crossover_point == 0) ? 1: crossover_point;
     if (j >= (ga->population_size-1)) break;
     if (rand_val > cross_prob) {
        rand_val = (double)rand() / (double)RAND_MAX;
-       j++; 
+       j++;
        continue;
     }
     if (l==0) {
@@ -118,7 +104,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
     if (value == 0) continue;
 
     value = count_set_bits(value);
-    value = crossover_point;
+    //value = crossover_point;
     printf("\nCrossover point is %d\n", value);
 
 /* Following memory copy operations do not reference the binary_enc member inside structure candidate for every gen_children because it is 
@@ -132,10 +118,10 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
     if (check_if_zero(gen_children[k])) {
        memcpy(&gen_children[k], &(ga->population[j+1].binary_enc), value);
        memcpy((char *)(&gen_children[k]) + value, (char *)(&ga->population[j]) + value, sizeof(temp) - value);
-    } 
-   
+ }
+
     if (check_if_zero(gen_children[k])) {
-       if (retry == 5) {
+       if (retry == MAX_RETRY) {
           printf("\nMade 5 attempts to avoid generating a zero child but now we will not perform any more crossover attempts for this pair \
                     of candidates and move forward with the next consecutive pair\n");
           retry = 0;
@@ -152,6 +138,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
        printf("\nChild from crossover not feasible\n");
        memset(&gen_children[k], 0, sizeof(candidate));
        if (retry_attempts == MAX_CROSSOVER_ATTEMPTS) {
+
           printf("\nEnough attempts have been made to do a crossover operation for this pair but all crossovers have resulted in infeasible \
                     children\n");
           rand_val = (double)rand() / (double)RAND_MAX;
@@ -168,8 +155,8 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
 
     if (k) { dup_child_gen = check_duplicate(&gen_children[k], gen_children, k); }
 
-    if (dup_parent_gen) { 
-       if (retry_attempts == MAX_CROSSOVER_ATTEMPTS) {
+    if (dup_parent_gen) {
+ if (retry_attempts == MAX_CROSSOVER_ATTEMPTS) {
           //printf("\nAlready tried enough attempts at generating a unique child from crossover but now we will consider this even though \
                     its a duplicate\n");
           printf("\nAlready tried enough attempts at generating a unique child from crossover so we will not consider the crossover for this \
@@ -187,7 +174,7 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
           retry_attempts++;
           continue;
        }
-    }    
+    }
 
     //if (k && check_duplicate(&gen_children[k], gen_children, k)) {
     if (k && dup_child_gen) {
@@ -204,14 +191,15 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
     retry = 0;
     retry_attempts = 0;
     j = j+2;
-    k++; 
-    
-    rand_val = (double)rand() / (double)RAND_MAX;
+    k++;
+rand_val = (double)rand() / (double)RAND_MAX;
     if (j >= (ga->population_size-1)) break;
  }
  printf("\nExiting crossover function\n");
  return k;
 }
+
+
 
 int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_size) {
    printf("\nEntering mutation routine\n");
@@ -223,9 +211,10 @@ int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_si
    int retry = 0;
    int i,j,l;
    int tempval, intervals, value;
-   if (NL)
-   intervals = (round((log2((double)RAND_MAX)))) / NL;
-   tempval = pow(2, NL) - 1;
+   if (NL) {
+      intervals = (round((log2((double)RAND_MAX)))) / NL;
+      tempval = pow(2, NL) - 1;
+   }
    srand(time(NULL));
    i = rand();
    l = intervals;
@@ -237,22 +226,23 @@ int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_si
          k++;
          continue;
       }
-      if (l == 0) {    
+      if (l == 0) {
          i = rand();
          l = intervals;
       }
 
-      value = i & tempval;
+                                                                                                                             219,0-1       80%
+ value = i & tempval;
       l--;
       i = i >> NL;
       if (value == 0) {
-         if (retry == 5) { retry = 0; k++; continue; }
+         if (retry == MAX_RETRY) { retry = 0; k++; continue; }
          retry++;
          continue;
       }
       pos_mutate = count_set_bits(value);
       memcpy(&temp, &gen_children[k], sizeof(candidate));
-      gen_children[k].binary_enc[pos_mutate] = (gen_children[k].binary_enc[pos_mutate] + 1)%2; 
+      gen_children[k].binary_enc[pos_mutate] = (gen_children[k].binary_enc[pos_mutate] + 1)%2;
       if (check_if_zero(gen_children[k])) {
          memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
          k++;
@@ -262,7 +252,7 @@ int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_si
       }
       if (feasibility(gen_children[k], netinfo) != 0) {
          memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
-         if (retry == 5) { retry = 0; k++; continue; }
+         if (retry == MAX_RETRY) { retry = 0; k++; continue; }
          retry++;
          continue;
       }
@@ -287,3 +277,6 @@ int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_si
    printf("\nExiting mutation routine\n");
    return 0;
 }
+
+
+

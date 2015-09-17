@@ -53,115 +53,6 @@ static int initialize(genetic_algo *ga, candidate gen_children, candidate *cache
    return 0;
 }
 
-static void print(genetic_algo *ga, network_data *netinfo, model_data *dndp) {
-    printf("\nInside print function\n");
-    printf("\nTravelers on all the links\n");
-    /***Travelers on link a***/
-    for (int m=0; m<EL; m++) {
-      orig = netinfo->existing_links[m].orig;
-      term = netinfo->existing_links[m].term;
-      //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
-      printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[m]).getSol());
-    #ifdef _DEBUG
-      for (int n=1; n<=M; n++) {
-	 printf("%lf\t", dndp->x[m][n].getSol());
-      }
-      printf("\n\n");
-    #endif
-    }
-    for (int m=0; m<NL; m++) {
-       if (ga->population[j].binary_enc[m]) {
- 	  orig = netinfo->new_links[m].orig;
-	  term = netinfo->new_links[m].term;
-	  //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
-	  printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[EL+m]).getSol());
-	  #ifdef _DEBUG
-          for (int n=1; n<=M; n++) {
-             printf("%lf\t", dndp->x[EL+m][n].getSol());
-          }
-          printf("\n\n");
-	  #endif
-       }   
-    }  
-    printf("\nExiting print function\n");
-}
-
-
-static void merge_sort(candidate *new_gen, genetic_algo *ga, candidate *gen_children) {
-   printf("\nInside merge_sort function\n");
-
-   int l = 0, k = 0, j = 0;
-
-   while(1) {
-      if (l == GA_POPULATION_SIZE || j == GA_POPULATION_SIZE || k == pool_size) break;
-      if (gen_children[k].fitness_value < ga.population[j].fitness_value) {
-#ifdef _PROTECT
-         //if (k && check_duplicate(&gen_children[k], ga.population, GA_POPULATION_SIZE)) {
-         if (l && check_duplicate(&gen_children[k], new_gen, l)) {
-            printf("\nIgnoring this child\n");
-            k++;
-            continue;
-         }
-#endif
-         memcpy(&new_gen[l], &gen_children[k], sizeof(candidate));
-         k++;
-      } else {
-#ifdef _PROTECT
-            //if (k && check_duplicate(&gen_children[k], ga.population, GA_POPULATION_SIZE)) {
-            if (l && check_duplicate(&ga.population[j], new_gen, l)) {
-               printf("\nIgnoring this child\n");
-               j++;
-               continue;
-            }
-#endif
-         memcpy(&new_gen[l], &(ga.population[j]), sizeof(candidate));
-         j++;
-      }
-      l++;
-      //k++; j++;
-      if (l == GA_POPULATION_SIZE || j == GA_POPULATION_SIZE || k == pool_size) break;
-   }
-
-   printf("\nStatus:  l = %d, k = %d, j = %d, pool_size = %d\n\n", l, k, j, pool_size);
-
-   if (k == pool_size) {
-      while(l < GA_POPULATION_SIZE && j < GA_POPULATION_SIZE) {
-#ifdef _PROTECT
-         if (l && check_duplicate(&ga.population[j], new_gen, l)) {
-            printf("\nIgnoring this child\n");
-            j++;
-            continue;
-         }
-#endif
-         memcpy(&new_gen[l], &(ga.population[j]), sizeof(candidate));
-         l++; j++;
-      }
-#ifdef _PROTECT
-      if (l < GA_POPULATION_SIZE) {
-         printf("\nInside if: Merge of parent and child populations could not happen to create a new generation hence keeping the old parent generation for next iteration as well\n");
-         int i = 0;
-         while (i < GA_POPULATION_SIZE) {
-            memcpy(&new_gen[i], &ga.population[i], sizeof(candidate));
-            printf("\nCopied candidate no. %d of parent population to next generation\n", i+1);
-            i++;
-         }
-      }
-#endif
-   } else {
-#ifdef _PROTECT
-      if (l < GA_POPULATION_SIZE) {
-         printf("\nInside else: Merge of parent and child populations could not happen to create a new generation hence keeping the old parent generation for next iteration as well\n");
-         int i = 0;
-         while (i < GA_POPULATION_SIZE) {
-            memcpy(&new_gen[i], &ga.population[i], sizeof(candidate));
-            i++;
-         }
-      }
-#endif
-   }
-   printf("\nExiting merge_sort function\n");
-}
-
 
 /***********************************************************************/
 
@@ -249,6 +140,9 @@ int main(int argc, char **argv)
        dndp->p.lpOptimize("");  
        //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 	       //printf("\nActual time: %lf\n", cpu_time_used);
+#ifdef _DEBUG
+       print(&ga, &netinfo, dndp);
+#endif
        printf("\nObjective value: %f\n", dndp->p.getObjVal());
        candidate_fitness(dndp, &netinfo, &(ga.population[j]));
 #ifdef _DEBUG
@@ -262,12 +156,12 @@ int main(int argc, char **argv)
        total_fitness += ga.population[j].fitness_value;
     #endif
 
-    if (selection_scheme == TOURNAMENT_SELECTION) {
-       if (last_best_fitness >= ga.population[j].fitness_value) {
-          last_best_fitness = ga.population[j].fitness_value;
-          last_best_index = j;
+       if (selection_scheme == TOURNAMENT_SELECTION) {
+          if (last_best_fitness >= ga.population[j].fitness_value) {
+             last_best_fitness = ga.population[j].fitness_value;
+             last_best_index = j;
+          }
        }
-    }
 
        delete dndp;
     }

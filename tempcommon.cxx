@@ -2,6 +2,41 @@
 #include <data.h>
 #include <funcs.h>
 
+
+static void print(genetic_algo *ga, network_data *netinfo, model_data *dndp) {
+    printf("\nInside print function\n");
+    printf("\nTravelers on all the links\n");
+    /***Travelers on link a***/
+    for (int m=0; m<EL; m++) {
+      orig = netinfo->existing_links[m].orig;
+      term = netinfo->existing_links[m].term;
+      //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
+      printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[m]).getSol());
+    #ifdef _DEBUG
+      for (int n=1; n<=M; n++) {
+         printf("%lf\t", dndp->x[m][n].getSol());
+      }
+      printf("\n\n");
+    #endif
+    }
+    for (int m=0; m<NL; m++) {
+       if (ga->population[j].binary_enc[m]) {
+          orig = netinfo->new_links[m].orig;
+          term = netinfo->new_links[m].term;
+          //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
+          printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[EL+m]).getSol());
+          #ifdef _DEBUG
+          for (int n=1; n<=M; n++) {
+             printf("%lf\t", dndp->x[EL+m][n].getSol());
+          }
+          printf("\n\n");
+          #endif
+       }
+    }
+    printf("\nExiting print function\n");
+}
+
+
 // Get random number in a specific range using the library function rand() which generates pseudo random numbers in the interval [0, RANGE_MAX]
 int get_random(int range, bool incl_zero) {
    unsigned int x = (RAND_MAX + 1u) / range;
