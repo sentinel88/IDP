@@ -43,3 +43,5 @@ because it does not help to continue further without any more improvements. "Not
 	From the data on OD flows, compute internally the total incoming and outgoing flow for every node. Compare this with the same data
 	that we can compute using the flows obtained by solving a TAP everytime. The difference in these values could be represented
 	as an absolute value.
+
+22. Try to generate 2 offsprings from a single crossover operation at the same time for better exploration.

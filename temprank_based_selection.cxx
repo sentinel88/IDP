@@ -54,7 +54,6 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
  int value2;
  int crossover[2];
 #endif
- int index[2] = {-1, -1};
  int best_fit_index = -1;
  int retry=0;
  double rand_val;
@@ -65,7 +64,10 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
  int dup_temp_gen = 0;
  int retry_attempts = 0;
  int error_flag = 0;
+ int offspring_count = 0;
+ int real_offspring_count = 0;
  bool switch_order = false;
+ bool select_cross = true;
 
  printf("\nEntering crossover function\n");
 
@@ -86,8 +88,11 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
     if (error_flag) {
           retry = 0;
           retry_attempts = 0;
+	  offspring_count = 0;
           rand_val = (double)rand() / (double)RAND_MAX;
           error_flag = 0;
+	  switch_order = false;
+	  select_cross = true;
     }
     if (k >= (size - 1)) break;
     if (rand_val > cross_prob) {
@@ -104,11 +109,12 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
     rand_elem = rand_elem >> NL;
     if (value == 0) continue;*/
     printf("\n");
+if (select_cross) {
     value = get_random(NL, false);
 #ifdef TWO_POINT_CROSSOVER
     do {   
        value2 = get_random(NL, false);
-    }while(value2 == value);
+    } while(value2 == value);
 
     if (value < value2) {
        crossover[0] = value;
@@ -123,6 +129,7 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
 #ifdef TWO_POINT_CROSSOVER
     printf("\nSecond crossover point is %d\n", value2);
 #endif
+}
     if (!retry_attempts) {
        i1 = get_random(size, true);
        i2 = get_random(size, true);
@@ -168,11 +175,20 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
     memcpy((char *)&gen_children[k].binary_enc, (char *)&pool[i1].binary_enc, crossover[0]);
     memcpy((char *)&gen_children[k].binary_enc + crossover[0], (char *)&pool[i2].binary_enc + crossover[0], crossover[1] - crossover[0]);
     memcpy((char *)&gen_children[k].binary_enc + crossover[1], (char *)&pool[i1].binary_enc + crossover[0], NL - crossover[1]);
+    /*if (k < (size-1)) {
+       memcpy((char *)&gen_children[k+1].binary_enc, (char *)&pool[i2].binary_enc, crossover[0]);
+       memcpy((char *)&gen_children[k+1].binary_enc + crossover[0], (char *)&pool[i1].binary_enc + crossover[0], crossover[1] - crossover[0]);
+       memcpy((char *)&gen_children[k+1].binary_enc + crossover[1], (char *)&pool[i2].binary_enc + crossover[0], NL - crossover[1]);
+    }*/
     //memcpy((char *)&gen_children[k].binary_enc + crossover[0], (char *)&pool[i2].binary_enc + crossover[0], crossover[1] - crossover[0]);
 #else
     memcpy((char *)&gen_children[k].binary_enc, (char *)&pool[i1].binary_enc, value);
 //    memcpy((char *)(&gen_children[k]) + i, (char *)(&ga->population[j+1]) + i, sizeof(temp) - i);
     memcpy((char *)&gen_children[k].binary_enc + value, (char *)&pool[i2].binary_enc + value, sizeof(temp) - value);
+    /*if (k < (size-1)) {
+       memcpy((char *)&gen_children[k+1].binary_enc, (char *)&pool[i2].binary_enc, value);
+       memcpy((char *)&gen_children[k+1].binary_enc + value, (char *)&pool[i1].binary_enc + value, sizeof(temp) - value);
+    } */  
 #endif
 
 //Commented the below section to avoid crossover in the other direction to make the implementation easier and consider the other order only in case we need to switch the order.
@@ -186,10 +202,11 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
          // memcpy((char *)&gen_children[k+1].binary_enc, (char *)&pool[i2].binary_enc, value);
          // memcpy((char *)&gen_children[k+1].binary_enc + value, (char *)&pool[i1].binary_enc + value, sizeof(temp) - value);
 // Still need to handle the scenarios where we need to decide what to do after retry attempts are equal to 5. Need to do this for all conditions below
+
     if (check_if_zero(gen_children[k])) {
        //switch_order = false;
-       if (retry == 5) {
-          printf("\nMade 5 attempts to avoid generating a zero child but now we will not perform any more crossover attempts for this pair \
+       if (retry == MAX_RETRY || offspring_count) {
+          printf("\nCrossover for 2nd offspring in the other order unsuccessful or we already Made 5 attempts to avoid generating a zero child but now we will not perform any more crossover attempts for this pair \
                     of candidates\n");
           /*retry = 0;
           retry_attempts = 0;
@@ -199,7 +216,13 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
           error_flag = 1;
           continue;
        }
-       switch_order = false;
+       //switch_order = false;
+       if (!switch_order) {
+	  switch_order = true;
+	  select_cross = false;
+       } else {
+          select_cross = !select_cross;
+       }
        retry++;
        continue;
     }
@@ -207,8 +230,8 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
     if (feasibility(gen_children[k], netinfo)) {  //Possibly consider to also increment retry here to avoid infinite attempts
        printf("\nChild from crossover not feasible\n");
        memset(&gen_children[k], 0, sizeof(candidate));
-       if (retry_attempts == MAX_CROSSOVER_ATTEMPTS) {
-          printf("\nEnough attempts have been made to do a crossover operation for this pair but all crossovers have resulted in infeasible \
+       if (retry_attempts == MAX_CROSSOVER_ATTEMPTS || offspring_count) {
+          printf("\nCrossover for the 2nd offspring in the other order is unsuccessful or Enough attempts have been made to do a crossover operation for this pair but all crossovers have resulted in infeasible \
                     children\n");
           /*rand_val = (double)rand() / (double)RAND_MAX;
           retry_attempts = 0;
@@ -218,7 +241,13 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
           error_flag = 1;
           continue;
        }
-       switch_order = false;
+       //switch_order = false;
+       if (!switch_order) {
+	  switch_order = true;
+	  select_cross = false;
+       } else {
+          select_cross = !select_cross;
+       }
        retry_attempts++;
        continue;
     }
@@ -226,10 +255,10 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
     dup_parent_gen = check_duplicate(&gen_children[k], ga_cand, GA_POPULATION_SIZE);
 
     if (dup_parent_gen) {
-       if (retry_attempts == MAX_CROSSOVER_ATTEMPTS) {
+       if (retry_attempts == MAX_CROSSOVER_ATTEMPTS || offspring_count) {
           //printf("\nAlready tried enough attempts at generating a unique child from crossover but now we will consider this even though \
                     its a duplicate\n");
-          printf("\nAlready tried enough attempts at generating a unique child from crossover. Reached max. limit for crossover attempts.\n");
+          printf("\nCrossover for the 2nd offspring in the other order is unsuccessful or we have Already tried enough attempts at generating a unique child from crossover. Reached max. limit for crossover attempts.\n");
           //memset(&gen_children[k], 0, sizeof(candidate));
           memcpy((char *)&gen_children[k].binary_enc, (char *)&pool[best_fit_index].binary_enc, NL * sizeof(unsigned char));
           k++;
@@ -242,7 +271,13 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
           printf("\nThis crossover operation has generated a child that is a duplicate of one of the candidates in the parent population. hence \
                  we need to repeat this crossover operation for this pair of candidates with a different crossover point.\n");
           memset(&gen_children[k], 0, sizeof(candidate));
-          switch_order = false;
+          //switch_order = false;
+          if (!switch_order) {
+	     switch_order = true;
+	     select_cross = false;
+          } else {
+             select_cross = !select_cross;
+          }
           retry_attempts++;
           continue;
        }
@@ -253,7 +288,8 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
     if (k && dup_child_gen) {
        printf("\nThis child generated from a crossover operation is already present in this population of children. We do not consider it \
                  and continue with no more attempts\n");
-       if (retry_attempts == MAX_CROSSOVER_ATTEMPTS) {
+       if (retry_attempts == MAX_CROSSOVER_ATTEMPTS || offspring_count) {
+          printf("\nCrossover for the 2nd offspring in the other order is unsuccessful or we have Already tried enough attempts at generating a unique child from crossover. Reached max. limit for crossover attempts.\n");
           memcpy((char *)&gen_children[k].binary_enc, (char *)&pool[best_fit_index].binary_enc, NL * sizeof(unsigned char));
           k++;
           /* rand_val = (double)rand() / (double)RAND_MAX;
@@ -263,7 +299,13 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
           continue;
        } else {
           memset(&gen_children[k], 0, sizeof(candidate));
-          switch_order = false;
+          //switch_order = false;
+          if (!switch_order) {
+	     switch_order = true;
+	     select_cross = false;
+          } else {
+             select_cross = !select_cross;
+          }
           retry_attempts++;
           continue;
        }
@@ -273,9 +315,19 @@ int genetic_rb_crossover(candidate* ga_cand, candidate *pool, candidate *gen_chi
     retry_attempts = 0;
     k++;
     error_flag = 0;
-    rand_val = (double)rand() / (double)RAND_MAX;
+    offspring_count = (offspring_count+1) % 2;
+    if (!offspring_count) rand_val = (double)rand() / (double)RAND_MAX;
     if (k >= (size - 1)) break;
-    if (!switch_order) { retry_attempts = 1; switch_order = true; } else { switch_order = false; }
+    //if (!switch_order) { retry_attempts = 1; switch_order = true; } else { switch_order = false; }
+    if (!offspring_count) {
+       retry_attempts = 0;
+       switch_order = false;
+       select_cross = true;
+    } else {
+       retry_attempts = 1;
+       select_cross = false;
+       switch_order = true;
+    }	  
  }
  //memcpy(&gen_children[0], &temp_gen[0], sizeof(candidate) * GA_POPULATION_SIZE);
  //free(temp_gen);

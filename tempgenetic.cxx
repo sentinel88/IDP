@@ -59,10 +59,10 @@ int generate_rand(genetic_algo *ga, network_data *netinfo) {
     return 0;
 }
 
-
+/*
 int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data *netinfo) {
  int i, j=0, k=0, l, rand_elem, bits;
- int intervals, tempval, srand, value;
+ int intervals, tempval, value;
  int retry=0;
  double rand_val;
  candidate temp, temp1;
@@ -85,8 +85,6 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
  rand_val = (double)rand() / (double)RAND_MAX;
 
  while(1) {
-    //crossover_point = (crossover_point + 1) % NL;
-    //crossover_point = (crossover_point == 0) ? 1: crossover_point;
     if (j >= (ga->population_size-1)) break;
     if (rand_val > cross_prob) {
        rand_val = (double)rand() / (double)RAND_MAX;
@@ -105,13 +103,13 @@ int genetic_sp_crossover(genetic_algo *ga, candidate *gen_children, network_data
 
     value = count_set_bits(value);
     //value = crossover_point;
-    printf("\nCrossover point is %d\n", value);
+    printf("\nCrossover point is %d\n", value);*/
 
 /* Following memory copy operations do not reference the binary_enc member inside structure candidate for every gen_children because it is 
    just a shortcut since the first member in the candidate data structure is binary_enc and the memcpy will work correctly without specfiying
    the binary_enc */
 //    memcpy(&gen_children[k], &(ga->population[j].binary_enc), i);
-    memcpy(&gen_children[k].binary_enc, &(ga->population[j].binary_enc), value);
+/*    memcpy(&gen_children[k].binary_enc, &(ga->population[j].binary_enc), value);
 //    memcpy((char *)(&gen_children[k]) + i, (char *)(&ga->population[j+1]) + i, sizeof(temp) - i);
     memcpy((char *)(&gen_children[k]) + value, (char *)(&ga->population[j+1]) + value, sizeof(temp) - value);
 
@@ -197,7 +195,7 @@ rand_val = (double)rand() / (double)RAND_MAX;
  }
  printf("\nExiting crossover function\n");
  return k;
-}
+}*/
 
 
 
