@@ -37,7 +37,7 @@ int model_problem(model_data *dndp, network_data *netinfo, candidate ga_cand)
  points[0] = 0; slopes[0] = 0;
  for (i=1; i<=M; i++) { 
     points[i] = points[i-1] + step_size;
-    if (cost_function_selector) {
+    if (CHOICE) {
        slopes[i] = ( pow(points[i], 5) - pow(points[i-1], 5)) / (points[i] - points[i-1]);
     } else {
        slopes[i] = ( pow(points[i], 4) - pow(points[i-1], 4)) / (points[i] - points[i-1]);
@@ -53,7 +53,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
 
 /***Flow on link a***/
  for (i=1; i<=OD; i++) {
-#ifdef ZONES 
+#if ZONES 
     r = (i/ZONES);
     s = (i%ZONES);
     r = (r==0)?1 : (s==0?r : (r+1));
@@ -130,7 +130,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
     //j = netinfo->existing_links[l].term;
     summation = 0;
     for (k=1; k<=OD; k++) {
-#ifdef ZONES 
+#if ZONES 
        r = (k/ZONES);
        s = (k%ZONES);
        r = (r==0)?1 : (s==0?r : (r+1));
@@ -153,7 +153,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
        //j = netinfo->new_links[l].term;
        summation = 0;
        for (k=1; k<=OD; k++) {
-#ifdef ZONES 
+#if ZONES 
           r = (k/ZONES);
           s = (k%ZONES);
           r = (r==0)?1 : (s==0?r : (r+1));
@@ -317,7 +317,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
 
 /***Flow conservation constraints***/
  for (i=1; i<=OD; i++) {
-#ifdef ZONES 
+#if ZONES 
     r = (i/ZONES);
     s = (i%ZONES);
     r = (r==0)?1 : (s==0?r : (r+1));
@@ -408,7 +408,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
           //p.newCtr("Increments", x[i][j][1] <= (x[i][j][k] + points[k-1]) );
           (dndp->p).newCtr("Increments", dndp->Xa[l] <= (dndp->x[l][k] + points[k-1]) );
        }
-       if (cost_function_selector == 2) {
+       if (CHOICE == 2) {
           summation += (ta * dndp->Xa[l]) + (Constant * (0 + (slopes[1]*dndp->Xa[l]) + increment[l]) );  /* 0 represents function value at X{0} which is                                                                                                zero since the non linear function here is x^5*/
        } else {
           //summation += (ta * Xa[i][j]) + ( (0.008/5) * (0 + (slopes[1]*x[i][j][1]) + increment[i][j]) );
@@ -435,7 +435,7 @@ zone thereby validating our IF condition j <= ZONES and next IF condition k <= Z
           (dndp->p).newCtr("Increments", dndp->Xa[EL+l] <= (dndp->x[EL+l][k] + points[k-1]) );
        }
 //#ifdef _CODE
-       if (cost_function_selector == 2) {
+       if (CHOICE == 2) {
           summation += (ta * dndp->Xa[EL+l]) + (Constant * (0 + (slopes[1]*dndp->Xa[EL+l]) + increment[EL+l]) );  /* 0 represents function value at X{0} which is                                                                                                zero since the non linear function here is x^5*/
        } else {
 //#endif 

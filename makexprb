@@ -38,7 +38,7 @@ LOADLIBES=-L$(BCL)/lib -L$(XPRESSDIR)/lib -lxprb -lxprs -lpthread -lm
 	$(CC) $(CFLAGS) $(LDFLAGS) $< $(LOADLIBES) -o $*
 
 .cxx: 
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< parse.cxx model.cxx genetic.cxx data.cxx common.cxx rank_based_selection.cxx tournament_selection.cxx $(LOADLIBES) -o $*
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< parse.cxx model.cxx genetic.cxx data.cxx common.cxx rank_based_selection.cxx tournament_selection.cxx default_selection.cxx $(LOADLIBES) -o $*
 
 .C:
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $< $(LOADLIBES) -o $*

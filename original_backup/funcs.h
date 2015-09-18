@@ -5,21 +5,23 @@
 
 /***Function signatures ***/
 
-extern int model_problem(model_data *, network_data *, candidate);
+int model_problem(model_data *, network_data *, genetic_algo *);
+
+int remodel_problem(model_data *, network_data *, candidate);
 
 int parse(network_data *);
 
 int clean(network_data *);
 
-int feasibility(candidate, network_data *);
+int feasibility(candidate, network_data);
 
-extern int candidates_sort(candidate *, int);
+int candidates_sort(candidate *, int);
 
-int generate_rand(genetic_algo *, network_data *);
+int generate_rand(genetic_algo *, network_data);
 
-extern int genetic_sp_crossover(genetic_algo *, candidate *, network_data *);
+int genetic_sp_crossover(genetic_algo *, candidate *, network_data);
 
-extern int genetic_mutation(candidate *, network_data *, int);
+int genetic_mutation(candidate *, network_data, int);
 
 int candidate_fitness(model_data *, network_data *, candidate *);
 
@@ -27,13 +29,11 @@ int print_candidate(candidate *);
 
 int print_generation(candidate *, int, bool);
 
-extern void print(genetic_algo *, network_data *, model_data *, int);
-
 int encode_ga_cand(candidate *, int);
 
 int count_set_bits(int value);
 
-int check_if_zero(candidate);
+int compare(candidate);
 
 int check_duplicate(candidate *, candidate *, int);
 
@@ -55,15 +55,21 @@ int select_candidate(candidate *, int);
 
 int get_random(int, bool);
 
+#ifdef TOURNAMENT_SELECTION
 int select_candidates_k(candidate *, int);
 
-int tournament_selection(candidate *, candidate *, network_data *, int);
+int tournament_selection(candidate *, candidate *, network_data, int);
 
-int rank_based_selection(candidate *, candidate *, network_data *, int);
+int genetic_ts_crossover(candidate *, candidate *, network_data, int);
+#endif
 
+#ifdef RANK_BASED_SELECTION
 int assign_selection_rb_prob(candidate *, int);
 
-int genetic_rb_crossover(candidate *, candidate *, candidate *, network_data *, int);
+int select_candidate_rb(candidate *, int);
 
-int default_selection(genetic_algo *, candidate *, network_data *, candidate *, candidate *);
+int rank_based_selection(candidate *, candidate *, network_data, int);
+#endif
+
+int genetic_rb_crossover(candidate *, candidate *, candidate *, network_data, int);
 #endif

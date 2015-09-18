@@ -2,18 +2,68 @@
 #include <data.h>
 #include <funcs.h>
 
-int feasibility(candidate gen_cand, network_data netinfo) {
+
+void print(genetic_algo *ga, network_data *netinfo, model_data *dndp, int j) {
+    printf("\nInside print function\n");
+    int orig, term;
+    printf("\nTravelers on all the links\n");
+    /***Travelers on link a***/
+    for (int m=0; m<EL; m++) {
+      orig = netinfo->existing_links[m].orig;
+      term = netinfo->existing_links[m].term;
+      //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
+      printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[m]).getSol());
+    #ifdef _DEBUG
+      for (int n=1; n<=M; n++) {
+         printf("%lf\t", dndp->x[m][n].getSol());
+      }
+      printf("\n\n");
+    #endif
+    }
+    for (int m=0; m<NL; m++) {
+       if (ga->population[j].binary_enc[m]) {
+          orig = netinfo->new_links[m].orig;
+          term = netinfo->new_links[m].term;
+          //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
+          printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[EL+m]).getSol());
+          #ifdef _DEBUG
+          for (int n=1; n<=M; n++) {
+             printf("%lf\t", dndp->x[EL+m][n].getSol());
+          }
+          printf("\n\n");
+          #endif
+       }
+    }
+    printf("\nExiting print function\n");
+}
+
+
+// Get random number in a specific range using the library function rand() which generates pseudo random numbers in the interval [0, RANGE_MAX]
+int get_random(int range, bool incl_zero) {
+   unsigned int x = (RAND_MAX + 1u) / range;
+   unsigned int y = x * range;
+   unsigned int r;
+   do {
+      r = rand();
+   } while(r >= y);
+   incl_zero == true ? printf("%d\t", r / x) : printf("%d\t", r/x + 1);
+   return ( incl_zero == true ? r/x: r/x + 1 );
+}
+
+
+int feasibility(candidate gen_cand, network_data *netinfo) {
  float budget_sat = 0.0;
  int i = 0, orig, term;
  int bin_val;
  printf("\nEntering feasibility\n");
- while (i<NL) {
-    orig = netinfo.new_links[i].orig;
-    term = netinfo.new_links[i].term;
+ while (i < NL) {
+    orig = netinfo->new_links[i].orig;
+    term = netinfo->new_links[i].term;
     bin_val = gen_cand.binary_enc[i];
+#ifdef _DEBUG
     printf("%d, orig: %d, term: %d\n ", gen_cand.binary_enc[i], orig, term);
-    //budget_sat += ( (gen_cand.binary_enc[i] - 48) * netinfo.ba[orig][term]);
-    budget_sat += ( bin_val * netinfo.ba[orig][term]);
+#endif
+    budget_sat += ( bin_val * netinfo->ba[orig][term]);
     i++;
  }
  printf("\nBudget = %f\n", budget_sat);
@@ -28,13 +78,14 @@ int encode_ga_cand(candidate *ga_cand, int value) {
  while(i--) {
     ga_cand->binary_enc[k] = value & 1;
     value = value >> 1;
+#ifdef _DEBUG
     printf("%d ", ga_cand->binary_enc[k]);
+#endif
     k++;
  }
  printf("\nExisting encode_ga_cand\n");
  return 0;
 }
-
 
 
 int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_cand) {
@@ -47,7 +98,7 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
    for (i=0; i<EL; i++) {
       orig = netinfo->existing_links[i].orig;
       term = netinfo->existing_links[i].term;
-      if (CHOICE == 2) {
+      if (cost_function_selector == 2) {
          //summation += (netinfo->Ta[orig][term] * (1 + (netinfo->Ba[orig][term] * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
          //summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4))) );
          summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term]  + (netinfo->Ba[orig][term] * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4)) );
@@ -63,7 +114,7 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
       orig = netinfo->new_links[i].orig;
       term = netinfo->new_links[i].term;
 //#ifdef _CODE   
-   if (CHOICE == 2) {
+   if (cost_function_selector == 2) {
          //summation += (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
          //summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4))) );
          //summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] + (netinfo->Ba[orig][term] * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4)) );
@@ -144,7 +195,8 @@ int check_duplicate(candidate *ga_cand, candidate *population, int size) {
    printf("\nEntering check_duplicate function\n");
 
    for (i=0; i<size; i++) {
-      if (elem_compare(ga_cand, &population[i])) {
+      if (!memcmp(ga_cand->binary_enc, population[i].binary_enc, NL)) {
+      //if (elem_compare(ga_cand, &population[i])) {
          match_found = 1;
          break;
       }
@@ -176,7 +228,7 @@ int count_set_bits(int value) {
    return count;
 }
 
-int compare(candidate gen_child) {
+int check_if_zero(candidate gen_child) {
    int i=0, k=0;
    while (i < NL) {
       if (gen_child.binary_enc[k++] & 1) return 0;

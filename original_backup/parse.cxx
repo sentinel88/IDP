@@ -14,7 +14,28 @@ int parse (network_data *netinfo) {
 
    printf("\nInside parse function\n");
 
+   /*memset(netinfo->Ca, 0, sizeof(netinfo->Ca));
+   memset(netinfo->Ba, 0, sizeof(netinfo->Ba));
+   memset(netinfo->ba, 0, sizeof(netinfo->ba));
+
+   netinfo->Demand = (float **)(malloc( (N+1) * sizeof(float *) ));
+   netinfo->Ta = (float **)(malloc( (N+1) * sizeof(float *) ));
+
+   for (i=0; i<=N; i++) {
+      netinfo->Demand[i] = (float *)malloc( (N+1) * sizeof(float));
+      netinfo->Ta[i] = (float *)malloc( (N+1) * sizeof(float));
+   } */
+
+/*#ifdef ZONES
+   memset(netinfo->Demand, 0, sizeof(float *) * (ZONES+1));
+#else
+   memset(netinfo->Demand, 0, sizeof(float *) * (N+1));
+#endif*/
+
+   //memset(netinfo->Ta, 0, sizeof(netinfo->Ta));
+
    datafile = fopen(FILENAME_NET, "r");   /*Open datafile for read access*/
+
 
    /***Reading from the data file***/
    cout<<"\nReading from data file started\n";
@@ -24,7 +45,7 @@ int parse (network_data *netinfo) {
    while (linecount < LC) {
     // while(fgets(str, 100, datafile)) {
       fgets(str, 200, datafile);
-      if (cost_function_selector == 2) {
+      if (CHOICE == 2) {
         /*if (sscanf(str, "%d %d %f %f %f", &i, &j, &ca, &ta, &ba) == 5) {
             netinfo->Ca[i][j] = ca; netinfo->Ba[i][j] = ba; netinfo->Ta[i][j] = ta;
             //printf("\n[%d %d]:%f %f %f\n", i, j, netinfo->Ca[i][j], netinfo->Ba[i][j], netinfo->Ta[i][j]);
@@ -98,7 +119,7 @@ int parse (network_data *netinfo) {
    count = 0;
 
    while (fgets(str, 100, datafile)) {
-      if (cost_function_selector == 1) {
+      if (CHOICE == 1) {
          if (sscanf(str, "%d %d %f %f", &i, &j, &ta, &ba) == 4) {
             printf("\n%d %d %f %f\n", i, j, ta, ba);
             netinfo->Ta[i][j] = ta;
