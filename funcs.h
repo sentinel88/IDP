@@ -17,7 +17,7 @@ extern int candidates_sort(candidate *, int);
 
 int generate_rand(genetic_algo *, network_data *);
 
-extern int genetic_sp_crossover(genetic_algo *, candidate *, network_data *);
+//extern int genetic_sp_crossover(genetic_algo *, candidate *, network_data *);
 
 extern int genetic_mutation(candidate *, network_data *, int);
 
@@ -63,7 +63,7 @@ int rank_based_selection(candidate *, candidate *, network_data *, int);
 
 int assign_selection_rb_prob(candidate *, int);
 
-int genetic_rb_crossover(candidate *, candidate *, candidate *, network_data *, int);
+int genetic_crossover(candidate *, candidate *, candidate *, network_data *, int);
 
 //int default_selection(genetic_algo *, candidate *, network_data *, candidate **, candidate *);
 int default_selection(candidate *, candidate *, network_data *, int);
