@@ -36,7 +36,7 @@ static int initialize(genetic_algo *ga, candidate **gen_children, candidate **ca
    //memset(cache, 0, 2 * ga->population_size * sizeof(candidate));
 
    Budget = atoi(argv[1]);
-   if (Budget <= 10 || (Budget % 10 != 0)) {
+   if (Budget < 10 || (Budget % 10 != 0)) {
       printf("\nIncorrect budget specified\n");
       return -1;
    }
@@ -220,7 +220,7 @@ int main(int argc, const char **argv)
 	       rank_based_selection(ga.population, gen_children, &netinfo, GA_POPULATION_SIZE);
 	    }
 	} else {
-	   pool_size = default_selection(&ga, gen_children, &netinfo, new_gen, cache);
+	   pool_size = default_selection(&ga, gen_children, &netinfo, &new_gen, cache);
 	   if (ret_val < 0) {
 	      printf("\nError encountered in the execution of the default selection algorithm\n");
 	      break;

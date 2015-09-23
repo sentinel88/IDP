@@ -79,7 +79,7 @@ static void merge_sort(candidate *new_gen, genetic_algo *ga, candidate *gen_chil
 }
 
 
-int default_selection(genetic_algo *ga, candidate *gen_children, network_data *netinfo, candidate *new_gen, candidate *cache) {
+int default_selection(genetic_algo *ga, candidate *gen_children, network_data *netinfo, candidate **new_gen, candidate *cache) {
     int pool_size = 0;
     int k;
     pool_size = genetic_sp_crossover(ga, gen_children, netinfo);
@@ -123,7 +123,7 @@ int default_selection(genetic_algo *ga, candidate *gen_children, network_data *n
    memset(new_gen1, 0, GA_POPULATION_SIZE * sizeof(candidate));
 
    merge_sort(new_gen1, ga, gen_children, pool_size);
-   new_gen = new_gen1;
+   *new_gen = new_gen1;
    return pool_size;
 }
 

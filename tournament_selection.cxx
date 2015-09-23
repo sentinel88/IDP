@@ -9,7 +9,7 @@ int select_candidates_k(candidate *ga_cand, int size) {
    int i = 0;
    double fittest = 999999999;
    int fittest_index = 0;
-   while (i < 3) {
+   while (i < 2) {
       index[i] = get_random(size, true);
       if (i && (index[i] == index[i -1])) { // Wrong check. index[i] needs to be compared with all the previous indices
          continue;

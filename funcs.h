@@ -65,5 +65,5 @@ int assign_selection_rb_prob(candidate *, int);
 
 int genetic_rb_crossover(candidate *, candidate *, candidate *, network_data *, int);
 
-int default_selection(genetic_algo *, candidate *, network_data *, candidate *, candidate *);
+int default_selection(genetic_algo *, candidate *, network_data *, candidate **, candidate *);
 #endif
