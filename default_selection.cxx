@@ -79,56 +79,9 @@ static void merge_sort(candidate *new_gen, genetic_algo *ga, candidate *gen_chil
 }
 
 
-//int default_selection(genetic_algo *ga, candidate *gen_children, network_data *netinfo, candidate *cache) {
 int default_selection(candidate *ga_cand, candidate *gen_children, network_data *netinfo, int size) {
-    int pool_size = 0;
-    int k;
-    //pool_size = genetic_sp_crossover(ga, gen_children, netinfo);
-    genetic_rb_crossover(ga_cand, ga_cand, gen_children, netinfo, size);
-#ifdef _DEBUG
-   // printf("\n\n************************************************\n");
-    //printf("Children generated after crossover for Generation %d\n", i+1);
-   // print_generation(gen_children, pool_size, false);
-#endif
-    //genetic_mutation(gen_children, netinfo, pool_size);
-    genetic_mutation(gen_children, netinfo, size);
-#ifdef _DEBUG
-    //printf("\n\n************************************************\n");
-//printf("Children generated after mutation for Generation %d\n", i+1);
-    //print_generation(gen_children, pool_size, false);
-    print_generation(gen_children, size, false);
-#endif
-   /* for (k=0; k<pool_size; k++) {
-       model_data dndp;
-       //printf("Iteration(Generation): %d, Child no: %d\n", i+1, k+1);
-       model_problem(&dndp, netinfo, gen_children[k]);
-       dndp.p.lpOptimize("");
-       printf("\nObjective value: %f\n", dndp.p.getObjVal());
-       candidate_fitness(&dndp, netinfo, &gen_children[k]);
-#ifdef _DEBUG
-       printf("\n\n************************************************\n");
-       //printf("Iteration %d results:\n", i+1);
-       print_candidate(&gen_children[k]);
-#endif
-       printf("Fitness: %f\n", gen_children[k].fitness_value);
-       printf("************************************************\n");
-    }
-
-    candidates_sort(gen_children, pool_size);
-#ifdef _DEBUG
-    printf("\n\n************************************************\n");
-    //printf("Children sorted after crossover and mutation for Generation %d\n", i+1);
-    print_generation(gen_children, pool_size, true);
-#endif
-    memcpy((candidate *)cache + GA_POPULATION_SIZE, gen_children, sizeof(candidate) * pool_size);*/
-
-/***Select the candidates for the next generation from the pool of children and current population***/
- /*  candidate *new_gen1 = (candidate *)(malloc(GA_POPULATION_SIZE * sizeof(candidate)));
-   memset(new_gen1, 0, GA_POPULATION_SIZE * sizeof(candidate));
-
-   merge_sort(new_gen1, ga, gen_children, pool_size);
-   *new_gen = new_gen1;
-   return pool_size;*/
+   genetic_rb_crossover(ga_cand, ga_cand, gen_children, netinfo, size);
+   genetic_mutation(gen_children, netinfo, size);
    memcpy(&ga_cand[1], gen_children, (size - 1) * sizeof(candidate));
    return 0;
 }
