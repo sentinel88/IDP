@@ -80,7 +80,7 @@ static void merge_sort(candidate *new_gen, genetic_algo *ga, candidate *gen_chil
 
 
 int default_selection(candidate *ga_cand, candidate *gen_children, network_data *netinfo, int size) {
-   genetic_rb_crossover(ga_cand, ga_cand, gen_children, netinfo, size);
+   genetic_crossover(ga_cand, ga_cand, gen_children, netinfo, size);
    genetic_mutation(gen_children, netinfo, size);
    memcpy(&ga_cand[1], gen_children, (size - 1) * sizeof(candidate));
    return 0;

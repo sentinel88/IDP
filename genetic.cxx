@@ -136,7 +136,6 @@ if (select_cross) {
        crossover[0] = value2;
        crossover[1] = value;
     }
- }
 #endif
     printf("\n");
     printf("\nCrossover point is %d\n", value);
@@ -319,7 +318,7 @@ printf("\nCrossover for the 2nd offspring in the other order is unsuccessful or 
           retry_attempts = 0; */
           error_flag = 1;
           continue;
- } else {
+       } else {
           memset(&gen_children[k], 0, sizeof(candidate));
           //switch_order = false;
           if (!switch_order) {

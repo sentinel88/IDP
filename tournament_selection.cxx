@@ -52,7 +52,7 @@ int tournament_selection(candidate *ga_cand, candidate *gen_children, network_da
    print_generation(pool, size, false);
    // Remaining half of the next generation will be filled by doing crossover and mutation operations on the first half of the mating pool
    //genetic_ts_crossover(ga_cand, gen_children, netinfo, size);
-   genetic_rb_crossover(ga_cand, pool, gen_children, netinfo, size);
+   genetic_crossover(ga_cand, pool, gen_children, netinfo, size);
    genetic_mutation(gen_children, netinfo, size);
    free(pool);
    memcpy(&ga_cand[1], gen_children, (size-1) * sizeof(candidate));
