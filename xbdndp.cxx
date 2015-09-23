@@ -56,6 +56,7 @@ static int initialize(genetic_algo *ga, candidate **gen_children, candidate **ca
 
    printf("\nExiting initialize function\n");
    return 0;
+
 }
 
 
@@ -220,11 +221,15 @@ int main(int argc, const char **argv)
 	       rank_based_selection(ga.population, gen_children, &netinfo, GA_POPULATION_SIZE);
 	    }
 	} else {
-	   pool_size = default_selection(&ga, gen_children, &netinfo, &new_gen, cache);
-	   if (ret_val < 0) {
-	      printf("\nError encountered in the execution of the default selection algorithm\n");
-	      break;
-	   }
+	   //pool_size = default_selection(&ga, gen_children, &netinfo, &new_gen, cache);
+	   //ret_val = default_selection(&ga, gen_children, &netinfo, cache);
+	   if (i < (ga.iterations - 1)) {
+	      ret_val = default_selection(ga.population, gen_children, &netinfo, GA_POPULATION_SIZE);
+	      if (ret_val < 0) {
+	         printf("\nError encountered in the execution of the default selection algorithm\n");
+	         break;
+	      }
+           }
         }
     }   
 
@@ -234,9 +239,9 @@ int main(int argc, const char **argv)
    if (selection_scheme != DEFAULT_SELECTION) {
    //ga.population = gen_children;*/
    } else {
-      free(ga.population);
+      /*free(ga.population);
       printf("\nFreed ga population\n");
-      ga.population = new_gen;
+      ga.population = new_gen;*/
       new_gen = NULL;
    }
 //#endif
