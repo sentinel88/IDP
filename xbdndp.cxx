@@ -17,7 +17,7 @@ int Budget;
 int selection_scheme;
 int cost_function_selector;
 
-static int initialize(genetic_algo *ga, candidate *gen_children, candidate *cache, const char **argv) {
+static int initialize(genetic_algo *ga, candidate **gen_children, candidate **cache, const char **argv) {
    int i = 0;
    int selector;
 
@@ -26,14 +26,14 @@ static int initialize(genetic_algo *ga, candidate *gen_children, candidate *cach
    ga->population_size = GA_POPULATION_SIZE;
    ga->iterations = GA_ITERATIONS;
    ga->population = (candidate *)malloc( (ga->population_size) * sizeof(candidate));
-   memset(ga->population, 0, sizeof(ga->population_size) * sizeof(candidate));
+   //memset(ga->population, 0, sizeof(ga->population_size) * sizeof(candidate));
 
-   gen_children = (candidate *)malloc(ga->population_size * sizeof(candidate));
+   *gen_children = (candidate *)(malloc(ga->population_size * sizeof(candidate)));
    //memset(gen_children, 0, sizeof(gen_children)); 
-   memset(gen_children, 0, ga->population_size * sizeof(candidate));
-   cache = (candidate *)malloc((2 * ga->population_size) * sizeof(candidate));
+   //memset(gen_children, 0, ga->population_size * sizeof(candidate));
+   *cache = (candidate *)(malloc((2 * ga->population_size) * sizeof(candidate)));
    //memset(cache, 0, sizeof(cache)); 
-   memset(cache, 0, 2 * ga->population_size * sizeof(candidate));
+   //memset(cache, 0, 2 * ga->population_size * sizeof(candidate));
 
    Budget = atoi(argv[1]);
    if (Budget <= 10 || (Budget % 10 != 0)) {
@@ -99,7 +99,7 @@ int main(int argc, const char **argv)
  selection_scheme = DEFAULT_SELECTION;
  cost_function_selector = 1;
 
- ret_val = initialize(&ga, gen_children, cache, argv);
+ ret_val = initialize(&ga, &gen_children, &cache, argv);
  if (ret_val < 0) {
     printf("\nIncorrect command line arguments\n");
     exit(0);
@@ -146,7 +146,7 @@ int main(int argc, const char **argv)
        //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 	       //printf("\nActual time: %lf\n", cpu_time_used);
 #ifdef _DEBUG
-       print(&ga, &netinfo, dndp, j);
+       //print(&ga, &netinfo, dndp, j);
 #endif
        printf("\nObjective value: %f\n", dndp->p.getObjVal());
        candidate_fitness(dndp, &netinfo, &(ga.population[j]));
@@ -231,7 +231,7 @@ int main(int argc, const char **argv)
    printf("\nFinished creating the next generation\n");
 //#ifdef RANK_BASED_SELECTION
    /* Do nothing as the  next generation of population is already present in ga.population */
-   if (selection_scheme == TOURNAMENT_SELECTION) {
+   if (selection_scheme != DEFAULT_SELECTION) {
    //ga.population = gen_children;*/
    } else {
       free(ga.population);
