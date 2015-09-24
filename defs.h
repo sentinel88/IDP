@@ -14,6 +14,8 @@
 using namespace std;
 using namespace ::dashoptimization;
 
+#define BIT_FLIP_MUTATION 1
+
 extern int Budget;
 
 typedef enum { DEFAULT_SELECTION, RANK_BASED_SELECTION, TOURNAMENT_SELECTION } scheme;

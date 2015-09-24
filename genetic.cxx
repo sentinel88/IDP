@@ -375,6 +375,49 @@ int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_si
    i = rand();
    l = intervals;
    rand_elem = (double)rand() / (double)range;
+
+#ifdef BIT_FLIP_MUTATION
+   while(1) {
+      if (k >= pool_size) break;
+      i = 0;
+      memcpy(&temp, &gen_children[k], sizeof(candidate));
+      while (i < NL) {
+         rand_elem = (double)rand() / (double)range;
+         if (rand_elem > mut_prob) {
+            rand_elem = (double)rand() / (double)range;
+	    i++;
+	    continue;
+	 }
+         gen_children[k].binary_enc[i] = (gen_children[k].binary_enc[i] + 1)%2;
+	 i++;
+      }
+      if (check_if_zero(gen_children[k])) {
+         memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
+         k++;
+         retry = 0;
+         continue;
+      }
+      if (feasibility(gen_children[k], netinfo) != 0) {
+         memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
+         if (retry == MAX_RETRY) { retry = 0; k++; continue; }
+         retry++; k++;
+         continue;
+      }
+      memcpy(&temp1, &gen_children[k].binary_enc, sizeof(candidate));
+      memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
+      if (k && check_duplicate(&temp1, gen_children, pool_size)) {
+         k++;
+         retry = 0;
+         continue;
+      }
+      memset(&temp, 0, sizeof(candidate));
+      memcpy(&gen_children[k].binary_enc, &temp1, sizeof(candidate));
+      memset(&temp1, 0, sizeof(candidate));
+      printf("\nMutation successfully done for candidate %d in the pool of children\n", k+1);
+      k++;
+      retry = 0;
+   }
+#else
    while(1) {
       if (k >= pool_size) break;
       if (rand_elem > mut_prob) {
@@ -428,6 +471,7 @@ int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_si
       rand_elem = (double)rand() / (double)range;
       retry = 0;
    }
+#endif
    printf("\nExiting mutation routine\n");
    return 0;
 }
