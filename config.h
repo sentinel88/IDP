@@ -28,7 +28,7 @@
 //#define step_size 80
 //#define step_size 1250
 //#define step_size 313
-#define mut_prob 0.15
+#define mut_prob 0.25
 #define cross_prob 0.85
 //#define _PROTECT 1
 #define CHOICE 1
@@ -38,7 +38,7 @@
 //#define B  10      /* Project budget */
 #define GA_POPULATION_SIZE 10
 //#define GA_POPULATION_SIZE 1
-#define GA_ITERATIONS 5
+#define GA_ITERATIONS 7
 #define MAX_BEST_ITERATIONS 4
 #define MAX_RETRY 3
 #define TWO_POINT_CROSSOVER 1

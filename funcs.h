@@ -19,7 +19,7 @@ int generate_rand(genetic_algo *, network_data *);
 
 //extern int genetic_sp_crossover(genetic_algo *, candidate *, network_data *);
 
-extern int genetic_mutation(candidate *, network_data *, int);
+extern int genetic_mutation(candidate *, candidate *, network_data *, int);
 
 int candidate_fitness(model_data *, network_data *, candidate *);
 

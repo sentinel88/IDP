@@ -1,0 +1,56 @@
+00400000-0040d000 r-xp 00000000 08:08 4063322                            /home/nishanth/IDP/xbdndp
+0060c000-0060d000 r--p 0000c000 08:08 4063322                            /home/nishanth/IDP/xbdndp
+0060d000-0060e000 rw-p 0000d000 08:08 4063322                            /home/nishanth/IDP/xbdndp
+01513000-01534000 rw-p 00000000 00:00 0                                  [heap]
+7fd226c0b000-7fd226c0e000 r-xp 00000000 08:08 1048606                    /lib/x86_64-linux-gnu/libdl-2.19.so
+7fd226c0e000-7fd226e0d000 ---p 00003000 08:08 1048606                    /lib/x86_64-linux-gnu/libdl-2.19.so
+7fd226e0d000-7fd226e0e000 r--p 00002000 08:08 1048606                    /lib/x86_64-linux-gnu/libdl-2.19.so
+7fd226e0e000-7fd226e0f000 rw-p 00003000 08:08 1048606                    /lib/x86_64-linux-gnu/libdl-2.19.so
+7fd226e0f000-7fd226e16000 r-xp 00000000 08:08 1048678                    /lib/x86_64-linux-gnu/librt-2.19.so
+7fd226e16000-7fd227015000 ---p 00007000 08:08 1048678                    /lib/x86_64-linux-gnu/librt-2.19.so
+7fd227015000-7fd227016000 r--p 00006000 08:08 1048678                    /lib/x86_64-linux-gnu/librt-2.19.so
+7fd227016000-7fd227017000 rw-p 00007000 08:08 1048678                    /lib/x86_64-linux-gnu/librt-2.19.so
+7fd227017000-7fd227030000 r-xp 00000000 08:08 1048676                    /lib/x86_64-linux-gnu/libpthread-2.19.so
+7fd227030000-7fd22722f000 ---p 00019000 08:08 1048676                    /lib/x86_64-linux-gnu/libpthread-2.19.so
+7fd22722f000-7fd227230000 r--p 00018000 08:08 1048676                    /lib/x86_64-linux-gnu/libpthread-2.19.so
+7fd227230000-7fd227231000 rw-p 00019000 08:08 1048676                    /lib/x86_64-linux-gnu/libpthread-2.19.so
+7fd227231000-7fd227235000 rw-p 00000000 00:00 0 
+7fd227235000-7fd22843a000 r-xp 00000000 08:08 3682351                    /home/nishanth/xpressmp/lib/libxprs.so.27.01.02
+7fd22843a000-7fd22853a000 ---p 01205000 08:08 3682351                    /home/nishanth/xpressmp/lib/libxprs.so.27.01.02
+7fd22853a000-7fd2286bf000 rw-p 01205000 08:08 3682351                    /home/nishanth/xpressmp/lib/libxprs.so.27.01.02
+7fd2286bf000-7fd2286ea000 rw-p 00000000 00:00 0 
+7fd2286ea000-7fd228775000 r-xp 00000000 08:08 3682357                    /home/nishanth/xpressmp/lib/libxprl-2.7.5-x7.8.so
+7fd228775000-7fd228875000 ---p 0008b000 08:08 3682357                    /home/nishanth/xpressmp/lib/libxprl-2.7.5-x7.8.so
+7fd228875000-7fd228881000 rw-p 0008b000 08:08 3682357                    /home/nishanth/xpressmp/lib/libxprl-2.7.5-x7.8.so
+7fd228881000-7fd2288ae000 rw-p 00000000 00:00 0 
+7fd2288ae000-7fd228a69000 r-xp 00000000 08:08 1048675                    /lib/x86_64-linux-gnu/libc-2.19.so
+7fd228a69000-7fd228c68000 ---p 001bb000 08:08 1048675                    /lib/x86_64-linux-gnu/libc-2.19.so
+7fd228c68000-7fd228c6c000 r--p 001ba000 08:08 1048675                    /lib/x86_64-linux-gnu/libc-2.19.so
+7fd228c6c000-7fd228c6e000 rw-p 001be000 08:08 1048675                    /lib/x86_64-linux-gnu/libc-2.19.so
+7fd228c6e000-7fd228c73000 rw-p 00000000 00:00 0 
+7fd228c73000-7fd228c89000 r-xp 00000000 08:08 1052646                    /lib/x86_64-linux-gnu/libgcc_s.so.1
+7fd228c89000-7fd228e88000 ---p 00016000 08:08 1052646                    /lib/x86_64-linux-gnu/libgcc_s.so.1
+7fd228e88000-7fd228e89000 rw-p 00015000 08:08 1052646                    /lib/x86_64-linux-gnu/libgcc_s.so.1
+7fd228e89000-7fd228f8e000 r-xp 00000000 08:08 1048591                    /lib/x86_64-linux-gnu/libm-2.19.so
+7fd228f8e000-7fd22918d000 ---p 00105000 08:08 1048591                    /lib/x86_64-linux-gnu/libm-2.19.so
+7fd22918d000-7fd22918e000 r--p 00104000 08:08 1048591                    /lib/x86_64-linux-gnu/libm-2.19.so
+7fd22918e000-7fd22918f000 rw-p 00105000 08:08 1048591                    /lib/x86_64-linux-gnu/libm-2.19.so
+7fd22918f000-7fd229275000 r-xp 00000000 08:08 8655018                    /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19
+7fd229275000-7fd229474000 ---p 000e6000 08:08 8655018                    /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19
+7fd229474000-7fd22947c000 r--p 000e5000 08:08 8655018                    /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19
+7fd22947c000-7fd22947e000 rw-p 000ed000 08:08 8655018                    /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19
+7fd22947e000-7fd229493000 rw-p 00000000 00:00 0 
+7fd229493000-7fd2294b6000 r-xp 00000000 08:08 1048672                    /lib/x86_64-linux-gnu/ld-2.19.so
+7fd22956a000-7fd229572000 rw-p 00000000 00:00 0 
+7fd22958d000-7fd22958f000 rw-p 00000000 00:00 0 
+7fd22958f000-7fd2295b2000 r-xp 00000000 08:08 3672973                    /home/nishanth/xpressmp/lib/libxprb.so.4.8.1
+7fd2295b2000-7fd2296b2000 ---p 00023000 08:08 3672973                    /home/nishanth/xpressmp/lib/libxprb.so.4.8.1
+7fd2296b2000-7fd2296b3000 rw-p 00023000 08:08 3672973                    /home/nishanth/xpressmp/lib/libxprb.so.4.8.1
+7fd2296b3000-7fd2296b5000 rw-p 00000000 00:00 0 
+7fd2296b5000-7fd2296b6000 r--p 00022000 08:08 1048672                    /lib/x86_64-linux-gnu/ld-2.19.so
+7fd2296b6000-7fd2296b7000 rw-p 00023000 08:08 1048672                    /lib/x86_64-linux-gnu/ld-2.19.so
+7fd2296b7000-7fd2296b8000 rw-p 00000000 00:00 0 
+7ffcfc431000-7ffcfc452000 rw-p 00000000 00:00 0                          [stack]
+7ffcfc5a1000-7ffcfc5a3000 r-xp 00000000 00:00 0                          [vdso]
+7ffcfc5a3000-7ffcfc5a5000 r--p 00000000 00:00 0                          [vvar]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]

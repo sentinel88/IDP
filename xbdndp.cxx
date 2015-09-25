@@ -25,13 +25,13 @@ static int initialize(genetic_algo *ga, candidate **gen_children, candidate **ca
 
    ga->population_size = GA_POPULATION_SIZE;
    ga->iterations = GA_ITERATIONS;
-   ga->population = (candidate *)malloc( (ga->population_size) * sizeof(candidate));
+   ga->population = (candidate *)malloc((ga->population_size) * sizeof(candidate));
    //memset(ga->population, 0, sizeof(ga->population_size) * sizeof(candidate));
 
-   *gen_children = (candidate *)(malloc(ga->population_size * sizeof(candidate)));
+   *gen_children = (candidate *)malloc(ga->population_size * sizeof(candidate));
    //memset(gen_children, 0, sizeof(gen_children)); 
    //memset(gen_children, 0, ga->population_size * sizeof(candidate));
-   *cache = (candidate *)(malloc((2 * ga->population_size) * sizeof(candidate)));
+   *cache = (candidate *)malloc((2 * ga->population_size) * sizeof(candidate));
    //memset(cache, 0, sizeof(cache)); 
    //memset(cache, 0, 2 * ga->population_size * sizeof(candidate));
 
@@ -87,7 +87,8 @@ int main(int argc, const char **argv)
  int orig, term;
  int ret_val = 0;
  float temp, best;
- clock_t start, end;
+ //clock_t start, end;
+ time_t start, end;
  double cpu_time_used;
 
  if (argc < 3) {
@@ -108,12 +109,19 @@ int main(int argc, const char **argv)
 
  init_net_data(&netinfo);
 
- parse(&netinfo);
+ ret_val = parse(&netinfo);
+ if (ret_val < 0) {
+    printf("\nExiting\n");
+    cleanup_net_data(&netinfo);
+    return 0;   
+ }
 
 //#ifdef DONT_EXECUTE_NOW
  ret = generate_rand(&ga, &netinfo);   
 //#endif
 
+ //start = clock();
+ start = time(NULL);
  for (i=0; i<ga.iterations; i++) {
 
     #ifdef ROULETTE_WHEEL_SELECTION
@@ -126,6 +134,10 @@ int main(int argc, const char **argv)
     printf("Generation %d\n", i+1);
     print_generation(ga.population, GA_POPULATION_SIZE, false);
 #endif
+    end = time(NULL);
+    //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cpu_time_used = (end - start);
+    printf("\nActual time: %lf\n", cpu_time_used);
     for (j=0; j<ga.population_size; j++) {
     //for (j=0; j<1; j++) {
        index = -1;
@@ -142,12 +154,21 @@ int main(int argc, const char **argv)
           } 
        }
        model_problem(dndp, &netinfo, ga.population[j]);
+    //end = clock();
+    end = time(NULL);
+    //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cpu_time_used = (end - start);
+    printf("\nActual time: %lf\n", cpu_time_used);
        //end = clock();
        dndp->p.lpOptimize("");  
+    end = time(NULL);
+    //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cpu_time_used = (end - start);
+    printf("\nActual time: %lf\n", cpu_time_used);
        //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 	       //printf("\nActual time: %lf\n", cpu_time_used);
 #ifdef _DEBUG
-       //print(&ga, &netinfo, dndp, j);
+       print(&ga, &netinfo, dndp, j);
 #endif
        printf("\nObjective value: %f\n", dndp->p.getObjVal());
        candidate_fitness(dndp, &netinfo, &(ga.population[j]));
@@ -170,7 +191,17 @@ int main(int argc, const char **argv)
        }
 
        delete dndp;
+    //end = clock();
+    end = time(NULL);
+    //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cpu_time_used = (end - start);
+    printf("\nActual time: %lf\n", cpu_time_used);
     }
+    //end = clock();
+    end = time(NULL);
+    //cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cpu_time_used = (end - start);
+    printf("\nActual time: %lf\n", cpu_time_used);
 #ifdef _DEBUG
     printf("\n\n************************************************\n");
     printf("Generation %d(Before sorting)\n", i+1);

@@ -9,7 +9,7 @@ int select_candidates_k(candidate *ga_cand, int size) {
    int i = 0;
    double fittest = 999999999;
    int fittest_index = 0;
-   while (i < 2) {
+   while (i < 3) {
       index[i] = get_random(size, true);
       if (i && (index[i] == index[i -1])) { // Wrong check. index[i] needs to be compared with all the previous indices
          continue;
@@ -53,7 +53,7 @@ int tournament_selection(candidate *ga_cand, candidate *gen_children, network_da
    // Remaining half of the next generation will be filled by doing crossover and mutation operations on the first half of the mating pool
    //genetic_ts_crossover(ga_cand, gen_children, netinfo, size);
    genetic_crossover(ga_cand, pool, gen_children, netinfo, size);
-   genetic_mutation(gen_children, netinfo, size);
+   genetic_mutation(ga_cand, gen_children, netinfo, size);
    free(pool);
    memcpy(&ga_cand[1], gen_children, (size-1) * sizeof(candidate));
    return 0;

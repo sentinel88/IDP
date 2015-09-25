@@ -63,7 +63,7 @@ int feasibility(candidate gen_cand, network_data *netinfo) {
 #ifdef _DEBUG
     printf("%d, orig: %d, term: %d\n ", gen_cand.binary_enc[i], orig, term);
 #endif
-    budget_sat += ( bin_val * netinfo->ba[orig][term]);
+    budget_sat += (bin_val * netinfo->ba[orig][term]);
     i++;
  }
  printf("\nBudget = %f\n", budget_sat);
@@ -100,10 +100,12 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
       term = netinfo->existing_links[i].term;
       if (cost_function_selector == 2) {
          //summation += (netinfo->Ta[orig][term] * (1 + (netinfo->Ba[orig][term] * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
-         //summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4))) );
-         summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term]  + (netinfo->Ba[orig][term] * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4)) );
 
-      } else {
+         summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4))) );   // Cost function for Sioux falls network
+
+        // summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term]  + (netinfo->Ba[orig][term] * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4)) );   // Cost function for berlin mitte center network
+
+      } else {   // Cost function for the example network
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());
          summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term] + (0.008 * pow(dndp->Xa[i].getSol(), 4)));
       }
@@ -116,9 +118,9 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
 //#ifdef _CODE   
    if (cost_function_selector == 2) {
          //summation += (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
-         //summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4))) );
+         summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4))) );
          //summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] + (netinfo->Ba[orig][term] * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4)) );
-         summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] + (ba * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4)) );
+         //summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] + (ba * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4)) );
       } else {
 //#endif
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());

@@ -41,7 +41,7 @@ int rank_based_selection(candidate *ga_cand, candidate *gen_children, network_da
       i++;
    }
    genetic_crossover(ga_cand, pool, gen_children, netinfo, size);
-   genetic_mutation(gen_children, netinfo, size);
+   genetic_mutation(ga_cand, gen_children, netinfo, size);
    free(pool);
    memcpy(&ga_cand[1], gen_children, (size-1) * sizeof(candidate));
    return 0;

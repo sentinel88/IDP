@@ -98,7 +98,7 @@ int genetic_crossover(candidate* ga_cand, candidate *pool, candidate *gen_childr
  rand_val = (double)rand() / (double)RAND_MAX;
 
  while(1) {
- if (error_flag) {
+    if(error_flag) {
           retry = 0;
           retry_attempts = 0;
           offspring_count = 0;
@@ -107,7 +107,8 @@ int genetic_crossover(candidate* ga_cand, candidate *pool, candidate *gen_childr
           switch_order = false;
           select_cross = true;
     }
-    if (k >= (size - 1)) break;
+    //if (k >= (size - 1)) break;
+    if (k >= size) break;
     if (rand_val > cross_prob) {
        rand_val = (double)rand() / (double)RAND_MAX;
        continue;
@@ -277,7 +278,7 @@ printf("\nCrossover for the 2nd offspring in the other order is unsuccessful or 
                     its a duplicate\n");
           printf("\nCrossover for the 2nd offspring in the other order is unsuccessful or we have Already tried enough attempts at generating a unique child from crossover. Reached max. limit for crossover attempts.\n");
           //memset(&gen_children[k], 0, sizeof(candidate));
-          if (!offspring_count) {
+          if(!offspring_count) {
              memcpy((char *)&gen_children[k].binary_enc, (char *)&pool[best_fit_index].binary_enc, NL * sizeof(unsigned char));
              k++;
           }
@@ -338,7 +339,8 @@ printf("\nCrossover for the 2nd offspring in the other order is unsuccessful or 
     error_flag = 0;
     offspring_count = (offspring_count+1) % 2;
     if (!offspring_count) rand_val = (double)rand() / (double)RAND_MAX;
-    if (k >= (size - 1)) break;
+    //if (k >= (size - 1)) break;
+    if (k >= (size)) break;
     //if (!switch_order) { retry_attempts = 1; switch_order = true; } else { switch_order = false; }
     if (!offspring_count) {
        retry_attempts = 0;
@@ -357,7 +359,7 @@ printf("\nCrossover for the 2nd offspring in the other order is unsuccessful or 
 }
 
 
-int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_size) {
+int genetic_mutation(candidate *ga_cand, candidate *gen_children, network_data *netinfo, int pool_size) {
    printf("\nEntering mutation routine\n");
    candidate temp, temp1;
    double rand_elem;
@@ -394,20 +396,26 @@ int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_si
       if (check_if_zero(gen_children[k])) {
          memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
          k++;
-         retry = 0;
+         //retry = 0;
          continue;
       }
       if (feasibility(gen_children[k], netinfo) != 0) {
          memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
-         if (retry == MAX_RETRY) { retry = 0; k++; continue; }
-         retry++; k++;
+         //if (retry == MAX_RETRY) { retry = 0; k++; continue; }
+         //retry++; 
+	 k++;
          continue;
       }
       memcpy(&temp1, &gen_children[k].binary_enc, sizeof(candidate));
       memcpy(&gen_children[k].binary_enc, &temp, sizeof(candidate));
-      if (k && check_duplicate(&temp1, gen_children, pool_size)) {
+      if(k && check_duplicate(&temp1, ga_cand, pool_size)) {
          k++;
-         retry = 0;
+         //retry = 0;
+         continue;
+      }
+      if(k && check_duplicate(&temp1, gen_children, pool_size)) {
+         k++;
+         //retry = 0;
          continue;
       }
       memset(&temp, 0, sizeof(candidate));
@@ -415,7 +423,7 @@ int genetic_mutation(candidate *gen_children, network_data *netinfo, int pool_si
       memset(&temp1, 0, sizeof(candidate));
       printf("\nMutation successfully done for candidate %d in the pool of children\n", k+1);
       k++;
-      retry = 0;
+      //retry = 0;
    }
 #else
    while(1) {

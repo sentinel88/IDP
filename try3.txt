@@ -1,0 +1,334 @@
+Enter main
+
+WARNING:  Please remember to change the settings for low budget problems to avoid getting stuck in an infinite loop. For low budget problems check_duplicate function is not a good idea as there are few feasible candidates in problems for low budget and one cannot avoid duplicates
+
+
+Inside initialize function
+
+Exiting initialize function
+
+Entering init_net_data function
+
+Exiting init_net_data function
+
+Inside parse function
+
+Reading from data file started
+
+1 2 20
+
+1 5 18
+
+2 3 23
+
+2 6 19
+
+3 4 17
+
+3 7 16
+
+5 6 14
+
+5 9 24
+
+6 10 20
+
+6 7 17
+
+7 11 26
+
+7 8 13
+
+8 12 19
+
+11 12 17
+
+4 8 22
+
+9 10 7
+
+10 11 18
+
+Partial parsing finished
+
+1 6 19.000000 7.000000
+
+5 10 25.000000 12.000000
+
+2 7 30.000000 7.000000
+
+6 11 32.000000 15.000000
+
+3 8 21.000000 11.000000
+
+7 12 28.000000 18.000000
+
+Exiting parse function
+
+Entering generate_rand
+
+Entering encode_ga_cand
+0 0 1 0 0 0 
+Existing encode_ga_cand
+
+Entering feasibility
+0, orig: 1, term: 6
+ 0, orig: 5, term: 10
+ 1, orig: 2, term: 7
+ 0, orig: 6, term: 11
+ 0, orig: 3, term: 8
+ 0, orig: 7, term: 12
+ 
+Budget = 7.000000
+
+Exiting feasiblity
+
+Entering encode_ga_cand
+0 1 1 1 0 1 
+Existing encode_ga_cand
+
+Entering feasibility
+0, orig: 1, term: 6
+ 1, orig: 5, term: 10
+ 1, orig: 2, term: 7
+ 1, orig: 6, term: 11
+ 0, orig: 3, term: 8
+ 1, orig: 7, term: 12
+ 
+Budget = 52.000000
+
+Not feasible
+
+Entering encode_ga_cand
+0 1 1 1 0 0 
+Existing encode_ga_cand
+
+Entering feasibility
+0, orig: 1, term: 6
+ 1, orig: 5, term: 10
+ 1, orig: 2, term: 7
+ 1, orig: 6, term: 11
+ 0, orig: 3, term: 8
+ 0, orig: 7, term: 12
+ 
+Budget = 34.000000
+
+Exiting feasiblity
+
+Entering check_duplicate function
+
+Exiting check_duplicate function
+
+Entering encode_ga_cand
+1 1 1 1 0 1 
+Existing encode_ga_cand
+
+Entering feasibility
+1, orig: 1, term: 6
+ 1, orig: 5, term: 10
+ 1, orig: 2, term: 7
+ 1, orig: 6, term: 11
+ 0, orig: 3, term: 8
+ 1, orig: 7, term: 12
+ 
+Budget = 59.000000
+
+Not feasible
+
+Entering encode_ga_cand
+0 1 1 0 1 0 
+Existing encode_ga_cand
+
+Entering feasibility
+0, orig: 1, term: 6
+ 1, orig: 5, term: 10
+ 1, orig: 2, term: 7
+ 0, orig: 6, term: 11
+ 1, orig: 3, term: 8
+ 0, orig: 7, term: 12
+ 
+Budget = 30.000000
+
+Exiting feasiblity
+
+Entering check_duplicate function
+
+Exiting check_duplicate function
+
+Entering encode_ga_cand
+0 0 0 0 1 0 
+Existing encode_ga_cand
+
+Entering feasibility
+0, orig: 1, term: 6
+ 0, orig: 5, term: 10
+ 0, orig: 2, term: 7
+ 0, orig: 6, term: 11
+ 1, orig: 3, term: 8
+ 0, orig: 7, term: 12
+ 
+Budget = 11.000000
+
+Exiting feasiblity
+
+Entering check_duplicate function
+
+Exiting check_duplicate function
+
+Entering encode_ga_cand
+0 0 0 0 1 1 
+Existing encode_ga_cand
+
+Entering feasibility
+0, orig: 1, term: 6
+ 0, orig: 5, term: 10
+ 0, orig: 2, term: 7
+ 0, orig: 6, term: 11
+ 1, orig: 3, term: 8
+ 1, orig: 7, term: 12
+ 
+Budget = 29.000000
+
+Exiting feasiblity
+
+Entering check_duplicate function
+
+Exiting check_duplicate function
+
+Entering encode_ga_cand
+1 1 0 0 0 0 
+Existing encode_ga_cand
+
+Entering feasibility
+1, orig: 1, term: 6
+ 1, orig: 5, term: 10
+ 0, orig: 2, term: 7
+ 0, orig: 6, term: 11
+ 0, orig: 3, term: 8
+ 0, orig: 7, term: 12
+ 
+Budget = 19.000000
+
+Exiting feasiblity
+
+Entering check_duplicate function
+
+Exiting check_duplicate function
+
+Entering encode_ga_cand
+1 0 1 1 1 0 
+Existing encode_ga_cand
+
+Entering feasibility
+1, orig: 1, term: 6
+ 0, orig: 5, term: 10
+ 1, orig: 2, term: 7
+ 1, orig: 6, term: 11
+ 1, orig: 3, term: 8
+ 0, orig: 7, term: 12
+ 
+Budget = 40.000000
+
+Exiting feasiblity
+
+Entering check_duplicate function
+
+Exiting check_duplicate function
+
+Entering encode_ga_cand
+1 0 0 1 1 1 
+Existing encode_ga_cand
+
+Entering feasibility
+1, orig: 1, term: 6
+ 0, orig: 5, term: 10
+ 0, orig: 2, term: 7
+ 1, orig: 6, term: 11
+ 1, orig: 3, term: 8
+ 1, orig: 7, term: 12
+ 
+Budget = 51.000000
+
+Not feasible
+
+Entering encode_ga_cand
+0 1 0 1 1 0 
+Existing encode_ga_cand
+
+Entering feasibility
+0, orig: 1, term: 6
+ 1, orig: 5, term: 10
+ 0, orig: 2, term: 7
+ 1, orig: 6, term: 11
+ 1, orig: 3, term: 8
+ 0, orig: 7, term: 12
+ 
+Budget = 38.000000
+
+Exiting feasiblity
+
+Entering check_duplicate function
+
+Exiting check_duplicate function
+
+Entering encode_ga_cand
+0 1 1 0 0 0 
+Existing encode_ga_cand
+
+Entering feasibility
+0, orig: 1, term: 6
+ 1, orig: 5, term: 10
+ 1, orig: 2, term: 7
+ 0, orig: 6, term: 11
+ 0, orig: 3, term: 8
+ 0, orig: 7, term: 12
+ 
+Budget = 19.000000
+
+Exiting feasiblity
+
+Entering check_duplicate function
+
+Exiting check_duplicate function
+
+Entering encode_ga_cand
+0 0 1 0 1 0 
+Existing encode_ga_cand
+
+Entering feasibility
+0, orig: 1, term: 6
+ 0, orig: 5, term: 10
+ 1, orig: 2, term: 7
+ 0, orig: 6, term: 11
+ 1, orig: 3, term: 8
+ 0, orig: 7, term: 12
+ 
+Budget = 18.000000
+
+Exiting feasiblity
+
+Entering check_duplicate function
+
+Exiting check_duplicate function
+
+Exiting generate_rand
+
+Genetic algorithm: Iteration 1
+
+
+************************************************
+Generation 1
+************************************************
+Candidate 1: 001000
+Candidate 2: 011100
+Candidate 3: 011010
+Candidate 4: 000010
+Candidate 5: 000011
+Candidate 6: 110000
+Candidate 7: 101110
+Candidate 8: 010110
+Candidate 9: 011000
+Candidate 10: 001010
+************************************************
+
+Actual time: 0.000000
