@@ -9,9 +9,9 @@ rm -rf $LOG2_PATH/*
 
 let a=1
 let b=1
-let i=1
+let i=2
 let k=2
-for (( i=1; i<=7; i++));
+for (( i=2; i<=7; i++));
 do
 b=$i
 a=$(($b * 10))
