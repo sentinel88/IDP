@@ -28,7 +28,7 @@ static int initialize(genetic_algo *ga, candidate **gen_children, candidate **ca
    ga->population = (candidate *)malloc((ga->population_size) * sizeof(candidate));
    //memset(ga->population, 0, sizeof(ga->population_size) * sizeof(candidate));
 
-   *gen_children = (candidate *)malloc(ga->population_size * sizeof(candidate));
+   *gen_children = (candidate *)malloc((ga->population_size) * sizeof(candidate));
    //memset(gen_children, 0, sizeof(gen_children)); 
    //memset(gen_children, 0, ga->population_size * sizeof(candidate));
    *cache = (candidate *)malloc((2 * ga->population_size) * sizeof(candidate));
@@ -212,6 +212,7 @@ int main(int argc, const char **argv)
     if (selection_scheme == TOURNAMENT_SELECTION) {
         if (i < (ga.iterations - 1)) {
            memcpy(cache, ga.population, sizeof(candidate) * GA_POPULATION_SIZE);
+           //memset(gen_children, 0, sizeof(candidate) * GA_POPULATION_SIZE);
            tournament_selection(ga.population, gen_children, &netinfo, GA_POPULATION_SIZE);
            memcpy(&ga.population[0], &cache[last_best_index], sizeof(candidate));
        	   last_best_index = 0;
@@ -275,6 +276,8 @@ int main(int argc, const char **argv)
       ga.population = new_gen;*/
       new_gen = NULL;
    }
+   //free(gen_children);
+   //gen_children = (candidate *)malloc((ga.population_size) * sizeof(candidate));
 //#endif
  }
 
@@ -282,6 +285,7 @@ int main(int argc, const char **argv)
  //printf("\nFinal objective value for DNDP is %f\n", best);
  free(gen_children);
  free(ga.population);
+ free(cache);
  gen_children = NULL;
 
  //clean(&netinfo);

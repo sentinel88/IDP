@@ -144,6 +144,7 @@ int parse(network_data *netinfo) {
    }
 #endif
 //#endif 
+   fclose(datafile);
    printf("\nExiting parse function\n");
    return 0;
 } 

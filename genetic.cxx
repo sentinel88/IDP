@@ -19,6 +19,7 @@ int generate_rand(genetic_algo *ga, network_data *netinfo) {
 	j = intervals;
 	rand_elem = rand();
 	while(j--) {
+	   if (count == GA_POPULATION_SIZE) break;
 	   value = rand_elem & temp;
 	   if (value == 0) continue;
 	   encode_ga_cand(&(ga->population[count]), value);
@@ -123,11 +124,13 @@ int genetic_crossover(candidate* ga_cand, candidate *pool, candidate *gen_childr
     rand_elem = rand_elem >> NL;
     if (value == 0) continue;*/
     printf("\n");
-if (select_cross) {
-    value = get_random(NL, false);
+    if (select_cross) {
+    //value = get_random(NL, false);
+    value = get_random(NL, true);
 #ifdef TWO_POINT_CROSSOVER
     do {
-       value2 = get_random(NL, false);
+       //value2 = get_random(NL, false);
+       value2 = get_random(NL, true);
     } while(value2 == value);
 
     if (value < value2) {
@@ -188,7 +191,7 @@ the binary_enc */
 #ifdef TWO_POINT_CROSSOVER
     memcpy((char *)&gen_children[k].binary_enc, (char *)&pool[i1].binary_enc, crossover[0]);
     memcpy((char *)&gen_children[k].binary_enc + crossover[0], (char *)&pool[i2].binary_enc + crossover[0], crossover[1] - crossover[0]);
-    memcpy((char *)&gen_children[k].binary_enc + crossover[1], (char *)&pool[i1].binary_enc + crossover[0], NL - crossover[1]);
+    memcpy((char *)&gen_children[k].binary_enc + crossover[1], (char *)&pool[i1].binary_enc + crossover[1], NL - crossover[1]);
     /*if (k < (size-1)) {
        memcpy((char *)&gen_children[k+1].binary_enc, (char *)&pool[i2].binary_enc, crossover[0]);
        memcpy((char *)&gen_children[k+1].binary_enc + crossover[0], (char *)&pool[i1].binary_enc + crossover[0], crossover[1] - crossover[0]);
@@ -352,6 +355,7 @@ printf("\nCrossover for the 2nd offspring in the other order is unsuccessful or 
        switch_order = true;
     }
  }
+ printf("\nk = %d\n",k); 
  //memcpy(&gen_children[0], &temp_gen[0], sizeof(candidate) * GA_POPULATION_SIZE);
  //free(temp_gen);
  printf("\nExiting crossover function\n");

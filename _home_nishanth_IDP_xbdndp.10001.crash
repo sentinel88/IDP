@@ -1,0 +1,192 @@
+ApportVersion: 2.14.1-0ubuntu3.11
+AssertionMessage: *** Error in `./xbdndp': double free or corruption (!prev): 0x000000000178e010 ***
+Disassembly:
+ => 0x7fd26ad3ecc9 <__GI_raise+57>:	cmp    $0xfffffffffffff000,%rax
+    0x7fd26ad3eccf <__GI_raise+63>:	ja     0x7fd26ad3ecea <__GI_raise+90>
+    0x7fd26ad3ecd1 <__GI_raise+65>:	repz retq 
+    0x7fd26ad3ecd3 <__GI_raise+67>:	nopl   0x0(%rax,%rax,1)
+    0x7fd26ad3ecd8 <__GI_raise+72>:	test   %eax,%eax
+    0x7fd26ad3ecda <__GI_raise+74>:	jg     0x7fd26ad3ecb9 <__GI_raise+41>
+    0x7fd26ad3ecdc <__GI_raise+76>:	mov    %eax,%ecx
+    0x7fd26ad3ecde <__GI_raise+78>:	neg    %ecx
+    0x7fd26ad3ece0 <__GI_raise+80>:	test   $0x7fffffff,%eax
+    0x7fd26ad3ece5 <__GI_raise+85>:	cmove  %esi,%ecx
+    0x7fd26ad3ece8 <__GI_raise+88>:	jmp    0x7fd26ad3ecb9 <__GI_raise+41>
+    0x7fd26ad3ecea <__GI_raise+90>:	mov    0x387177(%rip),%rdx        # 0x7fd26b0c5e68
+    0x7fd26ad3ecf1 <__GI_raise+97>:	neg    %eax
+    0x7fd26ad3ecf3 <__GI_raise+99>:	mov    %eax,%fs:(%rdx)
+    0x7fd26ad3ecf6 <__GI_raise+102>:	or     $0xffffffffffffffff,%rax
+    0x7fd26ad3ecfa <__GI_raise+106>:	retq
+HookError_generic:
+ Traceback (most recent call last):
+   File "/usr/lib/python3/dist-packages/apport/report.py", line 197, in _run_hook
+     symb['add_info'](report, ui)
+   File "/usr/share/apport/general-hooks/generic.py", line 60, in add_info
+     if not ui.yesno('''The crashed program seems to use third-party or local libraries:
+ AttributeError: 'NoneType' object has no attribute 'yesno'
+ 
+InstallationDate: Installed on 2015-03-04 (205 days ago)
+InstallationMedia: Ubuntu 14.04.2 LTS "Trusty Tahr" - Release amd64 (20150218.1)
+ProcVersionSignature: Ubuntu 3.16.0-38.52~14.04.1-generic 3.16.7-ckt10
+Registers:
+ rax            0x0	0
+ rbx            0x53	83
+ rcx            0xffffffffffffffff	-1
+ rdx            0x6	6
+ rsi            0x319b	12699
+ rdi            0x319b	12699
+ rbp            0x7fff5878dbf0	0x7fff5878dbf0
+ rsp            0x7fff5878d858	0x7fff5878d858
+ r8             0x3031306538373130	3472609998972334384
+ r9             0x6f6974707572726f	8028075837120213615
+ r10            0x8	8
+ r11            0x202	514
+ r12            0x7fff5878da00	140734677703168
+ r13            0x7	7
+ r14            0x53	83
+ r15            0x7	7
+ rip            0x7fd26ad3ecc9	0x7fd26ad3ecc9 <__GI_raise+57>
+ eflags         0x202	[ IF ]
+ cs             0x33	51
+ ss             0x2b	43
+ ds             0x0	0
+ es             0x0	0
+ fs             0x0	0
+ gs             0x0	0
+Stacktrace:
+ #0  0x00007fd26ad3ecc9 in __GI_raise (sig=sig@entry=6) at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
+         resultvar = 0
+         pid = 12699
+         selftid = 12699
+ #1  0x00007fd26ad420d8 in __GI_abort () at abort.c:89
+         save_stage = 2
+         act = {__sigaction_handler = {sa_handler = 0x1798838, sa_sigaction = 0x1798838}, sa_mask = {__val = {140541702297665, 0, 140541702123088, 140541725267840, 0, 69054992, 140541702190793, 140541725267840, 140541702252425, 69054992, 140541702123088, 140734677703088, 140541702123088, 24741944, 140541704538356, 479}}, sa_flags = 1782438548, sa_restorer = 0x4}
+         sigs = {__val = {32, 0 <repeats 15 times>}}
+ #2  0x00007fd26ad7b394 in __libc_message (do_abort=do_abort@entry=1, fmt=fmt@entry=0x7fd26ae89b28 "*** Error in `%s': %s: 0x%s ***\n") at ../sysdeps/posix/libc_fatal.c:175
+         ap = {{gp_offset = 40, fp_offset = 32767, overflow_arg_area = 0x7fff5878dc00, reg_save_area = 0x7fff5878db90}}
+         fd = 4
+         on_2 = <optimized out>
+         list = <optimized out>
+         nlist = <optimized out>
+         cp = <optimized out>
+         written = <optimized out>
+ #3  0x00007fd26ad8766e in malloc_printerr (ptr=<optimized out>, str=0x7fd26ae89c10 "double free or corruption (!prev)", action=1) at malloc.c:4996
+         buf = "000000000178e010"
+         cp = <optimized out>
+ #4  _int_free (av=<optimized out>, p=<optimized out>, have_lock=0) at malloc.c:3840
+         size = <optimized out>
+         fb = <optimized out>
+         nextchunk = <optimized out>
+         nextsize = <optimized out>
+         nextinuse = <optimized out>
+         prevsize = <optimized out>
+         bck = <optimized out>
+         fwd = <optimized out>
+         errstr = <optimized out>
+         locked = <optimized out>
+ #5  0x0000000000402239 in main (argc=4, argv=0x7fff5878de88) at xbdndp.cxx:287
+         new_gen = 0x7fff5878dd50
+         total_fitness = 0
+         i = 7
+         flag = 0
+         ret = 0
+         last_best_fitness = 7098402.5
+         j = 10
+         start = 1443243117
+         ga = {population_size = 10, iterations = 7, population = 0x178e010}
+         last_best_iter = 0
+         count = 0
+         ret_val = 0
+         last_best_index = 0
+         pool_size = 0
+         cpu_time_used = 43
+         cache = 0x178e1b0
+         index = 0
+         netinfo = {Ca = 0x178e350, Ba = 0x178e420, Ta = 0x178e4f0, Demand = 0x178e5c0, ba = 0x178e690, EdgeMatrix = 0x178e760, budget = 1.40129846e-45, existing_links = 0x178e830, new_links = 0x178eaa0}
+         gen_children = 0x178e0e0
+         end = 1443243160
+StacktraceAddressSignature: /home/nishanth/IDP/xbdndp:6:x86_64:/lib/x86_64-linux-gnu/libc-2.19.so+36cc9:/lib/x86_64-linux-gnu/libc-2.19.so+3a0d8:/lib/x86_64-linux-gnu/libc-2.19.so+73394:/lib/x86_64-linux-gnu/libc-2.19.so+7f66e:/home/nishanth/IDP/xbdndp+2239
+StacktraceTop:
+ __libc_message (do_abort=do_abort@entry=1, fmt=fmt@entry=0x7fd26ae89b28 "*** Error in `%s': %s: 0x%s ***\n") at ../sysdeps/posix/libc_fatal.c:175
+ malloc_printerr (ptr=<optimized out>, str=0x7fd26ae89c10 "double free or corruption (!prev)", action=1) at malloc.c:4996
+ _int_free (av=<optimized out>, p=<optimized out>, have_lock=0) at malloc.c:3840
+ main (argc=4, argv=0x7fff5878de88) at xbdndp.cxx:287
+Tags:  trusty
+ThreadStacktrace:
+ .
+ Thread 2 (Thread 0x7fd268e58700 (LWP 12700)):
+ #0  pthread_cond_timedwait@@GLIBC_2.3.2 () at ../nptl/sysdeps/unix/sysv/linux/x86_64/pthread_cond_timedwait.S:238
+ No locals.
+ #1  0x00007fd26ab697ac in ?? () from /home/nishanth/xpressmp/lib/libxprl.so.x7.8
+ No symbol table info available.
+ #2  0x00007fd26ab51d34 in ?? () from /home/nishanth/xpressmp/lib/libxprl.so.x7.8
+ No symbol table info available.
+ #3  0x00007fd269479182 in start_thread (arg=0x7fd268e58700) at pthread_create.c:312
+         __res = <optimized out>
+         pd = 0x7fd268e58700
+         now = <optimized out>
+         unwind_buf = {cancel_jmp_buf = {{jmp_buf = {140541679732480, 4349961156789820205, 0, 0, 140541679733184, 140541679732480, -4324868055206962387, -4324871610790159571}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x0, 0x0}, data = {prev = 0x0, cleanup = 0x0, canceltype = 0}}}
+         not_first_call = <optimized out>
+         pagesize_m1 = <optimized out>
+         sp = <optimized out>
+         freesize = <optimized out>
+         __PRETTY_FUNCTION__ = "start_thread"
+ #4  0x00007fd26ae0247d in clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:111
+ No locals.
+ .
+ Thread 1 (Thread 0x7fd26b9c5780 (LWP 12699)):
+ #0  0x00007fd26ad3ecc9 in __GI_raise (sig=sig@entry=6) at ../nptl/sysdeps/unix/sysv/linux/raise.c:56
+         resultvar = 0
+         pid = 12699
+         selftid = 12699
+ #1  0x00007fd26ad420d8 in __GI_abort () at abort.c:89
+         save_stage = 2
+         act = {__sigaction_handler = {sa_handler = 0x1798838, sa_sigaction = 0x1798838}, sa_mask = {__val = {140541702297665, 0, 140541702123088, 140541725267840, 0, 69054992, 140541702190793, 140541725267840, 140541702252425, 69054992, 140541702123088, 140734677703088, 140541702123088, 24741944, 140541704538356, 479}}, sa_flags = 1782438548, sa_restorer = 0x4}
+         sigs = {__val = {32, 0 <repeats 15 times>}}
+ #2  0x00007fd26ad7b394 in __libc_message (do_abort=do_abort@entry=1, fmt=fmt@entry=0x7fd26ae89b28 "*** Error in `%s': %s: 0x%s ***\n") at ../sysdeps/posix/libc_fatal.c:175
+         ap = {{gp_offset = 40, fp_offset = 32767, overflow_arg_area = 0x7fff5878dc00, reg_save_area = 0x7fff5878db90}}
+         fd = 4
+         on_2 = <optimized out>
+         list = <optimized out>
+         nlist = <optimized out>
+         cp = <optimized out>
+         written = <optimized out>
+ #3  0x00007fd26ad8766e in malloc_printerr (ptr=<optimized out>, str=0x7fd26ae89c10 "double free or corruption (!prev)", action=1) at malloc.c:4996
+         buf = "000000000178e010"
+         cp = <optimized out>
+ #4  _int_free (av=<optimized out>, p=<optimized out>, have_lock=0) at malloc.c:3840
+         size = <optimized out>
+         fb = <optimized out>
+         nextchunk = <optimized out>
+         nextsize = <optimized out>
+         nextinuse = <optimized out>
+         prevsize = <optimized out>
+         bck = <optimized out>
+         fwd = <optimized out>
+         errstr = <optimized out>
+         locked = <optimized out>
+ #5  0x0000000000402239 in main (argc=4, argv=0x7fff5878de88) at xbdndp.cxx:287
+         new_gen = 0x7fff5878dd50
+         total_fitness = 0
+         i = 7
+         flag = 0
+         ret = 0
+         last_best_fitness = 7098402.5
+         j = 10
+         start = 1443243117
+         ga = {population_size = 10, iterations = 7, population = 0x178e010}
+         last_best_iter = 0
+         count = 0
+         ret_val = 0
+         last_best_index = 0
+         pool_size = 0
+         cpu_time_used = 43
+         cache = 0x178e1b0
+         index = 0
+         netinfo = {Ca = 0x178e350, Ba = 0x178e420, Ta = 0x178e4f0, Demand = 0x178e5c0, ba = 0x178e690, EdgeMatrix = 0x178e760, budget = 1.40129846e-45, existing_links = 0x178e830, new_links = 0x178eaa0}
+         gen_children = 0x178e0e0
+         end = 1443243160
+Title: xbdndp assert failure: *** Error in `./xbdndp': double free or corruption (!prev): 0x000000000178e010 ***
+UnreportableReason: This package does not seem to be installed correctly
+UpgradeStatus: No upgrade log present (probably fresh install)
+_MarkForUpload: True

@@ -1,0 +1,1 @@
+Check the memcpy operations during crossover operation. We might be filling beyond the boundary of binary_enc because crossover points are between 1 and NL and not starting from 0.
