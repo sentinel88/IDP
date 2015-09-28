@@ -53,7 +53,10 @@
 %----------------------------------------------------------------------------------------
 %   TITLE SECTION
 %----------------------------------------------------------------------------------------
-\vspace{48mm}
+\vspace{35mm}
+\begin{center}
+\Large\textit{Inter Discplinary Project}
+\end{center}
 \HRule \\[0.4cm]
 { \Large \bfseries Implementation of a Metaheuristic\\for the\\Discrete Network Design Problem}\\[0.5cm] % Title of your document
 \HRule \\[1.5cm]
@@ -515,6 +518,7 @@ Example of a problem:  \textbf{Knapsack problem}\\
 The problem:  There are items with given value and size. The knapsack has given capacity. Select items to maximize the value of items in 
 knapsack, but do not extend knapsack capacity.\\
 Encoding: Each bit says, if the corresponding item is in knapsack.\\~\\
+\clearpage
 \textbf{\textit{Permutation Encoding: }}
 This type of encoding can be used in ordering problems, such as traveling salesman problem or task ordering problem. In permutation encoding,
 every chromosome is a string of numbers, which represents number in a sequence.
@@ -545,9 +549,14 @@ Example of Problem: \textbf{Finding weights for neural network}\\
 The problem: There is some neural network with given architecture. Find weights for inputs of neurons to train the network for wanted output.\\
 Encoding: Real values in chromosomes represent corresponding weights for inputs.\\~\\
 \textbf{\textit{Tree Encoding: }}
-Tree encoding is used mainly for evolving programs or expressions, for genetic programming. In tree encoding every chromosome is a tree of some objects, such as functions or commands in programming language. \\
-Diagram here\\
- Example of chromosomes with tree encoding\\
+Tree encoding is used mainly for evolving programs or expressions, for genetic programming. In tree encoding every chromosome is a tree of some objects, such as functions or commands in programming language. 
+\begin{figure}[h]
+\floatpagestyle{empty}
+\includegraphics[scale=0.85]{./treeenc.eps}
+\caption{\textbf{Tree Encoding}}
+\label{fig 9}
+\end{figure}
+Example of chromosomes with tree encoding\\
 Tree encoding is good for evolving programs. Programing language LISP is often used to this, because programs in it are represented in this form and can be easily parsed as a tree, so the crossover and mutation can be done relatively easily.\\~\\
 Example of Problem: \textbf{Finding a function from given values}\\
 The problem: Some input and output values are given. Task is to find a function, which will give the best (closest to wanted) output to all inputs.\\
@@ -560,7 +569,7 @@ rate of a GA is largely determined by the selection pressure, with higher select
 able to identify optimal or near-optimal solutions under a wide range of selection pressure[5]. However , if the selection pressure is too low, the convergence rate will be slow, and the GA will unnecessarily take longer to find the optimal solution. If the selection pressure is too 
 high, there is an increased chance of the GA prematurely converging to an incorrect (suboptimal) solution.
 \begin{itemize}
-\item Default selection
+\item Random selection
 \item Fitness proportionate selection
 \item Rank selection
 \item Tournament selection
@@ -571,7 +580,7 @@ high, there is an increased chance of the GA prematurely converging to an incorr
 Following content explains the first four of the above techniques in more detail.
 %\begin{large}\textbf{Fitness Proportionate Selection:}\end{large}
 \newpage
-\subsubsection{Default Selection}
+\subsubsection{Random Selection}
 This method does not follow any specific selection scheme. It selects parent chromosomes at random from the existing pool of candidate solutions. In this project, the implementation selects at random 2 candidates from the existing pool to follow up with crossover and mutation operations. This selection scheme is mainly intended for comparison purposes with other selection schemes such as the rank based selection and the tournament selection method. It allows us to observe the positive impact that the other selection schemes may have on the evolution of the population by using methods that influence the selection of candidates based on some criteria of fitness(weighted or absolute).
 The probability of selection of an individual $a_i$ is:
 \begin{large}
@@ -820,7 +829,7 @@ Programming Language : \textbf{\textit{C}}\\~\\
 Operating System : \textbf{\textit{Linux}}\\~\\
 Selection Schemes : \textbf{\textit{Default, Rank based and Tournament}}\\~\\
 Crossover operators : \textbf{\textit{Single point , Two point}}\\~\\
-Mutation operators : \textbf{\textit{Random mutation}}\\~\\
+Mutation operators : \textbf{\textit{Random mutation, Bit flip mutation}}\\~\\
 Datasets for testing : \textbf{\textit{Braess network, Sioux falls network, Berlin mitte center}}\\~\\
 Visualization of traffic network simulation : \textbf{\textit{NexTA}}\\~\\
 Range of budget for DNDP : \textbf{\textit{10 - 180}}\\
