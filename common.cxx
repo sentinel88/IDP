@@ -6,6 +6,7 @@
 void print(genetic_algo *ga, network_data *netinfo, model_data *dndp, int j) {
     printf("\nInside print function\n");
     int orig, term;
+    int r,s;
     printf("\nTravelers on all the links\n");
     /***Travelers on link a***/
     for (int m=0; m<EL; m++) {
@@ -13,7 +14,7 @@ void print(genetic_algo *ga, network_data *netinfo, model_data *dndp, int j) {
       term = netinfo->existing_links[m].term;
       //printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[orig][term]).getSol());
       printf("[%d, %d] = %lf\n", orig, term, (dndp->Xa[m]).getSol());
-    #ifdef _DEBUG
+    #ifdef _DEBUG1
       for (int n=1; n<=M; n++) {
          printf("%lf\t", dndp->x[m][n].getSol());
       }
@@ -32,6 +33,24 @@ void print(genetic_algo *ga, network_data *netinfo, model_data *dndp, int j) {
           }
           printf("\n\n");
           #endif
+       }
+    }
+    printf("\nFlows on the links w.r.t OD pairs\n");
+    for (int i=1; i<=OD; i++) {
+       r = (i/ZONES);
+       s = (i%ZONES);
+       r = (r==0)?1 : (s==0?r : (r+1));
+       s = (s==0)?ZONES : s;
+       if (netinfo->Demand[r][s]) {
+          for (int l=0; l<EL; l++) {
+	     if ((dndp->Fa_rs[i][l]).getSol() != 0.0) {
+	        printf("\nPair: [%d, %d]\n", r, s);
+      	        orig = netinfo->existing_links[l].orig;
+                term = netinfo->existing_links[l].term;
+                printf("[%d, %d] = %lf\t", orig, term, (dndp->Fa_rs[i][l]).getSol());
+	     }
+          }
+          printf("\n");
        }
     }
     printf("\nExiting print function\n");
@@ -103,7 +122,7 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
 
          summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4))) );   // Cost function for Sioux falls network
 
-        // summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term]  + (netinfo->Ba[orig][term] * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4)) );   // Cost function for berlin mitte center network
+         //summation += (dndp->Xa[i].getSol()) * (netinfo->Ta[orig][term]  + (netinfo->Ba[orig][term] * pow( (dndp->Xa[i].getSol() / netinfo->Ca[orig][term]), 4)) );   // Cost function for berlin mitte center network
 
       } else {   // Cost function for the example network
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());
@@ -118,9 +137,9 @@ int candidate_fitness(model_data *dndp, network_data *netinfo, candidate *ga_can
 //#ifdef _CODE   
    if (cost_function_selector == 2) {
          //summation += (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[orig][term].getSol() / netinfo->Ca[orig][term]), 4))) );
-         summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4))) );
+        // summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] * (1 + (0.15 * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4))) );
          //summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] + (netinfo->Ba[orig][term] * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4)) );
-         //summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] + (ba * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4)) );
+         summation += (dndp->Xa[EL+i].getSol()) * (netinfo->Ta[orig][term] + (ba * pow( (dndp->Xa[EL+i].getSol() / netinfo->Ca[orig][term]), 4)) );
       } else {
 //#endif
          //summation += (netinfo->Ta[orig][term]) * (dndp->Xa[orig][term].getSol());

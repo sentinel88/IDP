@@ -123,7 +123,6 @@ int main(int argc, const char **argv)
  //start = clock();
  start = time(NULL);
  for (i=0; i<ga.iterations; i++) {
-
     #ifdef ROULETTE_WHEEL_SELECTION
        total_fitness = 0;
     #endif

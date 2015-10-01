@@ -106,7 +106,7 @@ I would like to thank Mr. Pirmin Fontaine for his constant support and guidance 
 \end{center}
 \thispagestyle{empty}
 \vspace{35mm}
-
+\noindent
 The field of transportation planning involves a large class of problems that are characterized by multiple levels of decision making. Examples include selection of links for capacity improvements(network design), toll setting, traffic signal setting etc. In each of these problems, government or industry officials make one set of decisions to improve the network performance and at another level users make choices with regard to route, origin-destination etc. The discrete network design problem(DNDP) is one such problem which deals with the selection of link additions to an existing road network, with given demand from each origin to destination. The objective is to make an optimal investment decision to minimize the total travel cost in the network, while accounting for the route choice behavior of network users. This optimization problem is recognized to be NP hard because it is computationally difficult due to its non convexity owing to the bilevel nature and non-linear objective functions in most of the real cases. Finding exact or globally optimum solutions for such problems is very difficult. In mathematical optimization, a metaheuristic is a general high level procedure that can be quickly applied to different kinds of problems to provide a sufficiently good solution especially when there is limited computation capacity. These techniques sample a set of solutions which is too large to be completely sampled. Genetic algorithm is one such kind of a metaheuristic which tries to imitate the evolution of population by starting with a random set of candidate solutions that is evolved towards better solutions. The aim of the project is to implement this metaheuristic on the DNDP and to experiment with small to large size datasets(networks) widely mentioned in the literature to derive empirical results and to conclude on the effectiveness, solvability and quality of solutions obtained.
 
 \newpage
@@ -163,6 +163,7 @@ The set of pairs $\left(x,y\right)$ satisying the constraints of both the lower 
 \label{fig:2}
 \end{figure}
 \noindent
+\\
 The feasible set of the lower level problem for a fixed value of y is just the intersection of the set M with the set of all points above the point $\left(0,y\right)$ on the $y$-axis. Now, if the function $f \left(x,y\right) = -x$ is minimized on this set, we arrive at a point on the thick line which thus is the optimal solution of the lower level problem:\\
 \begin{large}
 \[
@@ -234,7 +235,7 @@ A rough \textbf{timeline} from when the project started till its completion time
 \item Feb 4, 2015 to April 14, 2015 - Further literature reading, setup, understanding and practical usage of the FICO Xpress software, learning to write code using BCL component.
 \item April 15, 2015 to July 31, 2015 - Implementation phase with good amount of testing. Further testing will follow on larger datasets with additional code to provide extensions.
 \item Aug 1, 2015 to Aug 30, 2015 - Documentation and Presentation
-\item Early Sep 2015 - Completion of IDP
+\item Sep 2015 - Completion of IDP
 \end{itemize}
 
 \subsection{Software Requirements}
@@ -394,8 +395,9 @@ Bilevel formulation:
 & y_{a}\ \in\ {0,1}\ \mathrm{\forall{a}\in{A_{2}}}
 %\end{equation*}
 \end{align*} %\\
-\end{large} \\
-\textbf{Linearization of non-linear convex functions}\\
+\end{large} 
+\clearpage
+\textbf{Linearization of non-linear convex functions}\\~\\
 Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $m+1$ approximation points $\left(\nu_{0},f_{0}\right)$, $\left(\nu_{1},f_{1}\right)$,...,$\left(\nu_{m},f_{m}\right)$ with $f_{i}:=f\left(\nu_{i}\right)$. Further, $f\left(x\right)$ is a function in the single flow variable $x_{a}$ and $v_{m}\geq\ \max_{a\in{A}}{x_{a}}$. The trivial upper bound is $\sum_{r\in{R},s\in{S}} q_{rs}$. However, as $x_{a}$ can be much smaller than $\sum_{r\in{R},s\in{S}} q_{rs}$, empirical upper bounds can further improve the quality of the approximation. Define $a_{i}=\frac{f_{i}-f_{i-1}}{\nu_{i}-\nu_{i-1}}$ and $b_{i}:=-v_{i-1}a_{i}+f_{i-1}$. Then $f\left(x\right)$ can be approximated by the following function:
 \begin{large}
 \[
@@ -519,6 +521,7 @@ The problem:  There are items with given value and size. The knapsack has given 
 knapsack, but do not extend knapsack capacity.\\
 Encoding: Each bit says, if the corresponding item is in knapsack.\\~\\
 \clearpage
+\noindent
 \textbf{\textit{Permutation Encoding: }}
 This type of encoding can be used in ordering problems, such as traveling salesman problem or task ordering problem. In permutation encoding,
 every chromosome is a string of numbers, which represents number in a sequence.
@@ -551,12 +554,12 @@ Encoding: Real values in chromosomes represent corresponding weights for inputs.
 \textbf{\textit{Tree Encoding: }}
 Tree encoding is used mainly for evolving programs or expressions, for genetic programming. In tree encoding every chromosome is a tree of some objects, such as functions or commands in programming language. 
 \begin{figure}[h]
-\floatpagestyle{empty}
-\includegraphics[scale=0.85]{./treeenc.eps}
+\centering
+\includegraphics[width=90mm,height=55mm]{./treeenc.jpg}
 \caption{\textbf{Tree Encoding}}
 \label{fig 9}
 \end{figure}
-Example of chromosomes with tree encoding\\
+Example of chromosomes with tree encoding\\~\\
 Tree encoding is good for evolving programs. Programing language LISP is often used to this, because programs in it are represented in this form and can be easily parsed as a tree, so the crossover and mutation can be done relatively easily.\\~\\
 Example of Problem: \textbf{Finding a function from given values}\\
 The problem: Some input and output values are given. Task is to find a function, which will give the best (closest to wanted) output to all inputs.\\
@@ -579,7 +582,6 @@ high, there is an increased chance of the GA prematurely converging to an incorr
 \end{itemize}
 Following content explains the first four of the above techniques in more detail.
 %\begin{large}\textbf{Fitness Proportionate Selection:}\end{large}
-\newpage
 \subsubsection{Random Selection}
 This method does not follow any specific selection scheme. It selects parent chromosomes at random from the existing pool of candidate solutions. In this project, the implementation selects at random 2 candidates from the existing pool to follow up with crossover and mutation operations. This selection scheme is mainly intended for comparison purposes with other selection schemes such as the rank based selection and the tournament selection method. It allows us to observe the positive impact that the other selection schemes may have on the evolution of the population by using methods that influence the selection of candidates based on some criteria of fitness(weighted or absolute).
 The probability of selection of an individual $a_i$ is:
@@ -728,14 +730,10 @@ Child: 110100001
 \end{center}
 Depending on how the chromosome represents the solution, a direct swap may not be possible. One such case is when the chromosome is an ordered list, such as an ordered list of the cities to be travelled for the traveling salesman problem. There are many crossover methods for ordered chromosomes. The already mentioned N-point crossover can be applied for ordered chromosomes also, but this always need a corresponding repair process, actually, some ordered crossover methods are derived from the idea. However, sometimes a crossover of chromosomes produces recombinations which violate the constraint of ordering and thus need to be repaired. Some of the techniques are given below:
 \begin{itemize}
-\item  partially matched crossover (PMX): In this method, two crossover points are selected at random and PMX proceeds by position wise exchanges. The two crossover points give matching selection. It affects cross by position-by-position exchange operations. In this method parents are mapped to each other, hence we can also call it partially mapped crossover.[5]
-\item  cycle crossover (CX): Beginning at any gene $i$ in parent $1$, the $i$-th gene in parent $2$ becomes replaced by it. The same is repeated for the displaced gene until the gene which is equal to the first inserted gene becomes replaced (cycle).
-\item  order crossover operator (OX1): A portion of one parent is mapped to a portion of the other parent. From the replaced portion on, the rest is filled up by the remaining genes, where already present genes are omitted and the order is preserved.
-\item order-based crossover operator (OX2)
-\item position-based crossover operator (POS)
-\item voting recombination crossover operator (VR)
-\item alternating-position crossover operator (AP)
-\item sequential constructive crossover operator (SCX)
+\item  \textbf{\textit{partially matched crossover (PMX):}} In this method, two crossover points are selected at random and PMX proceeds by position wise exchanges. The two crossover points give matching selection. It affects cross by position-by-position exchange operations. In this method parents are mapped to each other, hence we can also call it partially mapped crossover.[5]
+\item  \textbf{\textit{cycle crossover (CX):}} Beginning at any gene $i$ in parent $1$, the $i$-th gene in parent $2$ becomes replaced by it. The same is repeated for the displaced gene until the gene which is equal to the first inserted gene becomes replaced (cycle).
+\item  \textbf{\textit{order crossover operator (OX1):}} A portion of one parent is mapped to a portion of the other parent. From the replaced portion on, the rest is filled up by the remaining genes, where already present genes are omitted and the order is preserved.
+\item Some other examples of techniques are as follows : \textbf{\textit{order-based crossover operator (OX2)}}, \textbf{\textit{position-based crossover operator (POS)}}, \textbf{\textit{voting recombination crossover operator (VR)}}, \textbf{\textit{alternating-position crossover operator (AP)}}, \textbf{\textit{sequential constructive crossover operator (SCX)}}
 \end{itemize}
 \subsection{Mutation}
 The two individuals(children) resulting from each crossover operation will now be subjected to the mutation operator in the final step to form
