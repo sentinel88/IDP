@@ -97,7 +97,7 @@ Dipl.-Math. Pirmin Fontaine % Advisor's Name
 \end{center}
 \thispagestyle{empty}
 \vspace{35mm}
-I would like to thank Mr. Pirmin Fontaine for his constant support and guidance throughout the project especially when I faced some challenges in understanding certain topics. I would also like to thank Prof. Dr. Stefan Minner for providing me with this opportunity to work on such an Inter-Disciplinary project.
+I would like to thank Mr. Pirmin Fontaine for his constant support and guidance throughout the project especially when I faced some challenges in understanding certain topics. I would also like to thank Prof. Dr. Stefan Minner for providing me with this opportunity to work on such an interesting Inter-Disciplinary project.
 
 \newpage
 
@@ -113,6 +113,8 @@ The field of transportation planning involves a large class of problems that are
 \thispagestyle{empty}
 \tableofcontents
 \newpage
+\listoffigures
+\clearpage
 
 \setcounter{page}{1}
 \section{Introduction}
@@ -120,10 +122,11 @@ The network design problem(NDP) is concerned with the modification of a transpor
 \noindent
 \\These combinatorial problems are recognized as NP Hard due to the considerable amount of computational difficulties faced in trying to solve them because of their non-convex nature and due to the form of a bi-level mixed integer program with a large number of 0-1 variables. This Inter disciplinary project deals with only the discrete form of the NDP and considers the following kind of problem which often arises in transportation planning: minimize total travel expenditure subject to a budget constraint on the total construction cost of new links.
  
-\subsection{Problem Formulation}
-Bilevel problems are mathematical programming problems consisting of a special kind of optimization where one problem is embedded within another. The outer optimization task is commonly referred to as the upper level(or the leader) optimization task with a nested optimization problem(the lower one - also called follower) in the constraints. First, the leader has to decide over a subset of the decision variables which effects the objective value of the follower. Afterwards, the follower has to decide over the other subset of decision variables, which affects the objective value of the leader. The problem we are considering to solve here is a bilevel linear program with binary leader variables and continuous follower variables. An application of bilevel programming is network design problem where the objective of the network designer is to reduce congestion in the network and the objective of the follower is to find the fastest way from origin to destination.\\~\\
+\subsection{Problem Formulation*}
+Bilevel problems are mathematical programming problems consisting of a special kind of optimization where one problem is embedded within another. The outer optimization task is commonly referred to as the upper level(or the leader) optimization task with a nested optimization problem(the lower one - also called follower) in the constraints. First, the leader has to decide over a subset of the decision variables which effects the objective value of the follower. Afterwards, the follower has to decide over the other subset of decision variables, which affects the objective value of the leader. The problem we are considering to solve here is a bilevel linear program with binary leader variables and continuous follower variables. An application of bilevel programming is network design problem where the objective of the network designer is to reduce congestion in the network and the objective of the follower is to find the fastest way from origin to destination.Bilevel programming problems are mathematical optimization problems where the set of all decision variables is partitioned between two vectors say $x$ and $y$. $x$ is to be chosen as an optimal solution of the lower level problem parameterized in $y$.\\~\\
+\small\textit{*  Content derived from the book \textbf{Foundations of Bilevel Programming(Non-Convex Optimization and its Applications)} by \textbf{Stephan Dempe.} Chapter 1,3}\\\
 \noindent
-Bilevel programming problems are mathematical optimization problems where the set of all decision variables is partitioned between two vectors say $x$ and $y$. $x$ is to be chosen as an optimal solution of the lower level problem parameterized in $y$. Let the lower problem be introduced first as follows:
+Let the lower problem be introduced first as follows:
 \begin{large}
 \boldmath\begin{equation*}
 \min_{x}\{f(x,y):g(x,y)\leq0,\ h(x,y)=0\},
@@ -186,7 +189,7 @@ In doing all this for all values of $y$ between $1$ and $6$, all points on the t
 \]
 \end{large}
 \noindent
-Existing methods for solving this problem can be roughly divided into the following categories:
+Existing methods for solving bilevel problems can be roughly divided into the following categories:
 \begin{itemize}
 \item \textbf{Methods based on vertex enumeration:} In these methods, the basic idea is that the vertex points of the accessible region for BLP are vertex points for feasible space of the problem, and, the optimal solution is one of these vertices.
 \item \textbf{Methods based on kuhn tucker conditions:} In these methods, the second level problem is replaced by the Kuhn-Tucker optimiality conditions, yielding a one-level optimization problem with complimentarity constraints. Hence, the problem transfers into a single objective with complimentarity constraints. Several algorithms exist that try to solve these problems. One approach uses branch and bound to solve this. Another approach introduces a penalty function to satisfy the complimentarity constraints. Another approach converts the complimentarity constraints to linear one by adding some binary variables. One more approach develops parametric complimentary pivot(PCP) algorithm by transferring the problem into a single objective in which the objective function of the first level is augmented into the set of constraints as follows:\\
@@ -396,8 +399,7 @@ Bilevel formulation:
 %\end{equation*}
 \end{align*} %\\
 \end{large} 
-\clearpage
-\textbf{Linearization of non-linear convex functions}\\~\\
+\\\textbf{Linearization of non-linear convex functions}\\
 Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $m+1$ approximation points $\left(\nu_{0},f_{0}\right)$, $\left(\nu_{1},f_{1}\right)$,...,$\left(\nu_{m},f_{m}\right)$ with $f_{i}:=f\left(\nu_{i}\right)$. Further, $f\left(x\right)$ is a function in the single flow variable $x_{a}$ and $v_{m}\geq\ \max_{a\in{A}}{x_{a}}$. The trivial upper bound is $\sum_{r\in{R},s\in{S}} q_{rs}$. However, as $x_{a}$ can be much smaller than $\sum_{r\in{R},s\in{S}} q_{rs}$, empirical upper bounds can further improve the quality of the approximation. Define $a_{i}=\frac{f_{i}-f_{i-1}}{\nu_{i}-\nu_{i-1}}$ and $b_{i}:=-v_{i-1}a_{i}+f_{i-1}$. Then $f\left(x\right)$ can be approximated by the following function:
 \begin{large}
 \[
@@ -520,7 +522,6 @@ Example of a problem:  \textbf{Knapsack problem}\\
 The problem:  There are items with given value and size. The knapsack has given capacity. Select items to maximize the value of items in 
 knapsack, but do not extend knapsack capacity.\\
 Encoding: Each bit says, if the corresponding item is in knapsack.\\~\\
-\clearpage
 \noindent
 \textbf{\textit{Permutation Encoding: }}
 This type of encoding can be used in ordering problems, such as traveling salesman problem or task ordering problem. In permutation encoding,
@@ -686,7 +687,7 @@ probability of $1$.
 %\begin{large}\textbf{Crossover:}\end{large}\\
 The search of the solution space is done by creating new chromosomes from old ones. Crossover is the technique by which the chromosomes 
 selected from a source population according to a chosen selection scheme from those described earlier are combined to form offsprings which are potential members of a successor population. It is simply a matter of replacing some of the genes in one parent by the corresponding genes of the other. Pairs of chromosomes are randomly selected from the mating pool created using any one of the selection scheme. There are various ways to do a crossover. Few of them are described below. Examples demonstrating the various techniques use binary encoding as the underlying encoding scheme for the chromosomes.\\~\\
-For all the examples that follow the below 2 parents will be used as the selected chromosomes:
+For all the examples that follow, the below 2 parents will be used as the selected chromosomes:
 \begin{center}
 \begin{align*}
 Parent 1: 1010101010\\
@@ -779,7 +780,7 @@ This section describes a high level design of the software implemented with the 
 The following 3 pages give a high level design of this implementation.
 \begin{itemize}
 \item Figure 1 shows a flow chart explaining the complete flow of the software implementation at a very high level. This flow chart does not expand in full detail the internals of the different selection schemes implemented or of the crossover or mutation implementation. This have been covered in the figures that follow this in the form of a pseudo code.
-\item Figure 2 shows the pseudo code explaining the implementation details of the different selection schemes: Tournament selection, Default selection, and rank selection(including how to assign selection probailities to the candidates).
+\item Figure 2 shows the pseudo code explaining the implementation details of the different selection schemes: Tournament selection, Random selection, and Rank selection(including how to assign selection probailities to the candidates).
 \item Figure 3 shows the pseudo code explaining the implementation details of the crossover and mutation operations.
 \end{itemize}
 %\begin{minipage}[t]
@@ -787,10 +788,10 @@ The following 3 pages give a high level design of this implementation.
 %\afterpage{
 \begin{figure}[htbp]
 \floatpagestyle{empty}
-\hspace*{-0.3in}
+\hspace*{-0.45in}
 %\raisebox{12mm}{
-\includegraphics[scale=0.95]{./diagram.eps}%}
-\caption{\textbf{Flow chart of the software imlementation}}
+\includegraphics[scale=0.65]{./diagram.eps}%}
+\caption{\textbf{Flow chart of the software implementation}}
 \label{fig 1}
 \end{figure}
 %}
@@ -800,7 +801,7 @@ The following 3 pages give a high level design of this implementation.
 \begin{figure}[htbp]
 \floatpagestyle{empty}
 \hspace*{0.1in}
-\includegraphics[scale=0.9]{./diagram1.eps}
+\includegraphics[scale=0.65]{./diagram1.eps}
 \caption{\textbf{Pseudo code for algorithms}}
 \label{fig 2}
 \end{figure}
@@ -810,7 +811,7 @@ The following 3 pages give a high level design of this implementation.
 \begin{figure}[htbp]
 \floatpagestyle{empty}
 \hspace*{-0.10in}
-\includegraphics[scale=0.85]{./diagram2.eps}
+\includegraphics[scale=0.60]{./diagram2.eps}
 \caption{\textbf{Pseudo code for algorithms}}
 \label{fig 3}
 \end{figure}
@@ -847,7 +848,7 @@ Range of budget for DNDP : \textbf{\textit{10 - 180}}\\
 %\caption{Invasive resource management architecture}
 %\label{fig:arch}
 %\end{figure}
-\nocite{fontaine,gao,poorzahedy2,tianze,leblanc,kuo,poorzahedy1,wen}
+\nocite{fontaine,gao,poorzahedy2,tianze,leblanc,kuo,poorzahedy1,wen,andreas,obitko,iitm,bargera}
 
 \bibliographystyle{unsrt}
 % Literature sources are to be found in seminarpaper.bib

@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{fontaine}
 Fontaine{,} P.{,}~Minner{,} S.
@@ -52,5 +52,27 @@ Wen{,} U.P.{,}~Huang{,} A.D.
 \newblock {A simple Tabu Search method to solve the mixed-integer linear
   bilevel programming problem}.
 \newblock {\em {European Journal Of Operations Research}}, February 1996.
+
+\bibitem{andreas}
+Olaf Jahn{,} Rolf H. Möhring{,} Andreas S. Schulz{,} Nicolas~E. Stier-Moses.
+\newblock {System-Optimal Routing of Traffic Flows with User Constraints in
+  Networks with Congestion}.
+\newblock {\em {Operations Research, INFORMS}}, August 2005.
+
+\bibitem{obitko}
+Marek Obitko.
+\newblock Introduction to {G}enetic {A}lgorithms - {T}utorials with interactive
+  java applets.
+\newblock http://www.obitko.com/tutorials/genetic-algorithms.
+
+\bibitem{iitm}
+Prof.~C. Balaji.
+\newblock Design and {O}ptimization of {E}nergy {S}ystems - {L}ecture no. 38.
+\newblock http://nptel.ac.in/courses/112106064/38.
+
+\bibitem{bargera}
+Hillel Bar-Gera.
+\newblock Transportation network test problems.
+\newblock http://www.bgu.ac.il/~bargera/tntp/.
 
 \end{thebibliography}

@@ -3,44 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: nishanth.aux
 The style file: unsrt.bst
 Database file #1: nishanth.bib
-You've used 8 entries,
+You've used 12 entries,
             1791 wiz_defined-function locations,
-            480 strings with 4933 characters,
-and the built_in function-call counts, 1068 in all, are:
-= -- 88
-> -- 32
+            496 strings with 5504 characters,
+and the built_in function-call counts, 1570 in all, are:
+= -- 126
+> -- 48
 < -- 0
-+ -- 16
-- -- 8
-* -- 42
-:= -- 201
-add.period$ -- 24
-call.type$ -- 8
-change.case$ -- 8
++ -- 24
+- -- 12
+* -- 47
+:= -- 281
+add.period$ -- 36
+call.type$ -- 12
+change.case$ -- 12
 chr.to.int$ -- 0
-cite$ -- 8
-duplicate$ -- 64
-empty$ -- 113
-format.name$ -- 8
-if$ -- 225
+cite$ -- 12
+duplicate$ -- 87
+empty$ -- 181
+format.name$ -- 12
+if$ -- 340
 int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 8
-newline$ -- 43
-num.names$ -- 8
-pop$ -- 24
+int.to.str$ -- 12
+missing$ -- 9
+newline$ -- 63
+num.names$ -- 12
+pop$ -- 51
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 24
+skip$ -- 35
 stack$ -- 0
 substring$ -- 0
-swap$ -- 8
+swap$ -- 12
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 8
-width$ -- 9
-write$ -- 82
+while$ -- 12
+width$ -- 14
+write$ -- 119
