@@ -8,6 +8,7 @@
 \usepackage{floatpag}
 \usepackage{setspace}
 \usepackage{underscore}
+\usepackage[nottoc]{tocbibind}
 \floatpagestyle{empty}
 %\usepackage[a4paper, total={4in, 6in},margin=4in]{geometry}
 \usepackage[export]{adjustbox}
@@ -112,9 +113,13 @@ The field of transportation planning involves a large class of problems that are
 
 \newpage
 \thispagestyle{empty}
+%\addcontentsline{toc}{chapter}{\listfigurename}
+%\addcontentsline{toc}{chapter}{\listtablename}
 \tableofcontents
 \newpage
 \listoffigures
+\newpage
+\listoftables
 \clearpage
 
 \setcounter{page}{1}
@@ -902,10 +907,18 @@ Compiler & GCC (GNU C/C++ Compiler) Version 4.8.4 \\
 \label{table:2}
 \end{table}
 \subsection{Datasets}
-First dataset has been taken from \cite{gao} which is a small network as shown below. \\
-\begin{table}[!htbp]
+First dataset has been taken from \cite{gao} which is a small network as shown below.\par 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.65\textwidth]{small.eps}
+\vspace{-0.15in}
+\caption{Solid lines indicate existing links and dashed lines indicate potential new links}
+\label{fig:small}
+\end{figure}
+\begin{table}[h]
 \centering
 \begin{tabular}{ |c|c|c|c|c|c|c| }
+\hline
 Index & 1 & 2 & 3 & 4 & 5 & 6 \\
 \hline
 (i,j) & (1, 6) & (5, 10) & (2, 7) & (6, 11) & (3, 8) & (7, 12) \\
@@ -913,9 +926,10 @@ t_{ij} & 19 & 25 & 30 & 32 & 21 & 28 \\
 Cost & 7 & 12 & 7 & 15 & 11 & 18 \\
 \hline
 \end{tabular}
-\caption{Small Netowkr(s)}
+\caption{Small Network(s)}
 \label{table:3}
 \end{table}
+\noindent
 Following datasets for testing purposes have been taken from the \url{http://www.bgu.ac.il/~bargera/tntp/} that houses a repository of many such datasets.
 \subsection{Experiments and Results}
 \subsection{Visualization}
