@@ -72,7 +72,11 @@ Prof.~C. Balaji.
 
 \bibitem{bargera}
 Hillel Bar-Gera.
-\newblock Transportation network test problems.
+\newblock Transportation {N}etwork {T}est {P}roblems.
 \newblock http://www.bgu.ac.il/~bargera/tntp/.
+
+\bibitem{wikipedia}
+Genetic {A}lgorithms.
+\newblock https://en.wikipedia.org/wiki/Genetic\_algorithm.
 
 \end{thebibliography}

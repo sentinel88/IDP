@@ -7,6 +7,7 @@
 \usepackage{afterpage}
 \usepackage{floatpag}
 \usepackage{setspace}
+\usepackage{underscore}
 \floatpagestyle{empty}
 %\usepackage[a4paper, total={4in, 6in},margin=4in]{geometry}
 \usepackage[export]{adjustbox}
@@ -124,7 +125,7 @@ The network design problem(NDP) is concerned with the modification of a transpor
  
 \subsection{Problem Formulation*}
 Bilevel problems are mathematical programming problems consisting of a special kind of optimization where one problem is embedded within another. The outer optimization task is commonly referred to as the upper level(or the leader) optimization task with a nested optimization problem(the lower one - also called follower) in the constraints. First, the leader has to decide over a subset of the decision variables which effects the objective value of the follower. Afterwards, the follower has to decide over the other subset of decision variables, which affects the objective value of the leader. The problem we are considering to solve here is a bilevel linear program with binary leader variables and continuous follower variables. An application of bilevel programming is network design problem where the objective of the network designer is to reduce congestion in the network and the objective of the follower is to find the fastest way from origin to destination.Bilevel programming problems are mathematical optimization problems where the set of all decision variables is partitioned between two vectors say $x$ and $y$. $x$ is to be chosen as an optimal solution of the lower level problem parameterized in $y$.\\~\\
-\small\textit{*  Content derived from the book \textbf{Foundations of Bilevel Programming(Non-Convex Optimization and its Applications)} by \textbf{Stephan Dempe.} Chapter 1,3}\\\
+\small\textit{*  Content derived from the book \textbf{Foundations of Bilevel Programming(Non-Convex Optimization and its Applications)} by \textbf{Stephan Dempe.} Chapter 1,3}\\
 \noindent
 Let the lower problem be introduced first as follows:
 \begin{large}
@@ -277,6 +278,7 @@ On, the other hand a broad class of transportation networks can be described as 
 \noindent
 Out of the above 2 criterias, we can observe that the second criteria of user optimization problem can be reformulated as a total cost minimization problem for an appropriately chosen objective function. When viewed like this the problem then falls into the "multicommodity network flow" class. Literature says that for the case of linear cost(congestion) function, the problem reduces to a linear programming problem that can be solved fairly efficiently by the Dantzig-Wolfe decomposition algorithm. In case of non-linear objective function, its linear approximation is computed and Frank-Wolfe algorithm is used to solve the same. The following content presents the linear programming formulation of the traffic assignment problem.\\~\\
 \vspace{5mm}
+\noindent
 \begin{large}\textbf{Definitions:}\end{large}
 \begin{itemize}
 \item Set of Nodes \textit{N}
@@ -639,7 +641,7 @@ their ranks.
 \includegraphics[width=0.65\textwidth, clip]{./rank2.jpg}
 \vspace{-0.15in}
 \caption{Situation after ranking}
-\label{fig:4}
+\label{fig:14}
 \end{figure}
 The probability of the best individual to be selected is:
 \begin{large}
@@ -779,9 +781,9 @@ This section describes a high level design of the software implemented with the 
 \subsection{Software Design}
 The following 3 pages give a high level design of this implementation.
 \begin{itemize}
-\item Figure 1 shows a flow chart explaining the complete flow of the software implementation at a very high level. This flow chart does not expand in full detail the internals of the different selection schemes implemented or of the crossover or mutation implementation. This have been covered in the figures that follow this in the form of a pseudo code.
-\item Figure 2 shows the pseudo code explaining the implementation details of the different selection schemes: Tournament selection, Random selection, and Rank selection(including how to assign selection probailities to the candidates).
-\item Figure 3 shows the pseudo code explaining the implementation details of the crossover and mutation operations.
+\item \ref{fig 1} shows a flow chart explaining the complete flow of the software implementation at a very high level. This flow chart does not expand in full detail the internals of the different selection schemes implemented or of the crossover or mutation implementation. This have been covered in the figures that follow this in the form of a pseudo code.
+\item \ref{fig 2} shows the pseudo code explaining the implementation details of the different selection schemes: Tournament selection and Rank selection(including how to assign selection probailities to the candidates).
+\item \ref{fig 3} shows the pseudo code explaining the implementation details of the Random Selection method and Crossover operation. Mutation operation has been omitted considering that it is very simple and straightforward.
 \end{itemize}
 %\begin{minipage}[t]
 %\vspace{0mm}
@@ -848,7 +850,7 @@ Range of budget for DNDP : \textbf{\textit{10 - 180}}\\
 %\caption{Invasive resource management architecture}
 %\label{fig:arch}
 %\end{figure}
-\nocite{fontaine,gao,poorzahedy2,tianze,leblanc,kuo,poorzahedy1,wen,andreas,obitko,iitm,bargera}
+\nocite{fontaine,gao,poorzahedy2,tianze,leblanc,kuo,poorzahedy1,wen,andreas,obitko,iitm,bargera,wikipedia}
 
 \bibliographystyle{unsrt}
 % Literature sources are to be found in seminarpaper.bib
