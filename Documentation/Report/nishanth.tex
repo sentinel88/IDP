@@ -407,7 +407,7 @@ Bilevel formulation:
 \end{align*} %\\
 \end{large} 
 \\\textbf{Linearization of non-linear convex functions}\\
-Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $m+1$ approximation points $\left(\nu_{0},f_{0}\right)$, $\left(\nu_{1},f_{1}\right)$,...,$\left(\nu_{m},f_{m}\right)$ with $f_{i}:=f\left(\nu_{i}\right)$. Further, $f\left(x\right)$ is a function in the single flow variable $x_{a}$ and $v_{m}\geq\ \max_{a\in{A}}{x_{a}}$. The trivial upper bound is $\sum_{r\in{R},s\in{S}} q_{rs}$. However, as $x_{a}$ can be much smaller than $\sum_{r\in{R},s\in{S}} q_{rs}$, empirical upper bounds can further improve the quality of the approximation. Define $a_{i}=\frac{f_{i}-f_{i-1}}{\nu_{i}-\nu_{i-1}}$ and $b_{i}:=-v_{i-1}a_{i}+f_{i-1}$. Then $f\left(x\right)$ can be approximated by the following function:
+The approach to linearization used here follows from what has been proposed in the work of fontaine.et.al\cite{fontaine}. Let $f\left(x\right)$ be an increasing, convex and non-linear function. Assume $m+1$ approximation points $\left(\nu_{0},f_{0}\right)$, $\left(\nu_{1},f_{1}\right)$,...,$\left(\nu_{m},f_{m}\right)$ with $f_{i}:=f\left(\nu_{i}\right)$. Further, $f\left(x\right)$ is a function in the single flow variable $x_{a}$ and $v_{m}\geq\ \max_{a\in{A}}{x_{a}}$. The trivial upper bound is $\sum_{r\in{R},s\in{S}} q_{rs}$. However, as $x_{a}$ can be much smaller than $\sum_{r\in{R},s\in{S}} q_{rs}$, empirical upper bounds can further improve the quality of the approximation. Define $a_{i}=\frac{f_{i}-f_{i-1}}{\nu_{i}-\nu_{i-1}}$ and $b_{i}:=-v_{i-1}a_{i}+f_{i-1}$. Then $f\left(x\right)$ can be approximated by the following function:
 \begin{large}
 \[
  \overline{f}(x) := 
@@ -929,7 +929,7 @@ First dataset has been taken from \cite{gao} which is a small network as shown b
 Index & 1 & 2 & 3 & 4 & 5 & 6 \\
 \hline
 (i,j) & (1, 6) & (5, 10) & (2, 7) & (6, 11) & (3, 8) & (7, 12) \\
-t_{ij} & 19 & 25 & 30 & 32 & 21 & 28 \\
+$t_{ij}$ & 19 & 25 & 30 & 32 & 21 & 28 \\
 Cost & 7 & 12 & 7 & 15 & 11 & 18 \\
 \hline
 \end{tabular}
@@ -937,7 +937,19 @@ Cost & 7 & 12 & 7 & 15 & 11 & 18 \\
 \label{table:3}
 \end{table}
 \noindent
-Following datasets for testing purposes have been taken from the \url{http://www.bgu.ac.il/~bargera/tntp/} that houses a repository of many such datasets.
+Following datasets for testing purposes have been taken from the \url{http://www.bgu.ac.il/~bargera/tntp/} that houses a repository of many such datasets.\\~\\
+\textbf{Sioux Falls Network:}\\
+\ref{fig:Sioux} illustrates how the Sioux falls Network may look like\cite{bargera} with sample values on the links. This is a medium sized network. The figure does not show the addition of any new links but just the plain Sioux network with the given network data.\\~\\
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\textwidth,height=100mm]{Sioux.eps}
+\vspace{-0.15in}
+\caption{Sioux Falls Network}
+\label{fig:Sioux}
+\end{figure}
+\noindent
+\textbf{Berlin-Mitte Center Network:}\\
+This is a large network which cannot be illustrated with the help of a figure due to the fact that it has almost 36 zones and a total of 398 nodes with 871 links.
 \subsection{Experiments and Results}
 \subsection{Visualization}
 \newpage

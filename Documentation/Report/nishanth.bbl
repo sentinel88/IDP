@@ -1,17 +1,22 @@
 \begin{thebibliography}{10}
 
-\bibitem{gao}
-Gao{,} Ziyou.{,} Wu{,} Jianjun{,}~Sun{,} Huijun.
-\newblock {Solution algorithm for the bilevel discrete network design problem}.
-\newblock {\em {Transportation Research(www.elsevier.com/locate/trb)}}, July
-  2005.
-
 \bibitem{fontaine}
 Fontaine{,} P.{,}~Minner{,} S.
 \newblock {Benders Decomposition for Discrete-Continuous Linear Bilevel
   Problems with application to traffic network design}.
 \newblock {\em {Transportation Research(www.elsevier.com/locate/trb)}},
   September 2014.
+
+\bibitem{gao}
+Gao{,} Ziyou.{,} Wu{,} Jianjun{,}~Sun{,} Huijun.
+\newblock {Solution algorithm for the bilevel discrete network design problem}.
+\newblock {\em {Transportation Research(www.elsevier.com/locate/trb)}}, July
+  2005.
+
+\bibitem{bargera}
+Hillel Bar-Gera.
+\newblock Transportation {N}etwork {T}est {P}roblems.
+\newblock http://www.bgu.ac.il/~bargera/tntp/.
 
 \bibitem{poorzahedy2}
 Hejazi{,} S.R.{,} Memariani{,} A.{,} Jahanshahloo{,} G.{,}~Sepehri{,} M.M.
@@ -69,11 +74,6 @@ Marek Obitko.
 Prof.~C. Balaji.
 \newblock Design and {O}ptimization of {E}nergy {S}ystems - {L}ecture no. 38.
 \newblock http://nptel.ac.in/courses/112106064/38.
-
-\bibitem{bargera}
-Hillel Bar-Gera.
-\newblock Transportation {N}etwork {T}est {P}roblems.
-\newblock http://www.bgu.ac.il/~bargera/tntp/.
 
 \bibitem{wikipedia}
 Genetic {A}lgorithms.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.17)  12 OCT 2015 17:03
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.17)  12 OCT 2015 21:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -755,7 +755,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 162--163
 
  []
 
-<./blp.jpg, id=230, 538.01pt x 433.62pt>
+<./blp.jpg, id=232, 538.01pt x 433.62pt>
 File: ./blp.jpg Graphic file (type jpg)
  <use ./blp.jpg>
 Package pdftex.def Info: ./blp.jpg used on input line 169.
@@ -812,7 +812,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 251--257
 
  []
 
-<./Xpress.jpg, id=257, 500.87125pt x 216.81pt>
+<./Xpress.jpg, id=259, 500.87125pt x 216.81pt>
 File: ./Xpress.jpg Graphic file (type jpg)
  <use ./Xpress.jpg>
 Package pdftex.def Info: ./Xpress.jpg used on input line 260.
@@ -867,7 +867,7 @@ d-to.pdf linearization.eps>
 (epstopdf)             \includegraphics on input line 436.
 Package epstopdf Info: Output file is already uptodate.
 
-<linearization-eps-converted-to.pdf, id=288, 620.3175pt x 482.80376pt>
+<linearization-eps-converted-to.pdf, id=292, 620.3175pt x 482.80376pt>
 File: linearization-eps-converted-to.pdf Graphic file (type pdf)
 
 <use linearization-eps-converted-to.pdf>
@@ -959,7 +959,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 547--557
 
  []
 
-[16] <./treeenc.jpg, id=331, 413.545pt x 287.0725pt>
+[16] <./treeenc.jpg, id=335, 413.545pt x 287.0725pt>
 File: ./treeenc.jpg Graphic file (type jpg)
  <use ./treeenc.jpg>
 Package pdftex.def Info: ./treeenc.jpg used on input line 573.
@@ -988,7 +988,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 564--582
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
- <./roulette.jpg, id=336, 472.76625pt x 150.5625pt>
+ <./roulette.jpg, id=340, 472.76625pt x 150.5625pt>
 File: ./roulette.jpg Graphic file (type jpg)
 
 <use ./roulette.jpg>
@@ -1016,13 +1016,13 @@ Missing character: There is no ˜ in font cmr10!
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
- <./rank.jpg, id=342, 472.76625pt x 150.5625pt>
+ <./rank.jpg, id=346, 472.76625pt x 150.5625pt>
 File: ./rank.jpg Graphic file (type jpg)
 
 <use ./rank.jpg>
 Package pdftex.def Info: ./rank.jpg used on input line 646.
 (pdftex.def)             Requested size: 294.42636pt x 93.76819pt.
- <./rank2.jpg, id=344, 472.76625pt x 150.5625pt>
+ <./rank2.jpg, id=348, 472.76625pt x 150.5625pt>
 File: ./rank2.jpg Graphic file (type jpg)
 
 <use ./rank2.jpg>
@@ -1042,7 +1042,7 @@ Missing character: There is no ˜ in font cmr10!
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
- <./tournament.jpg, id=352, 425.59pt x 313.17pt>
+ <./tournament.jpg, id=356, 425.59pt x 313.17pt>
 File: ./tournament.jpg Graphic file (type jpg)
 
 <use ./tournament.jpg>
@@ -1130,7 +1130,7 @@ Package epstopdf Info: Source file: <./diagram.eps>
 .pdf ./diagram.eps>
 (epstopdf)             \includegraphics on input line 807.
 Package epstopdf Info: Output file is already uptodate.
- <./diagram-eps-converted-to.pdf, id=380, 755.82375pt x 963.6pt>
+ <./diagram-eps-converted-to.pdf, id=384, 755.82375pt x 963.6pt>
 File: ./diagram-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./diagram-eps-converted-to.pdf>
@@ -1152,7 +1152,7 @@ Package epstopdf Info: Source file: <./diagram1.eps>
 o.pdf ./diagram1.eps>
 (epstopdf)             \includegraphics on input line 818.
 Package epstopdf Info: Output file is already uptodate.
-<./diagram1-eps-converted-to.pdf, id=381, 651.43375pt x 1001.7425pt>
+<./diagram1-eps-converted-to.pdf, id=385, 651.43375pt x 1001.7425pt>
 File: ./diagram1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./diagram1-eps-converted-to.pdf>
@@ -1173,7 +1173,7 @@ Package epstopdf Info: Source file: <./diagram2.eps>
 o.pdf ./diagram2.eps>
 (epstopdf)             \includegraphics on input line 828.
 Package epstopdf Info: Output file is already uptodate.
-<./diagram2-eps-converted-to.pdf, id=382, 739.76375pt x 1060.96375pt>
+<./diagram2-eps-converted-to.pdf, id=386, 739.76375pt x 1060.96375pt>
 File: ./diagram2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./diagram2-eps-converted-to.pdf>
@@ -1259,61 +1259,92 @@ Package epstopdf Info: Source file: <small.eps>
  small.eps>
 (epstopdf)             \includegraphics on input line 920.
 Package epstopdf Info: Output file is already uptodate.
-<small-eps-converted-to.pdf, id=414, 498.86375pt x 265.99374pt>
+<small-eps-converted-to.pdf, id=418, 498.86375pt x 265.99374pt>
 File: small-eps-converted-to.pdf Graphic file (type pdf)
 
 <use small-eps-converted-to.pdf>
 Package pdftex.def Info: small-eps-converted-to.pdf used on input line 920.
 (pdftex.def)             Requested size: 339.73286pt x 213.40002pt.
- [30] [31 <./small-eps-converted-to.pdf>]
-(./nishanth.bbl
-Underfull \hbox (badness 1454) in paragraph at lines 10--15
+ [30]
+Package epstopdf Info: Source file: <Sioux.eps>
+(epstopdf)                    date: 2015-10-12 20:46:49
+(epstopdf)                    size: 270916 bytes
+(epstopdf)             Output file: <Sioux-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-10-12 20:47:04
+(epstopdf)                    size: 73669 bytes
+(epstopdf)             Command: <repstopdf --outfile=Sioux-eps-converted-to.pdf
+ Sioux.eps>
+(epstopdf)             \includegraphics on input line 945.
+Package epstopdf Info: Output file is already uptodate.
+
+<Sioux-eps-converted-to.pdf, id=426, 514.92375pt x 627.34375pt>
+File: Sioux-eps-converted-to.pdf Graphic file (type pdf)
+
+<use Sioux-eps-converted-to.pdf>
+Package pdftex.def Info: Sioux-eps-converted-to.pdf used on input line 945.
+(pdftex.def)             Requested size: 339.73286pt x 284.53246pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 939--953
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 939--953
+
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[31 <./small-eps-converted-to.pdf>] (./nishanth.bbl
+Underfull \hbox (badness 1454) in paragraph at lines 4--9
 []\OT1/cmr/m/n/10.95 Fontaine, P., Min-ner, S.  Ben-ders De-com-po-si-tion for 
 Discrete-Continuous Lin-ear
  []
 
 
-Underfull \hbox (badness 1509) in paragraph at lines 10--15
+Underfull \hbox (badness 1509) in paragraph at lines 4--9
 \OT1/cmr/m/n/10.95 Bilevel Prob-lems with ap-pli-ca-tion to traf-fic net-work d
 e-sign.  \OT1/cmr/m/it/10.95 Trans-porta-tion Re-
  []
 
 
-Underfull \hbox (badness 2065) in paragraph at lines 17--21
+Underfull \hbox (badness 2065) in paragraph at lines 22--26
 []\OT1/cmr/m/n/10.95 Hejazi, S.R., Memar-i-ani, A., Ja-han-shahloo, G., Sepehri
 , M.M.  Lin-ear bilevel
  []
 
 
-Underfull \hbox (badness 5133) in paragraph at lines 17--21
+Underfull \hbox (badness 5133) in paragraph at lines 22--26
 \OT1/cmr/m/n/10.95 pro-gram-ming so-lu-tion by ge-netic al-go-rithm.  \OT1/cmr/
 m/it/10.95 Com-put-ers and Op-er-a-tions Re-
  []
 
+[32 <./Sioux-eps-converted-to.pdf>]
 Missing character: There is no Ã in font cmr10!
 Missing character: There is no ¶ in font cmr10!
 
-Underfull \hbox (badness 1043) in paragraph at lines 69--72
+Underfull \hbox (badness 1043) in paragraph at lines 74--77
 []\OT1/cmr/m/n/10.95 Prof. C. Bal-aji.  De-sign and Op-ti-miza-tion of En-ergy 
 Sys-tems - Lec-ture no. 38.
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 959.
- [32]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 959.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 971.
+ [33]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 971.
  (./nishanth.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 959.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 959.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 971.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 971.
 Package rerunfilecheck Info: File `nishanth.out' has not changed.
 (rerunfilecheck)             Checksum: F236D52339494BF9CAABBE56C63B3B82;1994.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 959.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 971.
  ) 
 Here is how much of TeX's memory you used:
- 17496 strings out of 493304
- 306334 string characters out of 6139871
- 402838 words of memory out of 5000000
- 20470 multiletter control sequences out of 15000+600000
+ 17505 strings out of 493304
+ 306502 string characters out of 6139871
+ 402882 words of memory out of 5000000
+ 20476 multiletter control sequences out of 15000+600000
  21950 words of font info for 80 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  56i,10n,55p,1926b,925s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1343,10 +1374,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist
 public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmtt10.pfb>
-Output written on nishanth.pdf (38 pages, 1430611 bytes).
+Output written on nishanth.pdf (39 pages, 1504092 bytes).
 PDF statistics:
- 559 PDF objects out of 1000 (max. 8388607)
- 464 compressed objects within 5 object streams
- 106 named destinations out of 1000 (max. 500000)
- 357 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 572 PDF objects out of 1000 (max. 8388607)
+ 474 compressed objects within 5 object streams
+ 108 named destinations out of 1000 (max. 500000)
+ 362 words of extra memory for PDF output out of 10000 (max. 10000000)
 
