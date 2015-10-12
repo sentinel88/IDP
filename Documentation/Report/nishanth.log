@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.17)  12 OCT 2015 09:15
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.17)  12 OCT 2015 12:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1208,14 +1208,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 825--837
 [28
 
 
-] [29] (./nishanth.bbl
-Underfull \hbox (badness 1454) in paragraph at lines 4--9
+]
+Underfull \hbox (badness 10000) in paragraph at lines 841--904
+
+ []
+
+[29] [30] (./nishanth.bbl
+Underfull \hbox (badness 1454) in paragraph at lines 10--15
 []\OT1/cmr/m/n/10.95 Fontaine, P., Min-ner, S.  Ben-ders De-com-po-si-tion for 
 Discrete-Continuous Lin-ear
  []
 
 
-Underfull \hbox (badness 1509) in paragraph at lines 4--9
+Underfull \hbox (badness 1509) in paragraph at lines 10--15
 \OT1/cmr/m/n/10.95 Bilevel Prob-lems with ap-pli-ca-tion to traf-fic net-work d
 e-sign.  \OT1/cmr/m/it/10.95 Trans-porta-tion Re-
  []
@@ -1241,22 +1246,22 @@ Sys-tems - Lec-ture no. 38.
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 859.
- [30]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 859.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 938.
+ [31]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 938.
  (./nishanth.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 859.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 859.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 938.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 938.
 Package rerunfilecheck Info: File `nishanth.out' has not changed.
 (rerunfilecheck)             Checksum: 2FC5C6F32D4BD5B81E45948061094A51;1844.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 859.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 938.
  ) 
 Here is how much of TeX's memory you used:
- 17374 strings out of 493304
- 304549 string characters out of 6139871
- 401557 words of memory out of 5000000
- 20365 multiletter control sequences out of 15000+600000
- 21169 words of font info for 77 fonts, out of 8000000 for 9000
+ 17389 strings out of 493304
+ 304691 string characters out of 6139871
+ 401683 words of memory out of 5000000
+ 20375 multiletter control sequences out of 15000+600000
+ 21950 words of font info for 80 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  56i,10n,55p,1926b,925s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></u
@@ -1283,11 +1288,12 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmti12.pfb>
-Output written on nishanth.pdf (35 pages, 1334954 bytes).
+/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmtt10.pfb>
+Output written on nishanth.pdf (36 pages, 1350265 bytes).
 PDF statistics:
- 505 PDF objects out of 1000 (max. 8388607)
- 418 compressed objects within 5 object streams
- 98 named destinations out of 1000 (max. 500000)
+ 519 PDF objects out of 1000 (max. 8388607)
+ 430 compressed objects within 5 object streams
+ 102 named destinations out of 1000 (max. 500000)
  323 words of extra memory for PDF output out of 10000 (max. 10000000)
 

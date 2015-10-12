@@ -836,8 +836,87 @@ Visualization of traffic network simulation : \textbf{\textit{NexTA}}\\~\\
 Range of budget for DNDP : \textbf{\textit{10 - 180}}\\
 \newpage
 \section{Experiments and Visualization}
+This section presents details about the system being used for carrying out the experiments, The kind of datasets or transportation networks widely known in literature that are being used for testing the genetic algorithm and their formats. Finally the results from performing these experiments on different networks under different selection schemes and budgets are presented in the form of a table with their run times.
 \subsection{Setup}
+Below are the hardware details of the system(obtained from the lscpu command on Linux) on which the experiments have been carried out followed by the software details(obtained using lsb_release -a command on Linux).\\~\\
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{ |c|c| }
+\hline
+Architecture & x86_64 \\
+\hline
+CPU op-mode(s) & 32-bit , 64-bit \\
+\hline
+Byte Order & Little Endian \\
+\hline
+CPU(s) & 8 \\
+\hline
+Thread(s) per core & 2 \\
+\hline
+Core(s) per socket & 4 \\
+\hline
+Socket(s) & 1 \\
+\hline
+NUMA node(s) & 1 \\
+\hline
+Vendor ID & GenuineIntel \\
+\hline
+CPU family & 6 \\
+\hline
+Model & 60 \\
+\hline
+CPU Mhz & 2925.828 \\
+\hline
+L1d cache & 32K \\
+\hline
+L1i cache & 32K \\
+\hline
+L2 cache & 256K \\
+\hline
+L3 cache & 6144K \\
+\hline
+\end{tabular}
+\caption{Hardware Configuration}
+\label{table:1}
+\end{table}
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{ |c|c| }
+\hline
+Distributor ID & Ubuntu \\
+\hline
+Description & Ubuntu 14.04.2 LTS \\
+\hline
+Release & 14.04 \\
+\hline
+Codename & trusty \\
+\hline
+Optimization Software & FICO Xpress Version 27.01.02 \\
+\hline
+Library for modeling/solving & Xpress BCL Version 4.8.1 \\
+\hline
+Compiler & GCC (GNU C/C++ Compiler) Version 4.8.4 \\
+\hline
+\end{tabular}
+\caption{Software Configuration}
+\label{table:2}
+\end{table}
 \subsection{Datasets}
+First dataset has been taken from \cite{gao} which is a small network as shown below. \\
+\begin{table}[!htbp]
+\centering
+\begin{tabular}{ |c|c|c|c|c|c|c| }
+Index & 1 & 2 & 3 & 4 & 5 & 6 \\
+\hline
+(i,j) & (1, 6) & (5, 10) & (2, 7) & (6, 11) & (3, 8) & (7, 12) \\
+t_{ij} & 19 & 25 & 30 & 32 & 21 & 28 \\
+Cost & 7 & 12 & 7 & 15 & 11 & 18 \\
+\hline
+\end{tabular}
+\caption{Small Netowkr(s)}
+\label{table:3}
+\end{table}
+Following datasets for testing purposes have been taken from the \url{http://www.bgu.ac.il/~bargera/tntp/} that houses a repository of many such datasets.
 \subsection{Experiments and Results}
 \subsection{Visualization}
 \newpage
