@@ -431,6 +431,13 @@ Instead $\overline{f}(x)$ can be minimzed by the following LP:
 &x_{1}\geq0\ \ i=1,...,m
 \end{align*}
 \end{large}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.70\textwidth, height=80mm]{linearization.eps}
+\vspace{-0.15in}
+\caption{Example of an approximation of $F\left(x\right)$ with $4$ data points}
+\label{fig:88}
+\end{figure}
 \noindent
 As in each $\left(\nu_{i},f_{i}\right)$ a new slope $a_i$ starts, we have to add $\left(a_i-a_{i-1}\right)x_{i}$ from that point on with $x_{i}=x_{1}-\nu_{i-1}$, but do not subtract anything if $x_{1} \le \nu_{i-1}$. Because of the minimization problem and the definition of the objective function constraints, (51) and (52) (52) ensure that $x_{i}$ takes the value of $\min\{0,x_{1}-\nu_{i-1}\}$ and the defined optimization problem minimizes $f(x)$. In the example of Fig. 2, $x_1 \ge v_1$ and we have to add $\left(a_2 - a_1\right)x_2$ with $x_2=\left(x_1-\nu_1\right)$ (gray area), but $x_3=0$.
 
@@ -910,7 +917,7 @@ Compiler & GCC (GNU C/C++ Compiler) Version 4.8.4 \\
 First dataset has been taken from \cite{gao} which is a small network as shown below.\par 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.65\textwidth]{small.eps}
+\includegraphics[width=0.75\textwidth, height=75mm]{small.eps}
 \vspace{-0.15in}
 \caption{Solid lines indicate existing links and dashed lines indicate potential new links}
 \label{fig:small}

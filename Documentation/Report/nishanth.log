@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.17)  12 OCT 2015 12:50
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.17)  12 OCT 2015 17:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -755,7 +755,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 162--163
 
  []
 
-<./blp.jpg, id=228, 538.01pt x 433.62pt>
+<./blp.jpg, id=230, 538.01pt x 433.62pt>
 File: ./blp.jpg Graphic file (type jpg)
  <use ./blp.jpg>
 Package pdftex.def Info: ./blp.jpg used on input line 169.
@@ -812,7 +812,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 251--257
 
  []
 
-<./Xpress.jpg, id=255, 500.87125pt x 216.81pt>
+<./Xpress.jpg, id=257, 500.87125pt x 216.81pt>
 File: ./Xpress.jpg Graphic file (type jpg)
  <use ./Xpress.jpg>
 Package pdftex.def Info: ./Xpress.jpg used on input line 260.
@@ -855,127 +855,146 @@ Underfull \hbox (badness 10000) in paragraph at lines 347--349
 
  []
 
-[9] [10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 465--484
+[9] [10]
+Package epstopdf Info: Source file: <linearization.eps>
+(epstopdf)                    date: 2015-10-12 16:57:17
+(epstopdf)                    size: 131758 bytes
+(epstopdf)             Output file: <linearization-eps-converted-to.pdf>
+(epstopdf)                    date: 2015-10-12 16:57:37
+(epstopdf)                    size: 42874 bytes
+(epstopdf)             Command: <repstopdf --outfile=linearization-eps-converte
+d-to.pdf linearization.eps>
+(epstopdf)             \includegraphics on input line 436.
+Package epstopdf Info: Output file is already uptodate.
+
+<linearization-eps-converted-to.pdf, id=288, 620.3175pt x 482.80376pt>
+File: linearization-eps-converted-to.pdf Graphic file (type pdf)
+
+<use linearization-eps-converted-to.pdf>
+Package pdftex.def Info: linearization-eps-converted-to.pdf used on input line 
+436.
+(pdftex.def)             Requested size: 317.0771pt x 227.61766pt.
+ [11 <./linearization-eps-converted-to.pdf>] [12]
+Underfull \hbox (badness 10000) in paragraph at lines 472--491
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--484
+Underfull \hbox (badness 10000) in paragraph at lines 472--491
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--484
+Underfull \hbox (badness 10000) in paragraph at lines 472--491
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--484
+Underfull \hbox (badness 10000) in paragraph at lines 472--491
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--484
+Underfull \hbox (badness 10000) in paragraph at lines 472--491
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--484
+Underfull \hbox (badness 10000) in paragraph at lines 472--491
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--484
+Underfull \hbox (badness 10000) in paragraph at lines 472--491
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--484
+Underfull \hbox (badness 10000) in paragraph at lines 472--491
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 465--484
+Underfull \hbox (badness 10000) in paragraph at lines 472--491
 
  []
 
-[12] [13]
-Underfull \hbox (badness 10000) in paragraph at lines 497--501
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 497--501
+[13] [14]
+Underfull \hbox (badness 10000) in paragraph at lines 504--508
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 503--522
+Underfull \hbox (badness 10000) in paragraph at lines 504--508
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 503--522
-
- []
-
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 526--536
+Underfull \hbox (badness 10000) in paragraph at lines 510--529
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 526--536
+Underfull \hbox (badness 10000) in paragraph at lines 510--529
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 533--543
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 540--550
+Underfull \hbox (badness 10000) in paragraph at lines 533--543
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 540--550
+Underfull \hbox (badness 10000) in paragraph at lines 547--557
 
  []
 
-[15] <./treeenc.jpg, id=320, 413.545pt x 287.0725pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 547--557
+
+ []
+
+[16] <./treeenc.jpg, id=331, 413.545pt x 287.0725pt>
 File: ./treeenc.jpg Graphic file (type jpg)
  <use ./treeenc.jpg>
-Package pdftex.def Info: ./treeenc.jpg used on input line 566.
+Package pdftex.def Info: ./treeenc.jpg used on input line 573.
 (pdftex.def)             Requested size: 256.07973pt x 156.49301pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 557--575
+Underfull \hbox (badness 10000) in paragraph at lines 564--582
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 557--575
+Underfull \hbox (badness 10000) in paragraph at lines 564--582
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 557--575
+Underfull \hbox (badness 10000) in paragraph at lines 564--582
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 557--575
+Underfull \hbox (badness 10000) in paragraph at lines 564--582
 
  []
 
-[16 <./treeenc.jpg>]
+[17 <./treeenc.jpg>]
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
- <./roulette.jpg, id=326, 472.76625pt x 150.5625pt>
+ <./roulette.jpg, id=336, 472.76625pt x 150.5625pt>
 File: ./roulette.jpg Graphic file (type jpg)
 
 <use ./roulette.jpg>
-Package pdftex.def Info: ./roulette.jpg used on input line 611.
+Package pdftex.def Info: ./roulette.jpg used on input line 618.
 (pdftex.def)             Requested size: 294.42636pt x 93.76819pt.
- [17]
+ [18]
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
@@ -997,17 +1016,17 @@ Missing character: There is no ˜ in font cmr10!
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
- <./rank.jpg, id=332, 472.76625pt x 150.5625pt>
+ <./rank.jpg, id=342, 472.76625pt x 150.5625pt>
 File: ./rank.jpg Graphic file (type jpg)
 
 <use ./rank.jpg>
-Package pdftex.def Info: ./rank.jpg used on input line 639.
+Package pdftex.def Info: ./rank.jpg used on input line 646.
 (pdftex.def)             Requested size: 294.42636pt x 93.76819pt.
- <./rank2.jpg, id=334, 472.76625pt x 150.5625pt>
+ <./rank2.jpg, id=344, 472.76625pt x 150.5625pt>
 File: ./rank2.jpg Graphic file (type jpg)
 
 <use ./rank2.jpg>
-Package pdftex.def Info: ./rank2.jpg used on input line 646.
+Package pdftex.def Info: ./rank2.jpg used on input line 653.
 (pdftex.def)             Requested size: 294.42636pt x 93.76819pt.
 
 
@@ -1016,91 +1035,91 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[18 <./roulette.jpg>]
+[19 <./roulette.jpg>]
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ˜ in font cmr10!
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
- <./tournament.jpg, id=341, 425.59pt x 313.17pt>
+ <./tournament.jpg, id=352, 425.59pt x 313.17pt>
 File: ./tournament.jpg Graphic file (type jpg)
 
 <use ./tournament.jpg>
-Package pdftex.def Info: ./tournament.jpg used on input line 680.
+Package pdftex.def Info: ./tournament.jpg used on input line 687.
 (pdftex.def)             Requested size: 294.42636pt x 216.66573pt.
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
 
-Underfull \hbox (badness 10000) in paragraph at lines 670--693
+Underfull \hbox (badness 10000) in paragraph at lines 677--700
 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[19 <./rank.jpg> <./rank2.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 695--698
+[20 <./rank.jpg> <./rank2.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 702--705
 
  []
 
-[20 <./tournament.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 726--733
-
- []
-
-[21]
-Underfull \hbox (badness 10000) in paragraph at lines 747--771
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 747--771
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 747--771
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 747--771
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 747--771
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 747--771
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 747--771
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 747--771
+[21 <./tournament.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 733--740
 
  []
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 774--777
+Underfull \hbox (badness 10000) in paragraph at lines 754--778
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 780--783
+Underfull \hbox (badness 10000) in paragraph at lines 754--778
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 754--778
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 754--778
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 754--778
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 754--778
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 754--778
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 754--778
 
  []
 
 [23]
+Underfull \hbox (badness 10000) in paragraph at lines 781--784
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 787--790
+
+ []
+
+[24]
 Package epstopdf Info: Source file: <./diagram.eps>
 (epstopdf)                    date: 2015-08-21 18:41:49
 (epstopdf)                    size: 87017 bytes
@@ -1109,17 +1128,17 @@ Package epstopdf Info: Source file: <./diagram.eps>
 (epstopdf)                    size: 189219 bytes
 (epstopdf)             Command: <repstopdf --outfile=./diagram-eps-converted-to
 .pdf ./diagram.eps>
-(epstopdf)             \includegraphics on input line 800.
+(epstopdf)             \includegraphics on input line 807.
 Package epstopdf Info: Output file is already uptodate.
- <./diagram-eps-converted-to.pdf, id=370, 755.82375pt x 963.6pt>
+ <./diagram-eps-converted-to.pdf, id=380, 755.82375pt x 963.6pt>
 File: ./diagram-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./diagram-eps-converted-to.pdf>
-Package pdftex.def Info: ./diagram-eps-converted-to.pdf used on input line 800.
+Package pdftex.def Info: ./diagram-eps-converted-to.pdf used on input line 807.
 
 (pdftex.def)             Requested size: 491.27962pt x 626.33258pt.
 
-Overfull \hbox (8.40154pt too wide) in paragraph at lines 798--801
+Overfull \hbox (8.40154pt too wide) in paragraph at lines 805--808
 []|  [] 
  []
 
@@ -1131,18 +1150,18 @@ Package epstopdf Info: Source file: <./diagram1.eps>
 (epstopdf)                    size: 228235 bytes
 (epstopdf)             Command: <repstopdf --outfile=./diagram1-eps-converted-t
 o.pdf ./diagram1.eps>
-(epstopdf)             \includegraphics on input line 811.
+(epstopdf)             \includegraphics on input line 818.
 Package epstopdf Info: Output file is already uptodate.
-<./diagram1-eps-converted-to.pdf, id=371, 651.43375pt x 1001.7425pt>
+<./diagram1-eps-converted-to.pdf, id=381, 651.43375pt x 1001.7425pt>
 File: ./diagram1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./diagram1-eps-converted-to.pdf>
-Package pdftex.def Info: ./diagram1-eps-converted-to.pdf used on input line 811
+Package pdftex.def Info: ./diagram1-eps-converted-to.pdf used on input line 818
 .
 (pdftex.def)             Requested size: 423.42691pt x 651.12491pt.
 
 
-LaTeX Warning: Float too large for page by 7.45135pt on input line 814.
+LaTeX Warning: Float too large for page by 7.45135pt on input line 821.
 
 Package epstopdf Info: Source file: <./diagram2.eps>
 (epstopdf)                    date: 2015-08-21 18:41:58
@@ -1152,81 +1171,81 @@ Package epstopdf Info: Source file: <./diagram2.eps>
 (epstopdf)                    size: 272368 bytes
 (epstopdf)             Command: <repstopdf --outfile=./diagram2-eps-converted-t
 o.pdf ./diagram2.eps>
-(epstopdf)             \includegraphics on input line 821.
+(epstopdf)             \includegraphics on input line 828.
 Package epstopdf Info: Output file is already uptodate.
-<./diagram2-eps-converted-to.pdf, id=372, 739.76375pt x 1060.96375pt>
+<./diagram2-eps-converted-to.pdf, id=382, 739.76375pt x 1060.96375pt>
 File: ./diagram2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./diagram2-eps-converted-to.pdf>
-Package pdftex.def Info: ./diagram2-eps-converted-to.pdf used on input line 821
+Package pdftex.def Info: ./diagram2-eps-converted-to.pdf used on input line 828
 .
 (pdftex.def)             Requested size: 443.86166pt x 636.58316pt.
- [24] [25 <./diagram-eps-converted-to.pdf>] [26 <./diagram1-eps-converted-to.pd
-f>] [27 <./diagram2-eps-converted-to.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+ [25] [26 <./diagram-eps-converted-to.pdf>] [27 <./diagram1-eps-converted-to.pd
+f>] [28 <./diagram2-eps-converted-to.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 830--842
+Underfull \hbox (badness 10000) in paragraph at lines 837--849
 
  []
 
-[28
+[29
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 846--909
+Underfull \hbox (badness 10000) in paragraph at lines 853--916
 
  []
 
@@ -1238,15 +1257,15 @@ Package epstopdf Info: Source file: <small.eps>
 (epstopdf)                    size: 39474 bytes
 (epstopdf)             Command: <repstopdf --outfile=small-eps-converted-to.pdf
  small.eps>
-(epstopdf)             \includegraphics on input line 913.
+(epstopdf)             \includegraphics on input line 920.
 Package epstopdf Info: Output file is already uptodate.
-<small-eps-converted-to.pdf, id=404, 498.86375pt x 265.99374pt>
+<small-eps-converted-to.pdf, id=414, 498.86375pt x 265.99374pt>
 File: small-eps-converted-to.pdf Graphic file (type pdf)
 
 <use small-eps-converted-to.pdf>
-Package pdftex.def Info: small-eps-converted-to.pdf used on input line 913.
-(pdftex.def)             Requested size: 294.42636pt x 156.99176pt.
- [29] [30 <./small-eps-converted-to.pdf>]
+Package pdftex.def Info: small-eps-converted-to.pdf used on input line 920.
+(pdftex.def)             Requested size: 339.73286pt x 213.40002pt.
+ [30] [31 <./small-eps-converted-to.pdf>]
 (./nishanth.bbl
 Underfull \hbox (badness 1454) in paragraph at lines 10--15
 []\OT1/cmr/m/n/10.95 Fontaine, P., Min-ner, S.  Ben-ders De-com-po-si-tion for 
@@ -1280,21 +1299,21 @@ Sys-tems - Lec-ture no. 38.
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 952.
- [31]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 952.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 959.
+ [32]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 959.
  (./nishanth.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 952.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 952.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 959.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 959.
 Package rerunfilecheck Info: File `nishanth.out' has not changed.
 (rerunfilecheck)             Checksum: F236D52339494BF9CAABBE56C63B3B82;1994.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 952.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 959.
  ) 
 Here is how much of TeX's memory you used:
- 17487 strings out of 493304
- 306129 string characters out of 6139871
- 402753 words of memory out of 5000000
- 20464 multiletter control sequences out of 15000+600000
+ 17496 strings out of 493304
+ 306334 string characters out of 6139871
+ 402838 words of memory out of 5000000
+ 20470 multiletter control sequences out of 15000+600000
  21950 words of font info for 80 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  56i,10n,55p,1926b,925s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1324,10 +1343,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist
 public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
 nts/cm/cmtt10.pfb>
-Output written on nishanth.pdf (37 pages, 1388702 bytes).
+Output written on nishanth.pdf (38 pages, 1430611 bytes).
 PDF statistics:
- 549 PDF objects out of 1000 (max. 8388607)
- 457 compressed objects within 5 object streams
- 104 named destinations out of 1000 (max. 500000)
- 352 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 559 PDF objects out of 1000 (max. 8388607)
+ 464 compressed objects within 5 object streams
+ 106 named destinations out of 1000 (max. 500000)
+ 357 words of extra memory for PDF output out of 10000 (max. 10000000)
 
